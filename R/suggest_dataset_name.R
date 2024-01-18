@@ -4,10 +4,7 @@
 #' @param dataset_name a string to be matched against valid dataset names
 #'
 suggest_dataset_name <- function(dataset_name) {
-
-  content <- phs_GET("package_list", "")
-
-  dataset_names <- unlist(content$result)
+  dataset_names <- list_datasets()
 
   # calculate string distances
   string_distances <- stringdist::stringdist(dataset_name, dataset_names)
