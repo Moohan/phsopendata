@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">phsopendata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_resource</span><span class="op">(</span><span class="va">res_id</span>, rows <span class="op">=</span> <span class="cn">NULL</span>, row_filters <span class="op">=</span> <span class="cn">NULL</span>, col_select <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_resource</span><span class="op">(</span></span>
+<span>  <span class="va">res_id</span>,</span>
+<span>  rows <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_filters <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  include_context <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,13 +72,21 @@
 
 
 <dt>row_filters</dt>
-<dd><p>(optional) a named list or vector that specifies values of columns/fields to keep.
+<dd><p>(optional) a named list or vector that specifies values of
+columns/fields to keep.
 e.g. list(Date = 20220216, Sex = "Female").</p></dd>
 
 
 <dt>col_select</dt>
-<dd><p>(optional) a character vector containing the names of desired columns/fields.
+<dd><p>(optional) a character vector containing the names of
+desired columns/fields.
 e.g. c("Date", "Sex").</p></dd>
+
+
+<dt>include_context</dt>
+<dd><p>(optional) If <code>TRUE</code> additional information about the
+resource will be added as columns to the data, including the resource ID, the
+resource name, the creation date and the last modified/updated date.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -90,10 +104,17 @@ from a given dataset.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res_id</span> <span class="op">&lt;-</span> <span class="st">"ca3f8e44-9a84-43d6-819c-a880b23bd278"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_resource</span><span class="op">(</span><span class="va">res_id</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"HB"</span> <span class="op">=</span> <span class="st">"S08000030"</span>, <span class="st">"Month"</span> <span class="op">=</span> <span class="st">"202109"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">wanted_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HB"</span>, <span class="st">"Month"</span>, <span class="st">"TotalPatientsSeen"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">get_resource</span><span class="op">(</span>res_id <span class="op">=</span> <span class="va">res_id</span>, row_filters <span class="op">=</span> <span class="va">filters</span>, col_select <span class="op">=</span> <span class="va">wanted_cols</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">filtered_data</span> <span class="op">&lt;-</span> <span class="fu">get_resource</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  res_id <span class="op">=</span> <span class="va">res_id</span>,</span></span>
+<span class="r-in"><span>  row_filters <span class="op">=</span> <span class="va">filters</span>,</span></span>
+<span class="r-in"><span>  col_select <span class="op">=</span> <span class="va">wanted_cols</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
