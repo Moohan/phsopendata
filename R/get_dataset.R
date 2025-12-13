@@ -14,6 +14,8 @@
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
+#' @import furrr
+#' @import future
 #'
 #' @examples get_dataset("gp-practice-populations",
 #'   max_resources = 2, rows = 10
@@ -48,14 +50,24 @@ get_dataset <- function(dataset_name,
 
   selection_ids <- all_ids[res_index]
 
+  # The get_resource function, which is called by get_dataset,
+  # can take a while to run.
+  # By default, this function gets all resources in a dataset sequentially.
+  # The future and furrr packages can be used to parallelise these calls.
+  # This sets the plan to use multiple R sessions in parallel.
+  future::plan(future::multisession)
+
   # get all resources
-  all_data <- purrr::map(
-    selection_ids,
-    get_resource,
+  all_data <- furrr::future_map(
+    .x = selection_ids,
+    .f = get_resource,
     rows = rows,
     row_filters = row_filters,
-    col_select = col_select,
+    col_select = col_select
   )
+
+  # Always return to a sequential plan
+  on.exit(future::plan(future::sequential), add = TRUE)
 
   # resolve class issues
   types <- purrr::map(
