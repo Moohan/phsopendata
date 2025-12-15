@@ -117,10 +117,9 @@ get_resource <- function(res_id,
       )
     }
 
+    # Using dplyr::bind_rows is faster than purrr::map_dfr for this use case
     # extract data from response content
-    data <- purrr::map_dfr(
-      res_content$result$records, ~.x
-    ) %>% dplyr::select(
+    data <- dplyr::bind_rows(res_content$result$records) %>% dplyr::select(
       -dplyr::starts_with("rank "),
       -dplyr::matches("_id")
     )
@@ -130,7 +129,7 @@ get_resource <- function(res_id,
     # Get resource context if required
     context_content <- phs_GET(
       action = "resource_show",
-      query = paste0("id=", res_id)
+      query = list(id = res_id)
     )
 
     res_id <- context_content$result$id
