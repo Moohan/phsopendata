@@ -118,12 +118,13 @@ get_resource <- function(res_id,
     }
 
     # extract data from response content
-    data <- purrr::map_dfr(
-      res_content$result$records, ~.x
-    ) %>% dplyr::select(
-      -dplyr::starts_with("rank "),
-      -dplyr::matches("_id")
-    )
+    # Using dplyr::bind_rows instead of purrr::map_dfr for performance.
+    # bind_rows is significantly faster for converting lists of records to tibbles.
+    data <- dplyr::bind_rows(res_content$result$records) %>%
+      dplyr::select(
+        -dplyr::starts_with("rank "),
+        -dplyr::matches("_id")
+      )
   }
 
   if (include_context) {
