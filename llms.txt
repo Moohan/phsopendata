@@ -1,0 +1,134 @@
+# phsopendata
+
+`phsopendata` contains functions to interact with open data from the
+[Scottish Health and Social Care Open Data
+platform](https://www.opendata.nhs.scot/) via the CKAN API.
+
+- [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.md)
+  extracts a single resource from an open dataset by resource id
+- [`get_latest_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource.md)
+  extracts the most recent resource from applicable datasets, by dataset
+  name
+- [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.md)
+  extracts multiple resources from an open dataset by dataset name
+- [`list_datasets()`](https://public-health-scotland.github.io/phsopendata/reference/list_datasets.md)
+  returns the names of all available datasets
+- [`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.md)
+  returns information on all resources within an open dataset by dataset
+  name
+
+`phsopendata` can be used on both Posit Workbench and desktop versions
+of RStudio.
+
+## Installation
+
+You need to install `phsopendata` from GitHub, which requires a package
+like `remotes` or `devtools`.
+
+Using `remotes` you run this to install the package:
+
+``` R
+remotes::install_github("Public-Health-Scotland/phsopendata",
+  upgrade = "never"
+)
+```
+
+## Examples
+
+### Downloading a data table with `get_resource()`
+
+To extract a specific resource, you will need its unique identifier -
+resource id. This can be found in the dataset metadata, the URL of a
+resource’s page on <https://www.opendata.nhs.scot/>, or extracted using
+[`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.md).
+
+``` R
+library(phsopendata)
+
+# define a resource ID
+res_id <- "a794d603-95ab-4309-8c92-b48970478c14"
+
+# download the data from the CKAN database
+data <- get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+```
+
+### Querying/filtering data with `get_resource()`
+
+You can define a row limit with the `rows` argument to get the first *N*
+rows of a table.
+
+``` R
+# get first 100 rows
+get_resource(
+  res_id = "a794d603-95ab-4309-8c92-b48970478c14",
+  rows = 100
+)
+```
+
+You can use `col_select` and `row_filters` to query the data server-side
+(i.e., the data is filtered before it is downloaded to your machine).
+
+``` R
+# get first 100 rows
+get_resource(
+  res_id = "a794d603-95ab-4309-8c92-b48970478c14",
+  col_select = c("GPPracticeName", "TelephoneNumber"),
+  row_filters = list(
+    HB = "S08000017",
+    Dispensing = "Y"
+  )
+)
+```
+
+### Downloading multiple tables with `get_dataset()`
+
+To extract all resources from a dataset, you will need to use the
+*dataset name*. Note that this will differ from the *dataset title* that
+displays on the website. This can be found using
+[`list_datasets()`](https://public-health-scotland.github.io/phsopendata/reference/list_datasets.md),
+or taken from the dataset URL.
+
+In this example, we are downloading GP Practice Population Demographics
+from:
+[opendata.nhs.scot/dataset/*gp-practice-populations*](https://www.opendata.nhs.scot/dataset/gp-practice-populations),
+so the dataset name will be gp-practice-populations.
+
+``` R
+# if max_resources is not set, all resources will be returned by default.
+# Here we pull 10 rows from the first 2 resources only
+get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+```
+
+## Contributing to phsopendata
+
+At present, this package is maintained by [Csilla
+Scharle](https://github.com/csillasch).
+
+If you have requests or suggestions for additional functionality, please
+contact the package maintainer and/or the [PHS Open Data
+team](https://public-health-scotland.github.io/phsopendata/phs.opendata@phs.scot).
+
+If you would like to share examples of how you work with open data, you
+can also do so in the [Open Data
+repository](https://github.com/Public-Health-Scotland/Open-Data), where
+example scripts and resources are collated.
+
+# Package index
+
+## All functions
+
+- [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.md)
+  : Get Open Data resources from a dataset
+- [`get_dataset_additional_info()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset_additional_info.md)
+  : get a datasets additional info
+- [`get_latest_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource.md)
+  : Get the latest resource from a data set
+- [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.md)
+  : Get Open Data resource
+- [`get_resource_sql()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.md)
+  : Get PHS Open Data using SQL
+- [`list_datasets()`](https://public-health-scotland.github.io/phsopendata/reference/list_datasets.md)
+  : Lists all available datasets
+- [`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.md)
+  : Lists all available resources for a dataset
+
