@@ -22,24 +22,16 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   query <- list("id" = dataset_name)
   content <- phs_GET("package_show", query)
 
-  # retrieve the resource id's from returned contect
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-
-
-  # add the id, created date and last_modified to a dataframe
-  id <- c()
-  created_date <- c()
-  modified_date <- c()
-
-  for (res in content$result$resources) {
-    id <- append(id, res$id)
-    created_date <- append(created_date, res$created)
-    modified_date <- append(modified_date, res$last_modified)
-  }
-  all_id_data <- tibble::tibble(
-    id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
+  # Vectorized extraction of resource metadata.
+  # This is more efficient than growing vectors in a loop.
+  all_id_data <- dplyr::bind_rows(
+    lapply(content$result$resources, function(res) {
+      tibble::tibble(
+        id = res$id,
+        created_date = strptime(res$created, format = "%FT%X", tz = "UTC"),
+        modified_date = strptime(res$last_modified, format = "%FT%X", tz = "UTC")
+      )
+    })
   ) %>%
     dplyr::mutate(most_recent_date_created = max(created_date))
 
