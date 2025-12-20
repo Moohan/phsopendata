@@ -64,26 +64,17 @@ get_dataset <- function(dataset_name,
   )
 
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
+  # A more performant way to find columns with multiple types
+  # Convert the list of type-lists to a single tibble
+  types_list <- purrr::map(types, ~ tibble::enframe(.x, name = "col_name", value = "col_type"))
+  types_df <- dplyr::bind_rows(types_list)
 
-    this_types <- types[[i]]
-    next_types <- types[[i + 1]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] != next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # Find columns that have more than one type across all dataframes
+  to_coerce <- types_df %>%
+    dplyr::group_by(.data$col_name) %>%
+    dplyr::summarise(n_types = dplyr::n_distinct(.data$col_type), .groups = "drop") %>%
+    dplyr::filter(.data$n_types > 1) %>%
+    dplyr::pull(.data$col_name)
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
