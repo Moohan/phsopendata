@@ -19,9 +19,10 @@ Imports:
     dplyr (>= 1.0.0),
     furrr,
     future,
-    httr (>= 1.0.0),
+    httr2 (>= 1.0.0),
     magrittr (>= 1.0.0),
     purrr (>= 1.0.0),
+    readr (>= 1.0.0),
     rlang (>= 1.0.0),
     stringdist,
     tibble (>= 3.0.0)
