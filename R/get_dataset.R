@@ -63,27 +63,17 @@ get_dataset <- function(dataset_name,
     ~ purrr::map_chr(.x, class)
   )
 
-
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] != next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # Check for columns that have multiple types across all resources
+  to_coerce <- types %>%
+    # Convert each element to a tibble
+    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
+    # Bind them into a single tibble efficiently
+    dplyr::bind_rows() %>%
+    # Find columns that have more than one unique type
+    dplyr::group_by(col_name) %>%
+    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
+    dplyr::filter(n_types > 1) %>%
+    dplyr::pull(col_name)
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
