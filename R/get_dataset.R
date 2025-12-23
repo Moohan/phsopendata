@@ -64,16 +64,27 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # OPTIMIZATION: This is a much faster way to find columns with
+  # inconsistent types across multiple resources than the original approach,
+  # which used a chain of purrr::map and dplyr functions.
+  # The original approach created multiple intermediate tibbles and was
+  # significantly slower.
+  #
+  # This new approach works by:
+  # 1. unlist(types): Creates a single vector of all column types, with names.
+  # 2. table(names(.), .): Creates a contingency table where rows are
+  #    column names and columns are data types.
+  # 3. rowSums(. > 0): Counts, for each column name, how many different
+  #    data types it has.
+  # 4. which(. > 1): Finds the indices of columns with more than one type.
+  # 5. names(...): Gets the names of those columns.
+  all_types <- unlist(types)
+  if (length(all_types) > 0) {
+    type_counts <- table(names(all_types), all_types)
+    to_coerce <- names(which(rowSums(type_counts > 0) > 1))
+  } else {
+    to_coerce <- character(0)
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
