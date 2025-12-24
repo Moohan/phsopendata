@@ -64,16 +64,20 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # This base R approach is more efficient than the dplyr equivalent
+  # as it avoids creating intermediate tibbles and is much faster
+  all_types <- unlist(types)
+
+  # When unlisting, the names are preserved, so we can split by name
+  types_by_col <- split(all_types, names(all_types))
+
+  # vapply is a type-safe and slightly faster version of sapply
+  n_distinct_types <- vapply(types_by_col,
+    function(x) length(unique(x)),
+    integer(1)
+  )
+
+  to_coerce <- names(n_distinct_types[n_distinct_types > 1])
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
