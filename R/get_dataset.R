@@ -72,7 +72,8 @@ get_dataset <- function(dataset_name,
   types_by_col <- split(all_types, names(all_types))
 
   # vapply is a type-safe and slightly faster version of sapply
-  n_distinct_types <- vapply(types_by_col,
+  n_distinct_types <- vapply(
+    types_by_col,
     function(x) length(unique(x)),
     integer(1)
   )
