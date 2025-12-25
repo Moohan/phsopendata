@@ -71,8 +71,9 @@ get_dataset <- function(dataset_name,
   types_by_col <- split(all_types, names(all_types))
   # Check which columns have more than one unique type
   has_multiple_types <- vapply(types_by_col,
-                               function(x) length(unique(x)) > 1,
-                               FUN.VALUE = logical(1))
+    function(x) length(unique(x)) > 1,
+    FUN.VALUE = logical(1)
+  )
   to_coerce <- names(has_multiple_types[has_multiple_types])
 
   if (length(to_coerce) > 0) {
