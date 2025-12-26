@@ -64,16 +64,12 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
+  # A base R implementation is used here over a dplyr pipeline for performance
   to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+    unlist() %>%
+    split(., names(.)) %>%
+    Filter(f = function(x) length(unique(x)) > 1, x = .) %>%
+    names()
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
