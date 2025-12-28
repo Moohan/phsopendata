@@ -63,17 +63,19 @@ get_dataset <- function(dataset_name,
     ~ purrr::map_chr(.x, class)
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # This approach is more performant than the previous dplyr/purrr implementation
+  # It avoids creating intermediate tibbles and uses base R functions for speed.
+  # 1. Flatten the list of named vectors into a single vector, preserving names.
+  all_types <- do.call(c, unname(types))
+  # 2. Split the vector into a list of vectors, grouped by column name.
+  types_by_col <- split(all_types, names(all_types))
+  # 3. Identify columns with more than one unique type by checking the length
+  # of unique values for each column.
+  # The `sapply` returns a logical vector. Subsetting its names by the
+  # vector itself is a robust way to get the names of the TRUE elements.
+  # This pattern correctly returns `character(0)` if no columns need coercion.
+  res <- sapply(types_by_col, function(x) length(unique(x))) > 1
+  to_coerce <- names(res)[res]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
