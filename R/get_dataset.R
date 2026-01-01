@@ -64,16 +64,23 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten the list of type vectors into a single named vector
+  all_types <- do.call(c, unname(types))
+
+  if (length(all_types) > 0) {
+    # Group types by column name
+    types_by_name <- split(unname(all_types), names(all_types))
+
+    # Find names where there's more than one unique type
+    inconsistent_cols <- vapply(
+      types_by_name,
+      function(x) length(unique(x)) > 1,
+      logical(1)
+    )
+    to_coerce <- names(inconsistent_cols)[inconsistent_cols]
+  } else {
+    to_coerce <- character(0)
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
