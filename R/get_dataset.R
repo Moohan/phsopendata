@@ -73,8 +73,9 @@ get_dataset <- function(dataset_name,
   types_by_col <- split(all_types_flat, names(all_types_flat))
   # 3. Check which columns have more than one unique type.
   inconsistent_cols <- vapply(types_by_col,
-                                function(x) length(unique(x)) > 1,
-                                FUN.VALUE = logical(1))
+    function(x) length(unique(x)) > 1,
+    FUN.VALUE = logical(1)
+  )
   to_coerce <- names(inconsistent_cols)[inconsistent_cols]
 
   if (length(to_coerce) > 0) {
