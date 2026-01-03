@@ -71,7 +71,7 @@ get_dataset <- function(dataset_name,
   types_by_name <- split(all_types_vector, names(all_types_vector))
   to_coerce <- names(types_by_name)[
     vapply(types_by_name, function(x) length(unique(x)) > 1, logical(1))
-    ]
+  ]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
