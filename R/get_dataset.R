@@ -64,16 +64,14 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # This implementation is a performant base R alternative to the original
+  # tidyverse pipeline. It avoids creating intermediate tibbles and uses
+  # vectorized operations for speed.
+  all_types_vector <- do.call(c, unname(types))
+  types_by_name <- split(all_types_vector, names(all_types_vector))
+  to_coerce <- names(types_by_name)[
+    vapply(types_by_name, function(x) length(unique(x)) > 1, logical(1))
+    ]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
