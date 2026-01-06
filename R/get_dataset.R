@@ -76,7 +76,8 @@ get_dataset <- function(dataset_name,
   #    unique type.
   all_types_vector <- do.call(c, unname(types))
   types_by_col <- split(all_types_vector, names(all_types_vector))
-  inconsistent_cols <- vapply(types_by_col,
+  inconsistent_cols <- vapply(
+    types_by_col,
     function(x) length(unique(x)) > 1,
     logical(1)
   )
