@@ -70,8 +70,9 @@ get_dataset <- function(dataset_name,
   flat_types <- do.call(c, unname(types))
   grouped_types <- split(unname(flat_types), names(flat_types))
   inconsistent_cols <- vapply(grouped_types,
-                              function(x) length(unique(x)) > 1,
-                              FUN.VALUE = logical(1))
+    function(x) length(unique(x)) > 1,
+    FUN.VALUE = logical(1)
+  )
   to_coerce <- names(inconsistent_cols)[inconsistent_cols]
 
   if (length(to_coerce) > 0) {
