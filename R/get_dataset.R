@@ -34,9 +34,8 @@ get_dataset <- function(dataset_name,
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
+  # if the API call failed, try to suggest a dataset name
+  if (inherits(content, "try-error")) {
     suggest_dataset_name(dataset_name)
   }
 
@@ -64,16 +63,21 @@ get_dataset <- function(dataset_name,
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # This is much faster than the previous dplyr/purrr implementation as it
+  # avoids creating tibbles and uses base R functions that are highly
+  # optimized for this kind of operation.
+  # 1. `do.call(c, unname(types))` efficiently flattens the list of named
+  #    vectors into a single named vector. `unname` is important to avoid
+  #    creating compound names like 'list_element.colA'.
+  # 2. `split()` groups the types by column name.
+  # 3. `vapply()` checks for type inconsistencies in a type-safe manner.
+  flattened_types <- do.call(c, unname(types))
+  if (length(flattened_types) > 0) {
+    grouped_types <- split(unname(flattened_types), names(flattened_types))
+    to_coerce <- names(grouped_types)[vapply(grouped_types, function(x) length(unique(x)) > 1, logical(1))]
+  } else {
+    to_coerce <- character(0)
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
