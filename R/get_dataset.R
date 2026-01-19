@@ -78,7 +78,8 @@ get_dataset <- function(dataset_name,
 
   # 3. Use `vapply` to efficiently check which columns have >1 unique type.
   #    It's faster than sapply and provides type-safety.
-  inconsistent_cols <- vapply(types_by_name,
+  inconsistent_cols <- vapply(
+    types_by_name,
     function(x) length(unique(x)) > 1,
     logical(1)
   )
