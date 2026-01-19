@@ -63,17 +63,29 @@ get_dataset <- function(dataset_name,
     ~ purrr::map_chr(.x, class)
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # ⚡ Bolt Optimization:
+  # The following base R implementation is a faster and more memory-efficient
+  # replacement for the original dplyr/purrr pipe chain.
+  # It avoids creating multiple intermediate tibbles.
+  #
+  # 1. Flatten the list of type vectors into a single named vector
+  #    - unname() prevents compound names (list.col) from being created.
+  #    - do.call(c, ...) is a performant way to concatenate list elements.
+  all_types_flat <- do.call(c, unname(types))
+
+  # 2. Group types by column name. `split` is highly efficient for this.
+  types_by_name <- split(all_types_flat, names(all_types_flat))
+
+  # 3. Use `vapply` to efficiently check which columns have >1 unique type.
+  #    It's faster than sapply and provides type-safety.
+  inconsistent_cols <- vapply(types_by_name,
+    function(x) length(unique(x)) > 1,
+    logical(1)
+  )
+
+  # 4. Extract the names of the inconsistent columns.
+  #    This pattern is type-stable and returns character(0) if none are found.
+  to_coerce <- names(inconsistent_cols)[inconsistent_cols]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
