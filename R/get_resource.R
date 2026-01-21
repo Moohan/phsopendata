@@ -1,22 +1,16 @@
 #' Get Open Data resource
 #'
-#' @param res_id The resource ID as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param rows (optional) specify the max number of rows to return.
-#' @param row_filters (optional) a named list or vector that specifies values of
-#'  columns/fields to keep.
-#' e.g. list(Date = 20220216, Sex = "Female").
-#' @param col_select (optional) a character vector containing the names of
-#' desired columns/fields.
-#' e.g. c("Date", "Sex").
-#' @param include_context (optional) If `TRUE` additional information about the
-#' resource will be added as columns to the data, including the resource ID, the
-#' resource name, the creation date and the last modified/updated date.
+#' @description Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
 #'
-#' @seealso [get_dataset()] for downloading all resources
-#' from a given dataset.
+#' @param res_id The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @param rows (optional) Maximum number of rows to return (integer).
+#' @param row_filters (optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#' @param col_select (optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
+#' @param include_context (optional) If `TRUE`, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @seealso [get_dataset()] for downloading all resources from a given dataset.
+#'
+#' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
 #' @examples
@@ -32,11 +26,13 @@
 #'   row_filters = filters,
 #'   col_select = wanted_cols
 #' )
-get_resource <- function(res_id,
-                         rows = NULL,
-                         row_filters = NULL,
-                         col_select = NULL,
-                         include_context = FALSE) {
+get_resource <- function(
+  res_id,
+  rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
+  include_context = FALSE
+) {
   # check res_id
   check_res_id(res_id)
 
@@ -54,7 +50,9 @@ get_resource <- function(res_id,
       row_filters_sql <- paste(
         purrr::imap_chr(
           row_filters,
-          function(value, col) paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+          function(value, col) {
+            paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+          }
         ),
         collapse = ") AND ("
       )
@@ -117,8 +115,6 @@ get_resource <- function(res_id,
       )
     }
 
-    # Using dplyr::bind_rows is faster than purrr::map_dfr for this use case
-    # extract data from response content
     data <- dplyr::bind_rows(res_content$result$records) %>% dplyr::select(
       -dplyr::starts_with("rank "),
       -dplyr::matches("_id")

@@ -1,3 +1,13 @@
+# phsopendata (development version)
+
+# phsopendata 1.0.1 (2025-11-10)
+
+- No user-facing changes. Fixes some tests that were failing when the open data platform is offline, and fixes tests that were failing due to a change in the open data resource. Tests are now more robust against changes to the data.  
+
+# phsopendata 1.0.0 (2025-09-03)
+
+- Initial CRAN release 🥳 - [CRAN.R-project.org/package=phsopendata](https://CRAN.R-project.org/package=phsopendata).
+
 # phsopendata 0.4.0 (2025-02-13)
 
 - Multiple filters can now be passed to the `row_filter` arguments of  [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) and [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.html). (#54)
