@@ -2,7 +2,7 @@
 #'
 #' @inheritParams request_url
 #' @param verbose TRUE or FALSE. If TRUE, a success message will be printed to the console.
-#' @return content of a httr::GET request
+#' @return content of a httr2::request
 #' @keywords internal
 #' @noRd
 phs_GET <- function(
@@ -14,38 +14,42 @@ phs_GET <- function(
   # define URL
   url <- request_url(action, query)
 
-  # Attempt GET request, gently retrying up to 3 times
-  response <- httr::RETRY(
-    verb = "GET",
-    url = url,
-    terminate_on = c(409),
-    user_agent = httr::user_agent(
-      "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
-    )
+  # Build request
+  req <- httr2::request(url) %>%
+    httr2::req_user_agent("phsopendata (https://github.com/Public-Health-Scotland/phsopendata)") %>%
+    httr2::req_retry(max_tries = 4)
+
+  # Perform the request
+  response <- tryCatch(
+    httr2::req_perform(req),
+    httr2_failure = function(cnd) {
+      cli::cli_abort(
+        c(
+          "Can't connect to the CKAN server.",
+          i = "Check your network/proxy settings."
+        ),
+        call = call,
+        parent = cnd
+      )
+    }
   )
 
-  # Check for a response from the server
-  if (!inherits(response, "response")) {
-    cli::cli_abort(
-      c(
-        "Can't connect to the CKAN server.",
-        i = "Check your network/proxy settings."
-      ),
-      call = call
-    )
-  }
-
   # Extract the content from the HTTP response
-  if (httr::http_type(response) %in% c("text/html", "application/json")) {
-    content <- httr::content(response)
-  } else if (httr::http_type(response) == "text/csv") {
+  content_type <- httr2::resp_content_type(response)
+
+  if (grepl("application/json", content_type, fixed = TRUE)) {
+    content <- httr2::resp_body_json(response)
+  } else if (grepl("text/html", content_type, fixed = TRUE)) {
+    # The API sometimes returns JSON with a text/html content type
+    content <- httr2::resp_body_json(response, check_type = FALSE)
+  } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     content <- readr::read_csv(
-      file = httr::content(response, as = "text"),
+      file = httr2::resp_body_string(response),
       guess_max = Inf
     )
   } else {
     cli::cli_abort(
-      "The response contained an unhandled content type: {httr::http_type(response)}"
+      "The response contained an unhandled content type: {content_type}"
     )
   }
 
