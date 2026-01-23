@@ -60,17 +60,17 @@ get_dataset <- function(
     ~ purrr::map_chr(.x, class)
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Check for columns that have multiple types across all resources.
+  # This is a more performant base R equivalent of the original tidyverse chain.
+  # It avoids creating intermediate tibbles and is much faster.
+  all_types <- do.call(c, unname(types))
+  inconsistent_cols <- split(all_types, names(all_types))
+  to_coerce_vec <- vapply(
+    inconsistent_cols,
+    function(x) length(unique(x)) > 1,
+    logical(1)
+  )
+  to_coerce <- names(to_coerce_vec)[to_coerce_vec]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
