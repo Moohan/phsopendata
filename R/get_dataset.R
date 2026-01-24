@@ -61,16 +61,27 @@ get_dataset <- function(
   )
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # This base R approach is a deliberate performance optimization over a
+  # `purrr`/`dplyr` equivalent. It's faster and more memory-efficient as it
+  # avoids creating intermediate data frames.
+  # The logic is:
+  # 1. Flatten the list of named vectors into a single named vector.
+  # 2. Group the vector elements by name.
+  # 3. Find which groups have more than one unique type.
+  all_types_vector <- do.call(c, unname(types))
+
+  # Return early if there are no types to check
+  if (length(all_types_vector) == 0) {
+    to_coerce <- character(0)
+  } else {
+    grouped_types <- split(all_types_vector, names(all_types_vector))
+    inconsistent_mask <- vapply(
+      grouped_types,
+      function(x) length(unique(x)) > 1,
+      FUN.VALUE = logical(1)
+    )
+    to_coerce <- names(inconsistent_mask)[inconsistent_mask]
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
