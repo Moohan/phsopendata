@@ -67,8 +67,9 @@ get_dataset <- function(
   all_types <- do.call(c, unname(types))
   types_by_col <- split(all_types, names(all_types))
   inconsistent_cols <- vapply(types_by_col,
-                                function(x) length(unique(x)) > 1,
-                                FUN.VALUE = logical(1))
+    function(x) length(unique(x)) > 1,
+    FUN.VALUE = logical(1)
+  )
   to_coerce <- names(inconsistent_cols)[inconsistent_cols]
 
   if (length(to_coerce) > 0) {
