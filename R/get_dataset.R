@@ -60,17 +60,20 @@ get_dataset <- function(
     ~ purrr::map_chr(.x, class)
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Check for columns that have multiple types across all resources.
+  # This base R approach is much faster than the dplyr/purrr equivalent.
+  # It works by:
+  # 1. Unlisting the list of character vectors into a single vector.
+  #    `do.call(c, ...)` is faster than `unlist()`. `unname()` is used
+  #    to remove the outer list names to avoid `list_name.vector_name`
+  #    compound names.
+  # 2. Splitting the single vector into a list of vectors, where each
+  #    element is named after a column and contains all its types.
+  # 3. Using vapply to check which columns have more than one unique type.
+  all_types <- do.call(c, unname(types))
+  cols <- split(all_types, names(all_types))
+  inconsistent_cols <- vapply(cols, function(x) length(unique(x)) > 1, logical(1))
+  to_coerce <- names(inconsistent_cols)[inconsistent_cols]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
