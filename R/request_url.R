@@ -28,20 +28,23 @@ request_url <- function(action, query, call = rlang::caller_env()) {
   base_url <- "https://www.opendata.nhs.scot"
 
   if (action == "dump") {
-    # return dump URL
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("datastore/dump", query),
-      query = list(bom = "true")
-    )
-  } else {
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("api/3/action", action),
-      query = query
-    )
+    # Return dump URL. We use paste0 here to match legacy httr behavior
+    # of not escaping characters like '=' in the resource ID path component.
+    return(paste0(base_url, "/datastore/dump/", query, "?bom=true"))
+  }
+
+  req <- httr2::request(base_url) %>%
+    httr2::req_url_path("api", "3", "action", action)
+
+  if (is.list(query)) {
+    # Remove NULLs to avoid errors in httr2
+    query <- query[!vapply(query, is.null, logical(1))]
+    req <- req %>% httr2::req_url_query(!!!query)
+  } else if (is.character(query) && nchar(query) > 0) {
+    # Handle raw query strings by appending to the URL to match legacy httr behavior
+    return(paste0(req$url, "?", query))
   }
 
   # return standard API endpoint (i.e., not dump)
-  return(url)
+  return(req$url)
 }

@@ -17,7 +17,10 @@ phs_GET <- function(
   # Build request
   req <- httr2::request(url) %>%
     httr2::req_user_agent("phsopendata (https://github.com/Public-Health-Scotland/phsopendata)") %>%
-    httr2::req_retry(max_tries = 4)
+    httr2::req_retry(max_tries = 4) %>%
+    # Don't throw on HTTP errors (e.g. 404, 409) so we can handle them
+    # in error_check() by parsing the response body.
+    httr2::req_error(is_error = ~ FALSE)
 
   # Perform the request
   response <- tryCatch(
@@ -40,8 +43,26 @@ phs_GET <- function(
   if (grepl("application/json", content_type, fixed = TRUE)) {
     content <- httr2::resp_body_json(response)
   } else if (grepl("text/html", content_type, fixed = TRUE)) {
-    # The API sometimes returns JSON with a text/html content type
-    content <- httr2::resp_body_json(response, check_type = FALSE)
+    # The API sometimes returns JSON with a text/html content type.
+    # If it's actually HTML, resp_body_json will fail.
+    content <- try(
+      httr2::resp_body_json(response, check_type = FALSE),
+      silent = TRUE
+    )
+    if (inherits(content, "try-error")) {
+      # If it's not JSON, it might be a real HTML page (e.g. 404 for dump).
+      # If xml2 is available, we return an xml_document to match legacy behavior.
+      if (requireNamespace("xml2", quietly = TRUE)) {
+        content <- httr2::resp_body_html(response)
+      } else {
+        status <- httr2::resp_status(response)
+        if (status == 404) {
+          content <- "Not Found Error"
+        } else {
+          content <- paste("HTTP error", status)
+        }
+      }
+    }
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     content <- readr::read_csv(
       file = httr2::resp_body_string(response),

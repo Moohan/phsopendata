@@ -21,10 +21,15 @@ list_resources <- function(dataset_name) {
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # if content is an error
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # otherwise re-throw the error
+    stop(content)
   }
 
   # define list of resource IDs names date created and date modified within dataset

@@ -1,12 +1,12 @@
-#' Throws errors found in the content of an `httr::GET` request
+#' Throws errors found in the content of an API request
 #'
-#' @param content object produced by `httr::content`
+#' @param content object produced by `httr2::resp_body_json`
 #' @keywords internal
 #' @noRd
 error_check <- function(content, call = rlang::caller_env()) {
   # if content is not a list,
   # stop for content (a string describing an error)
-  if (!is.list(content)) {
+  if (!is.list(content) && !inherits(content, "xml_document")) {
     cli::cli_abort(
       c(
         "API error",
