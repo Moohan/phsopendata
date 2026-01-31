@@ -55,22 +55,28 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    ~ purrr::map_chr(.x, class)
-  )
+  # Robustly get first class of each column across all data frames.
+  # Using do.call(c, ...) on a flattened list of types is significantly faster
+  # than binding multiple tibbles. Taking class(col)[1] ensures robustness
+  # for types with multiple classes like POSIXct.
+  all_types <- do.call(c, unname(lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1], character(1))
+  })))
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Group types by column name and identify those with more than one unique type.
+  # Sorted names match dplyr's group_by/summarise behavior.
+  # Handle the case where all_types is NULL or empty (no columns).
+  to_coerce <- if (!is.null(all_types) && length(all_types) > 0) {
+    types_by_col <- split(all_types, names(all_types))
+    to_coerce_logical <- vapply(
+      types_by_col,
+      function(x) length(unique(x)) > 1,
+      logical(1)
+    )
+    sort(unname(names(to_coerce_logical)[to_coerce_logical]))
+  } else {
+    character(0)
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
