@@ -20,7 +20,7 @@ phs_GET <- function(
     httr2::req_retry(max_tries = 4) %>%
     # Don't throw on HTTP errors (e.g. 404, 409) so we can handle them
     # in error_check() by parsing the response body.
-    httr2::req_error(is_error = ~ FALSE)
+    httr2::req_error(is_error = ~FALSE)
 
   # Perform the request
   response <- tryCatch(
