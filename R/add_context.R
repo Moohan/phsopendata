@@ -17,25 +17,24 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values using ISO8601 format to avoid locale dependencies
+  created_date <- as.POSIXct(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  modified_date <- as.POSIXct(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
+  if (!is.na(modified_date) && !is.na(created_date) && modified_date < created_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
+  # Use bind_cols to prepend columns efficiently
+  context_cols <- tibble::tibble(
     "ResID" = id,
     "ResName" = name,
     "ResCreatedDate" = created_date,
-    "ResModifiedDate" = modified_date,
-    .before = dplyr::everything()
+    "ResModifiedDate" = modified_date
   )
 
-  return(data_with_context)
+  return(dplyr::bind_cols(context_cols, data))
 }

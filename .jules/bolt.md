@@ -1,0 +1,5 @@
+## 2025-01-24 - [Vectorization of Metadata Addition] **Learning:** Repeatedly calling `dplyr::mutate` in a loop (e.g., via `purrr::pmap`) to add context columns to a list of data frames is extremely slow (~45x slower in benchmarks) compared to binding all data first and adding columns in a single vectorized operation. **Action:** Always prefer binding data early and performing metadata enrichment on the combined data frame.
+
+## 2025-01-24 - [Robust Type Extraction] **Learning:** `purrr::map_chr(df, class)` fails when a column has multiple classes (e.g., `POSIXct` and `POSIXt`), which is common in R. **Action:** Use `vapply(df, function(x) class(x)[1], character(1))` for robust and faster column type identification.
+
+## 2025-01-24 - [Base R for Type Checking] **Learning:** Finding columns with inconsistent types across a list of data frames is significantly faster (~1.5x speedup, 4x less memory) when using a base R `split()` + `vapply()` approach instead of a `tidyverse` pipe with `enframe()`, `bind_rows()`, and `group_by()`. **Action:** Use base R grouping patterns for performance-critical metadata checks.
