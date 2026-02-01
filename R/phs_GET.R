@@ -20,8 +20,10 @@ phs_GET <- function(
     httr2::req_retry(max_tries = 4)
 
   # Perform the request
+  # Disable automatic error throwing for HTTP errors (4xx, 5xx)
+  # to match legacy httr behavior and allow error_check() to handle them.
   response <- tryCatch(
-    httr2::req_perform(req),
+    httr2::req_perform(httr2::req_error(req, is_error = function(resp) FALSE)),
     httr2_failure = function(cnd) {
       cli::cli_abort(
         c(
@@ -40,8 +42,18 @@ phs_GET <- function(
   if (grepl("application/json", content_type, fixed = TRUE)) {
     content <- httr2::resp_body_json(response)
   } else if (grepl("text/html", content_type, fixed = TRUE)) {
-    # The API sometimes returns JSON with a text/html content type
-    content <- httr2::resp_body_json(response, check_type = FALSE)
+    # The API sometimes returns JSON with a text/html content type.
+    # If it's not JSON, it might be an actual HTML error page.
+    content <- tryCatch(
+      httr2::resp_body_json(response, check_type = FALSE),
+      error = function(e) {
+        if (requireNamespace("xml2", quietly = TRUE)) {
+          xml2::read_html(httr2::resp_body_string(response))
+        } else {
+          httr2::resp_body_string(response)
+        }
+      }
+    )
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     # Use I() to indicate literal data to avoid vroom warnings
     content <- readr::read_csv(

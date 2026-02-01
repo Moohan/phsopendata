@@ -5,3 +5,5 @@
 ## 2025-01-24 - [Base R for Type Checking] **Learning:** Finding columns with inconsistent types across a list of data frames is significantly faster (~1.5x speedup, 4x less memory) when using a base R `split()` + `vapply()` approach instead of a `tidyverse` pipe with `enframe()`, `bind_rows()`, and `group_by()`. **Action:** Use base R grouping patterns for performance-critical metadata checks.
 
 ## 2025-01-24 - [httr2 Path Escaping] **Learning:** `httr2::req_url_path` automatically escapes special characters like `=`, which can break legacy API expectations (e.g., CKAN dump endpoints). **Action:** Use manual string building if literal characters are needed in the path to match legacy `httr::modify_url` behavior.
+
+## 2025-01-24 - [httr2 Error Handling] **Learning:** Unlike `httr`, `httr2::req_perform()` throws errors on HTTP 4xx/5xx responses by default. This can bypass custom error-checking logic that expects a response object even on failure. **Action:** Use `httr2::req_error(req, is_error = function(resp) FALSE)` to restore legacy behavior when custom body parsing is needed for error reporting.
