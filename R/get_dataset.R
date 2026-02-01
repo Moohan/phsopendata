@@ -129,7 +129,7 @@ get_dataset <- function(
 
     # Remove the temporary index column if it exists (might be missing if combined was empty)
     if ("res_idx" %in% names(combined)) {
-      combined <- dplyr::select(combined, -res_idx)
+      combined$res_idx <- NULL
     }
   } else {
     # Combine the list of resources into a single tibble

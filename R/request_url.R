@@ -29,17 +29,21 @@ request_url <- function(action, query, call = rlang::caller_env()) {
 
   if (action == "dump") {
     # return dump URL
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("datastore/dump", query),
-      query = list(bom = "true")
-    )
+    # We build the URL manually to match httr::modify_url behavior for this endpoint
+    # specifically to avoid escaping of '=' if present in query/id.
+    url <- paste0(base_url, "/datastore/dump/", query, "?bom=true")
   } else {
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("api/3/action", action),
-      query = query
-    )
+    req <- httr2::request(base_url)
+    req <- httr2::req_url_path(req, "api", "3", "action", action)
+
+    if (is.list(query)) {
+      req <- httr2::req_url_query(req, !!!query)
+      url <- req$url
+    } else if (is.character(query) && length(query) == 1 && nchar(query) > 0) {
+      url <- paste0(req$url, "?", query)
+    } else {
+      url <- req$url
+    }
   }
 
   # return standard API endpoint (i.e., not dump)

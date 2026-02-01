@@ -3,3 +3,5 @@
 ## 2025-01-24 - [Robust Type Extraction] **Learning:** `purrr::map_chr(df, class)` fails when a column has multiple classes (e.g., `POSIXct` and `POSIXt`), which is common in R. **Action:** Use `vapply(df, function(x) class(x)[1], character(1))` for robust and faster column type identification.
 
 ## 2025-01-24 - [Base R for Type Checking] **Learning:** Finding columns with inconsistent types across a list of data frames is significantly faster (~1.5x speedup, 4x less memory) when using a base R `split()` + `vapply()` approach instead of a `tidyverse` pipe with `enframe()`, `bind_rows()`, and `group_by()`. **Action:** Use base R grouping patterns for performance-critical metadata checks.
+
+## 2025-01-24 - [httr2 Path Escaping] **Learning:** `httr2::req_url_path` automatically escapes special characters like `=`, which can break legacy API expectations (e.g., CKAN dump endpoints). **Action:** Use manual string building if literal characters are needed in the path to match legacy `httr::modify_url` behavior.
