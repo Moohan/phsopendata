@@ -21,22 +21,27 @@ list_resources <- function(dataset_name) {
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # If an error occurred in phs_GET, handle it.
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # Otherwise re-throw the original error
+    stop(content)
   }
 
   # define list of resource IDs names date created and date modified within dataset
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
   all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
   all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
+    as.POSIXct(format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   all_date_modified <- purrr::map_chr(
     content$result$resources,
     ~ .x$last_modified
   ) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
+    as.POSIXct(format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   return_value <- tibble::tibble(
     "res_id" = all_ids,
     "name" = all_names,

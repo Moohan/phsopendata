@@ -31,10 +31,15 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # If an error occurred in phs_GET, handle it.
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # Otherwise re-throw the original error
+    stop(content)
   }
 
   # define list of resource IDs to get
@@ -116,7 +121,7 @@ get_dataset <- function(
     # Prepend context columns efficiently.
     # We use indexing with res_idx to correctly map metadata to rows.
     # If combined is empty, res_idx_vec is integer(0), leading to empty context columns.
-    res_idx_vec <- as.integer(combined$res_idx)
+    res_idx_vec <- as.integer(combined[["res_idx"]])
 
     context_info <- tibble::tibble(
       "ResID" = ids[res_idx_vec],
@@ -129,7 +134,7 @@ get_dataset <- function(
 
     # Remove the temporary index column if it exists (might be missing if combined was empty)
     if ("res_idx" %in% names(combined)) {
-      combined$res_idx <- NULL
+      combined[["res_idx"]] <- NULL
     }
   } else {
     # Combine the list of resources into a single tibble

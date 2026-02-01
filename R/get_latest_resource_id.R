@@ -37,8 +37,8 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   }
   all_id_data <- tibble::tibble(
     id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
+    created_date = strptime(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"),
+    modified_date = strptime(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   ) %>%
     dplyr::mutate(most_recent_date_created = max(created_date))
 

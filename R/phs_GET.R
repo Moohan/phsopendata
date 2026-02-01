@@ -43,8 +43,9 @@ phs_GET <- function(
     # The API sometimes returns JSON with a text/html content type
     content <- httr2::resp_body_json(response, check_type = FALSE)
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
+    # Use I() to indicate literal data to avoid vroom warnings
     content <- readr::read_csv(
-      file = httr2::resp_body_string(response),
+      file = I(httr2::resp_body_string(response)),
       guess_max = Inf
     )
   } else {
