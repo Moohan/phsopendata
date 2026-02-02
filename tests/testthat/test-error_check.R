@@ -6,7 +6,7 @@ test_that("returns nothing if no error", {
   )
 })
 
-test_that("throws error if error in httr content", {
+test_that("throws error if error in content", {
   expect_error(
     error_check(phs_GET("datastore_search", "id=doop")),
     regexp = 'Resource "doop" was not found.'
