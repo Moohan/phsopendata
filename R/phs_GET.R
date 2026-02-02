@@ -17,7 +17,8 @@ phs_GET <- function(
   # Build request
   req <- httr2::request(url) %>%
     httr2::req_user_agent("phsopendata (https://github.com/Public-Health-Scotland/phsopendata)") %>%
-    httr2::req_retry(max_tries = 4)
+    httr2::req_retry(max_tries = 4) %>%
+    httr2::req_error(is_error = function(resp) FALSE)
 
   # Perform the request
   response <- tryCatch(
@@ -41,7 +42,16 @@ phs_GET <- function(
     content <- httr2::resp_body_json(response)
   } else if (grepl("text/html", content_type, fixed = TRUE)) {
     # The API sometimes returns JSON with a text/html content type
-    content <- httr2::resp_body_json(response, check_type = FALSE)
+    content <- tryCatch(
+      httr2::resp_body_json(response, check_type = FALSE),
+      error = function(e) {
+        if (requireNamespace("xml2", quietly = TRUE)) {
+          xml2::read_html(httr2::resp_body_string(response))
+        } else {
+          httr2::resp_body_string(response)
+        }
+      }
+    )
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     content <- readr::read_csv(
       file = httr2::resp_body_string(response),

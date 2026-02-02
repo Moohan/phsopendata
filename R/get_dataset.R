@@ -55,22 +55,20 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    ~ purrr::map_chr(.x, class)
-  )
+  # Get first class of each column for all data frames
+  types <- lapply(all_data, function(df) vapply(df, function(col) class(col)[1], character(1)))
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten the list of named vectors efficiently
+  all_types <- do.call(c, unname(types))
+
+  # Group by name and check for unique types
+  type_groups <- split(all_types, names(all_types))
+
+  # Find columns with more than one unique type
+  is_inconsistent <- vapply(type_groups, function(x) length(unique(x)) > 1, logical(1))
+
+  to_coerce <- names(is_inconsistent)[is_inconsistent]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,40 +77,54 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        "data" = all_data,
-        "id" = selection_ids,
-        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        "modified_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_to_coerce <- intersect(names(df), to_coerce)
+      if (length(cols_to_coerce) > 0) {
+        df[cols_to_coerce] <- lapply(df[cols_to_coerce], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  if (include_context) names(all_data) <- selection_ids
+  combined <- purrr::list_rbind(all_data, names_to = if (include_context) "ResID")
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data
+    context_table <- tibble::tibble(
+      "ResID" = selection_ids,
+      "ResName" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
+      "ResCreatedDate" = purrr::map_chr(
+        content$result$resources[res_index],
+        ~ .x$created
+      ),
+      "ResModifiedDate" = purrr::map_chr(
+        content$result$resources[res_index],
+        ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
+      )
+    )
+
+    # Parse dates and handle modified < created logic (same as in add_context)
+    context_table <- context_table %>%
+      dplyr::mutate(
+        ResCreatedDate = as.POSIXct(ResCreatedDate, format = "%FT%X", tz = "UTC"),
+        ResModifiedDate = as.POSIXct(ResModifiedDate, format = "%FT%X", tz = "UTC"),
+        ResModifiedDate = dplyr::if_else(
+          !is.na(ResModifiedDate) & ResModifiedDate < ResCreatedDate,
+          ResCreatedDate,
+          ResModifiedDate
+        )
+      )
+
+    # Join context to combined data
+    combined <- combined %>%
+      dplyr::left_join(context_table, by = "ResID") %>%
+      dplyr::select(
+        dplyr::any_of(c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")),
+        dplyr::everything()
+      )
+  }
 
   return(combined)
 }

@@ -4,16 +4,17 @@
 #' @keywords internal
 #' @noRd
 error_check <- function(content, call = rlang::caller_env()) {
-  # if content is not a list,
+  # if content is not a list (and not an xml_document),
   # stop for content (a string describing an error)
-  if (!is.list(content)) {
-    cli::cli_abort(
-      c(
-        "API error",
-        x = content
-      ),
+  if (!is.list(content) && !inherits(content, "xml_document")) {
+    rlang::abort(
+      paste("API error:", content),
       call = call
     )
+  }
+
+  if (inherits(content, "xml_document")) {
+    return()
   }
 
   # if there is no error status/message in the content,

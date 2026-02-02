@@ -86,7 +86,7 @@ get_resource <- function(
     if (is.null(query$limit)) query$limit <- 99999
 
     # remove null values from query
-    null_q_field <- sapply(query, is.null)
+    null_q_field <- vapply(query, is.null, logical(1))
     query[null_q_field] <- NULL
 
     # fetch the data
