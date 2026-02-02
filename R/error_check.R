@@ -14,7 +14,10 @@ error_check <- function(content, call = rlang::caller_env()) {
   }
 
   if (inherits(content, "xml_document")) {
-    return()
+    rlang::abort(
+      "Can't find resource with ID. The API returned an HTML page instead of JSON. This often happens for 404 or 500 errors.",
+      call = call
+    )
   }
 
   # if there is no error status/message in the content,

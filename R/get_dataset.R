@@ -106,16 +106,22 @@ get_dataset <- function(
     )
 
     # Parse dates and handle modified < created logic (same as in add_context)
-    context_table <- context_table %>%
-      dplyr::mutate(
-        ResCreatedDate = as.POSIXct(ResCreatedDate, format = "%FT%X", tz = "UTC"),
-        ResModifiedDate = as.POSIXct(ResModifiedDate, format = "%FT%X", tz = "UTC"),
-        ResModifiedDate = dplyr::if_else(
-          !is.na(ResModifiedDate) & ResModifiedDate < ResCreatedDate,
-          ResCreatedDate,
-          ResModifiedDate
-        )
-      )
+    context_table$ResCreatedDate <- as.POSIXct(
+      context_table$ResCreatedDate,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+    context_table$ResModifiedDate <- as.POSIXct(
+      context_table$ResModifiedDate,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+    context_table$ResModifiedDate <- dplyr::if_else(
+      !is.na(context_table$ResModifiedDate) &
+        context_table$ResModifiedDate < context_table$ResCreatedDate,
+      context_table$ResCreatedDate,
+      context_table$ResModifiedDate
+    )
 
     # Join context to combined data
     combined <- combined %>%
