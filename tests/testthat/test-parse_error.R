@@ -1,21 +1,23 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("correctly extracts error from API response", {
-  content <- httr::content(
-    httr::GET(
-      request_url("datastore_search", "id=doop")
-    )
-  )
+  url <- request_url("datastore_search", list(id = "doop"))
+  resp <- httr2::request(url) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+  content <- httr2::resp_body_json(resp)
+
   expect_equal(
     parse_error(content$error),
     "Not Found Error: Not found: Resource \"doop\" was not found."
   )
 
-  content <- httr::content(
-    httr::GET(
-      request_url("datastore_search", "")
-    )
-  )
+  url <- request_url("datastore_search", list())
+  resp <- httr2::request(url) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+  content <- httr2::resp_body_json(resp)
+
   expect_equal(
     parse_error(content$error),
     "resource_id: Missing value"

@@ -17,7 +17,8 @@ phs_GET <- function(
   # Build request
   req <- httr2::request(url) %>%
     httr2::req_user_agent("phsopendata (https://github.com/Public-Health-Scotland/phsopendata)") %>%
-    httr2::req_retry(max_tries = 4)
+    httr2::req_retry(max_tries = 4) %>%
+    httr2::req_error(is_error = function(resp) FALSE)
 
   # Perform the request
   response <- tryCatch(

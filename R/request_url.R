@@ -27,21 +27,23 @@ request_url <- function(action, query, call = rlang::caller_env()) {
 
   base_url <- "https://www.opendata.nhs.scot"
 
-  if (action == "dump") {
-    # return dump URL
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("datastore/dump", query),
-      query = list(bom = "true")
-    )
-  } else {
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("api/3/action", action),
-      query = query
-    )
+  # Parse the base URL
+  url_obj <- httr2::url_parse(base_url)
+
+  # Handle empty query strings that some internal functions pass
+  if (identical(query, "")) {
+    query <- list()
   }
 
-  # return standard API endpoint (i.e., not dump)
-  return(url)
+  if (action == "dump") {
+    # return dump URL
+    url_obj$path <- paste(c("datastore/dump", query), collapse = "/")
+    url_obj$query <- list(bom = "true")
+  } else {
+    # return standard API endpoint URL
+    url_obj$path <- paste(c("api/3/action", action), collapse = "/")
+    url_obj$query <- query
+  }
+
+  return(httr2::url_build(url_obj))
 }
