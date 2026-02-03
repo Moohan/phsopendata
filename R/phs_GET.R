@@ -64,7 +64,7 @@ phs_GET <- function(
   }
 
   # detect/handle errors
-  error_check(content, call = call)
+  error_check(content, response = response, call = call)
 
   if (verbose) cat("GET request successful.\n")
   return(content)

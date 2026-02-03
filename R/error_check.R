@@ -3,7 +3,7 @@
 #' @param content object produced by the API
 #' @keywords internal
 #' @noRd
-error_check <- function(content, call = rlang::caller_env()) {
+error_check <- function(content, response = NULL, call = rlang::caller_env()) {
   # if content is not a list (and not an xml_document),
   # stop for content (a string describing an error)
   if (!is.list(content) && !inherits(content, "xml_document")) {
@@ -14,8 +14,11 @@ error_check <- function(content, call = rlang::caller_env()) {
   }
 
   if (inherits(content, "xml_document")) {
+    status <- if (!is.null(response)) httr2::resp_status(response) else "Unknown"
+    desc <- if (!is.null(response)) httr2::resp_status_desc(response) else "Unknown error"
+
     rlang::abort(
-      "Can't find resource with ID. The API returned an HTML page instead of JSON. This often happens for 404 or 500 errors.",
+      sprintf("Can't find resource with ID. The API returned an HTML page (Status: %s %s). This often happens for 404 or 500 errors.", status, desc),
       call = call
     )
   }
