@@ -31,14 +31,20 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
+  # if content contains a 'Not Found' error
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  if (inherits(content, "try-error")) {
+    if (grepl("Not Found", content[1], fixed = TRUE)) {
+      suggest_dataset_name(dataset_name)
+    } else {
+      # if some other error occurred, stop now
+      stop(content)
+    }
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_resources <- content$result$resources
+  all_ids <- vapply(all_resources, function(x) x$id, character(1))
 
   n_res <- length(all_ids)
   res_index <- 1:min(n_res, max_resources)
@@ -55,22 +61,27 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
+  # Use class()[1] for robustness and vapply for speed/type-safety
+  types_list <- lapply(
     all_data,
-    ~ purrr::map_chr(.x, class)
+    function(df) vapply(df, function(col) class(col)[1], character(1))
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten all type vectors into one named vector
+  all_types <- do.call(c, unname(types_list))
+
+  if (length(all_types) > 0) {
+    # Split type names into groups and check for inconsistencies
+    split_types <- split(all_types, names(all_types))
+    inconsistent <- vapply(
+      split_types,
+      function(x) length(unique(x)) > 1,
+      logical(1)
+    )
+    to_coerce <- names(inconsistent)[inconsistent]
+  } else {
+    to_coerce <- character(0)
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,32 +90,31 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_to_fix <- intersect(to_coerce, names(df))
+      if (length(cols_to_fix) > 0) {
+        df[cols_to_fix] <- lapply(df[cols_to_fix], as.character)
+      }
+      df
+    })
   }
 
   if (include_context) {
     # Add the 'resource context' as columns to the data
+    resources <- all_resources[res_index]
     all_data <- purrr::pmap(
       list(
         "data" = all_data,
         "id" = selection_ids,
-        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        "modified_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
+        "name" = vapply(resources, function(x) x$name, character(1)),
+        "created_date" = vapply(resources, function(x) x$created, character(1)),
+        "modified_date" = vapply(
+          resources,
+          function(x) {
+            m <- x$last_modified
+            if (is.null(m)) NA_character_ else m
+          },
+          character(1)
         )
       ),
       add_context

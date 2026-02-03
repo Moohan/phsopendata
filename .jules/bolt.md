@@ -1,0 +1,1 @@
+## 2025-01-24 - [Optimization of get_dataset type resolution] **Learning:** Replacing tidyverse pipelines with base R patterns for type resolution and batch coercion results in dramatic speedups (up to 40x for coercion). **Action:** Always prioritize base R `lapply`/`vapply` and direct subsetting over `dplyr::mutate(across(...))` when processing lists of data frames in a loop.
