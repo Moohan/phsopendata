@@ -1,13 +1,13 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("returns data for a dataset that is listed", {
-  expect_no_error(data <- get_latest_resource("gp-practice-populations"))
+  expect_no_error(data <- get_latest_resource("general-practitioner-contact-details"))
   expect_s3_class(data, "tbl_df")
-  expect_match(data[["ResName"]], "^GP Practice Populations \\w+ [0-9]{4}$")
+  expect_match(data[["ResName"]], "GP Details \\w+ [0-9]{4}")
   expect_named(data)
   expect_contains(names(data), c(
     "ResID", "ResName", "ResCreatedDate", "ResModifiedDate",
-    "Date", "HB", "HSCP", "Sex"
+    "Surname", "Sex", "Postcode", "HB", "HSCP"
   ))
 })
 

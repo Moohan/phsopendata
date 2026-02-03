@@ -6,7 +6,7 @@
 #' keep historic resources instead of updating existing ones.
 #' For these it is useful to be able to retrieve the latest
 #' resource. As of 1.8.2024 these data sets include:
-#' * gp-practice-populations
+#' * general-practitioner-contact-details
 #' * gp-practice-contact-details-and-list-sizes
 #' * nhsscotland-payments-to-general-practice
 #' * dental-practices-and-patient-registrations

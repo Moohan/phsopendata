@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' get_dataset("annual-outpatient-activity", max_resources = 2, rows = 10)
+#' get_dataset("general-practitioner-contact-details", max_resources = 2, rows = 10)
 get_dataset <- function(
   dataset_name,
   max_resources = NULL,

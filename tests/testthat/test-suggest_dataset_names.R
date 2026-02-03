@@ -19,7 +19,7 @@ test_that("throws error and does suggest for close matches", {
 
   expect_error(
     suggest_dataset_name(
-      "population"
+      "contact-detail"
     ),
     regexp = "Did you mean any of .+?\\?"
   )

@@ -45,7 +45,7 @@ phs_GET <- function(
     content <- httr2::resp_body_json(response, check_type = FALSE)
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     content <- readr::read_csv(
-      file = httr2::resp_body_string(response),
+      file = I(httr2::resp_body_string(response)),
       guess_max = Inf
     )
   } else {

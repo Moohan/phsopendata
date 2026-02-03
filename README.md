@@ -91,14 +91,14 @@ To extract all resources from a dataset, you will need to use the
 displays on the website. This can be found using `list_datasets()`, or
 taken from the dataset URL.
 
-In this example, we are downloading Annual Outpatient Activity
+In this example, we are downloading General Practitioner Contact Details
 from:
-[opendata.nhs.scot/dataset/*annual-outpatient-activity*](https://www.opendata.nhs.scot/dataset/annual-outpatient-activity),
-so the dataset name will be annual-outpatient-activity.
+[opendata.nhs.scot/dataset/*general-practitioner-contact-details*](https://www.opendata.nhs.scot/dataset/general-practitioner-contact-details),
+so the dataset name will be general-practitioner-contact-details.
 
     # if max_resources is not set, all resources will be returned by default.
     # Here we pull 10 rows from the first 2 resources only
-    get_dataset("annual-outpatient-activity", max_resources = 2, rows = 10)
+    get_dataset("general-practitioner-contact-details", max_resources = 2, rows = 10)
 
 ## Contributing to phsopendata
 

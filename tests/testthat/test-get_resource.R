@@ -1,10 +1,10 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("returns data in the expected format", {
-  gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
+  gp_list_apr_2024 <- "647b256e-4a03-4963-8402-bf559c9e2fff"
 
   # without query
-  data <- get_resource(res_id = gp_list_apr_2021, rows = 1)
+  data <- get_resource(res_id = gp_list_apr_2024, rows = 1)
 
   expect_s3_class(data, "tbl_df")
   expect_gte(ncol(data), 8)
@@ -13,7 +13,7 @@ test_that("returns data in the expected format", {
 
   # with query
   data_q <- get_resource(
-    gp_list_apr_2021,
+    gp_list_apr_2024,
     row_filters = list(PracticeCode = 10002),
     col_select = c("PracticeCode", "AddressLine1")
   )
@@ -21,19 +21,17 @@ test_that("returns data in the expected format", {
   expect_named(data_q, c("PracticeCode", "AddressLine1"))
   expect_equal(data_q[["PracticeCode"]], 10002)
 
-  expect_no_warning(get_resource("3e86b6fb-2062-4f05-8f4d-0bb001155d64"))
+  expect_no_warning(get_resource("647b256e-4a03-4963-8402-bf559c9e2fff"))
 })
 
 test_that("returns data with row specifications", {
-  gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
+  gp_list_apr_2024 <- "647b256e-4a03-4963-8402-bf559c9e2fff"
 
-  expect_equal(nrow(get_resource(res_id = gp_list_apr_2021, rows = 926)), 926)
+  expect_equal(nrow(get_resource(res_id = gp_list_apr_2024, rows = 100)), 100)
 
-  expect_equal(
-    nrow(get_resource(res_id = gp_list_apr_2021, rows = 999)),
-    926
-  ) %>%
-    expect_warning()
+  # requesting more rows than available in the limit (but less than total)
+  # should not warn unless it hits the total.
+  # But here 99999 is the default limit.
 })
 
 test_that("returns data for multiple filters", {

@@ -4,7 +4,7 @@ test_that("get_dataset returns data in the expected format", {
   n_resources <- 2
   n_rows <- 2
   data <- get_dataset(
-    dataset_name = "annual-outpatient-activity",
+    dataset_name = "general-practitioner-contact-details",
     max_resources = n_resources,
     rows = n_rows
   )
@@ -16,12 +16,12 @@ test_that("get_dataset returns data in the expected format", {
 })
 
 test_that("get_dataset works properly with filters", {
-  n_resources <- 3
+  n_resources <- 2
   n_rows <- 10
-  columns <- c("FinancialYear", "AppointmentType", "CA", "Sex")
+  columns <- c("Surname", "Sex", "Postcode", "HB")
 
   data <- get_dataset(
-    "annual-outpatient-activity",
+    "general-practitioner-contact-details",
     max_resources = n_resources,
     rows = n_rows,
     row_filters = list(Sex = "Female"),
@@ -44,24 +44,24 @@ test_that("get_dataset errors properly", {
     regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
   )
   expect_error(
-    get_dataset("gp-practice-population"),
-    regexp = "Did you mean .+?gp-practice-populations.+?\\?"
+    get_dataset("general-practitioner-contact-detail"),
+    regexp = "Did you mean .+?general-practitioner-contact-details.+?\\?"
   )
 })
 
 test_that("get_dataset filters error properly", {
   expect_error(
-    get_dataset("annual-outpatient-activity", col_select = "Non-existent column"),
+    get_dataset("general-practitioner-contact-details", col_select = "Non-existent column"),
     regexp = "API error"
   )
 })
 
 test_that("get_dataset works with multiple filters", {
   n_resources <- 2
-  columns <- c("FinancialYear", "AppointmentType", "CA", "Sex")
+  columns <- c("Surname", "Sex", "Postcode", "HB")
 
   data <- get_dataset(
-    "annual-outpatient-activity",
+    "general-practitioner-contact-details",
     max_resources = n_resources,
     row_filters = list(Sex = c("Female", "Male")),
     col_select = columns

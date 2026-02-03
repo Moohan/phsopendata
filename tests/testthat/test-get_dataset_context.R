@@ -4,13 +4,13 @@ test_that("returns expected context with the data", {
   n_rows <- 2
   data_col_names <- names(
     get_dataset(
-      dataset_name = "gp-practice-populations",
+      dataset_name = "general-practitioner-contact-details",
       max_resources = 1,
       rows = 1
     )
   )
   data <- get_dataset(
-    dataset_name = "gp-practice-populations",
+    dataset_name = "general-practitioner-contact-details",
     max_resources = 1,
     rows = n_rows,
     include_context = TRUE
@@ -34,7 +34,7 @@ test_that("returns expected context and length of data", {
   n_rows <- 2
 
   data <- get_dataset(
-    dataset_name = "gp-practice-populations",
+    dataset_name = "general-practitioner-contact-details",
     max_resources = n_resources,
     rows = n_rows,
     include_context = TRUE

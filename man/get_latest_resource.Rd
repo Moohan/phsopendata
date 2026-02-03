@@ -35,7 +35,7 @@ keep historic resources instead of updating existing ones.
 For these it is useful to be able to retrieve the latest
 resource. As of 1.8.2024 these data sets include:
 \itemize{
-\item gp-practice-populations
+\item general-practitioner-contact-details
 \item gp-practice-contact-details-and-list-sizes
 \item nhsscotland-payments-to-general-practice
 \item dental-practices-and-patient-registrations
