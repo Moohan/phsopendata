@@ -6,12 +6,24 @@
 #' @noRd
 dump_download <- function(res_id, call = rlang::caller_env()) {
   # fetch the data
-  content <- suppressMessages(
-    phs_GET("dump", res_id)
+  content <- tryCatch(
+    suppressMessages(phs_GET("dump", res_id)),
+    error = function(e) {
+      if (grepl("HTML response", e$message)) {
+        cli::cli_abort(
+          c(
+            "Can't find resource with ID {.var {res_id}} in datastore."
+          ),
+          call = call
+        )
+      }
+      stop(e)
+    }
   )
 
-  # if content is a web page
-  if ("xml_document" %in% class(content)) {
+  # if content is a web page (redundant if phs_GET/error_check already aborts,
+  # but good for safety if we changed something)
+  if (inherits(content, "xml_document")) {
     cli::cli_abort(
       c(
         "Can't find resource with ID {.var {res_id}} in datastore."

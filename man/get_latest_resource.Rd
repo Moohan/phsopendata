@@ -39,19 +39,18 @@ resource. As of 1.8.2024 these data sets include:
 \item gp-practice-contact-details-and-list-sizes
 \item nhsscotland-payments-to-general-practice
 \item dental-practices-and-patient-registrations
-\item general-practitioner-contact-details
 \item prescribed-dispensed
 \item dispenser-location-contact-details
 \item community-pharmacy-contractor-activity
 }
 }
 \examples{
-dataset_name <- "gp-practice-contact-details-and-list-sizes"
+dataset_name <- "general-practitioner-contact-details"
 
 data <- get_latest_resource(dataset_name)
 
-filters <- list("Postcode" = "DD11 1ES")
-wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
+filters <- list("Postcode" = "G2 4AA")
+wanted_cols <- c("PracticeCode", "Postcode")
 
 filtered_data <- get_latest_resource(
   dataset_name = dataset_name,

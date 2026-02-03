@@ -7,6 +7,23 @@ error_check <- function(content, call = rlang::caller_env()) {
   # if content is not a list,
   # stop for content (a string describing an error)
   if (!is.list(content)) {
+    if (inherits(content, "xml_document")) {
+      if (requireNamespace("xml2", quietly = TRUE)) {
+        text <- xml2::xml_text(content)
+        text <- gsub("\\s+", " ", text)
+        text <- substr(trimws(text), 1, 500)
+        cli::cli_abort(
+          c(
+            "API error (HTML response).",
+            x = text
+          ),
+          call = call
+        )
+      } else {
+        cli::cli_abort("API error (HTML response).", call = call)
+      }
+    }
+
     cli::cli_abort(
       c(
         "API error",

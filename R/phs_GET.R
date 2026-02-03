@@ -42,7 +42,19 @@ phs_GET <- function(
     content <- httr2::resp_body_json(response)
   } else if (grepl("text/html", content_type, fixed = TRUE)) {
     # The API sometimes returns JSON with a text/html content type
-    content <- httr2::resp_body_json(response, check_type = FALSE)
+    # If it's actual HTML, resp_body_json will fail.
+    content <- tryCatch(
+      httr2::resp_body_json(response, check_type = FALSE),
+      error = function(e) {
+        # Fallback for TRUE HTML responses (e.g. proxy errors, server crashes)
+        body <- httr2::resp_body_string(response)
+        if (requireNamespace("xml2", quietly = TRUE)) {
+          return(xml2::read_html(body))
+        } else {
+          stop("API returned HTML instead of JSON.", call. = FALSE)
+        }
+      }
+    )
   } else if (grepl("text/csv", content_type, fixed = TRUE)) {
     content <- readr::read_csv(
       file = I(httr2::resp_body_string(response)),

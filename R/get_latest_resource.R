@@ -10,7 +10,6 @@
 #' * gp-practice-contact-details-and-list-sizes
 #' * nhsscotland-payments-to-general-practice
 #' * dental-practices-and-patient-registrations
-#' * general-practitioner-contact-details
 #' * prescribed-dispensed
 #' * dispenser-location-contact-details
 #' * community-pharmacy-contractor-activity
@@ -22,12 +21,12 @@
 #' @export
 #'
 #' @examples
-#' dataset_name <- "gp-practice-contact-details-and-list-sizes"
+#' dataset_name <- "general-practitioner-contact-details"
 #'
 #' data <- get_latest_resource(dataset_name)
 #'
-#' filters <- list("Postcode" = "DD11 1ES")
-#' wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
+#' filters <- list("Postcode" = "G2 4AA")
+#' wanted_cols <- c("PracticeCode", "Postcode")
 #'
 #' filtered_data <- get_latest_resource(
 #'   dataset_name = dataset_name,
@@ -48,7 +47,6 @@ get_latest_resource <- function(
     "dispenser-location-contact-details",
     "general-practitioner-contact-details",
     "gp-practice-contact-details-and-list-sizes",
-    "gp-practice-populations",
     "nhsscotland-payments-to-general-practice",
     "prescribed-dispensed"
   )

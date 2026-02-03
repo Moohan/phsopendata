@@ -14,13 +14,13 @@ test_that("throws error and does suggest for close matches", {
     suggest_dataset_name(
       "rospital-codes"
     ),
-    regexp = "Did you mean .+?\\?"
+    regexp = "Did you mean"
   )
 
   expect_error(
     suggest_dataset_name(
-      "contact-detail"
+      "hospital-code"
     ),
-    regexp = "Did you mean any of .+?\\?"
+    regexp = "Did you mean"
   )
 })

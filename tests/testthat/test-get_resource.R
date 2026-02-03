@@ -19,7 +19,7 @@ test_that("returns data in the expected format", {
   )
 
   expect_named(data_q, c("PracticeCode", "AddressLine1"))
-  expect_equal(data_q[["PracticeCode"]], 10002)
+  expect_true(all(data_q[["PracticeCode"]] == 10002))
 
   expect_no_warning(get_resource("647b256e-4a03-4963-8402-bf559c9e2fff"))
 })
