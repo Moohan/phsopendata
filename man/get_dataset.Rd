@@ -33,7 +33,7 @@ A \link[tibble:tibble-package]{tibble} with the data.
 Downloads multiple resources from a dataset on the NHS Open Data platform by dataset name, with optional row limits and context columns.
 }
 \examples{
-get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+get_dataset("annual-outpatient-activity", max_resources = 2, rows = 10)
 }
 \seealso{
 \code{\link[=get_resource]{get_resource()}} for downloading a single resource from a dataset.
