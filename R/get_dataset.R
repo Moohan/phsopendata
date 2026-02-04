@@ -31,14 +31,23 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
+  # if content contains a 'Not Found' error
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  if (inherits(content, "try-error")) {
+    if (grepl("Not Found", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+
+    # If it's another type of error, stop and throw it
+    stop(content)
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_ids <- vapply(
+    content$result$resources,
+    function(x) x$id,
+    character(1)
+  )
 
   n_res <- length(all_ids)
   res_index <- 1:min(n_res, max_resources)
@@ -103,10 +112,15 @@ get_dataset <- function(
     n_rows <- vapply(all_data, nrow, integer(1))
 
     res_ids <- selection_ids
-    res_names <- purrr::map_chr(content$result$resources[res_index], ~ .x$name)
-    res_created <- purrr::map_chr(
+    res_names <- vapply(
       content$result$resources[res_index],
-      ~ .x$created
+      function(x) x$name,
+      character(1)
+    )
+    res_created <- vapply(
+      content$result$resources[res_index],
+      function(x) x$created,
+      character(1)
     )
     res_modified_list <- lapply(
       content$result$resources[res_index],
