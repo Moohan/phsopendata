@@ -54,23 +54,28 @@ get_dataset <- function(
     col_select = col_select,
   )
 
+  if (length(all_data) == 0) {
+    return(tibble::tibble())
+  }
+
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    ~ purrr::map_chr(.x, class)
+  # Get the first class of each column for all data frames
+  all_types_list <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1], character(1))
+  })
+
+  # Flatten and group by column name to find inconsistencies
+  flat_types <- do.call(c, unname(all_types_list))
+  split_types <- split(flat_types, names(flat_types))
+
+  # Identify columns with more than one unique type across resources
+  is_inconsistent <- vapply(
+    split_types,
+    function(x) length(unique(x)) > 1,
+    logical(1)
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  to_coerce <- names(is_inconsistent)[is_inconsistent]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,40 +84,65 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        "data" = all_data,
-        "id" = selection_ids,
-        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        "modified_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols <- intersect(to_coerce, names(df))
+      if (length(cols) > 0) {
+        df[cols] <- lapply(df[cols], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data
+    # Pre-calculating metadata in a vectorized way is much faster than
+    # calling add_context in a loop.
+    n_rows <- vapply(all_data, nrow, integer(1))
+
+    res_ids <- selection_ids
+    res_names <- purrr::map_chr(content$result$resources[res_index], ~ .x$name)
+    res_created <- purrr::map_chr(
+      content$result$resources[res_index],
+      ~ .x$created
+    )
+    res_modified_list <- lapply(
+      content$result$resources[res_index],
+      function(x) x$last_modified
+    )
+    res_modified <- vapply(
+      res_modified_list,
+      function(x) if (is.null(x)) NA_character_ else x,
+      character(1)
+    )
+
+    # Parse and handle dates (as in add_context)
+    res_created_dates <- as.POSIXct(res_created, format = "%FT%X", tz = "UTC")
+    res_modified_dates <- as.POSIXct(res_modified, format = "%FT%X", tz = "UTC")
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    too_early <- !is.na(res_modified_dates) &
+      !is.na(res_created_dates) &
+      res_modified_dates < res_created_dates
+    res_modified_dates[too_early] <- res_created_dates[too_early]
+
+    # Prepend context columns in a vectorized way.
+    # We use rep() to expand the metadata for each resource by its number of rows,
+    # ensuring the context matches the combined data from list_rbind.
+    combined <- dplyr::bind_cols(
+      tibble::tibble(
+        "ResID" = rep(res_ids, n_rows),
+        "ResName" = rep(res_names, n_rows),
+        "ResCreatedDate" = rep(res_created_dates, n_rows),
+        "ResModifiedDate" = rep(res_modified_dates, n_rows)
+      ),
+      combined
+    )
+  }
 
   return(combined)
 }

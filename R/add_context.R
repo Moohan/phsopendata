@@ -28,13 +28,15 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    "ResID" = id,
-    "ResName" = name,
-    "ResCreatedDate" = created_date,
-    "ResModifiedDate" = modified_date,
-    .before = dplyr::everything()
+  n_rows <- nrow(data)
+  data_with_context <- dplyr::bind_cols(
+    tibble::tibble(
+      "ResID" = rep(id, n_rows),
+      "ResName" = rep(name, n_rows),
+      "ResCreatedDate" = rep(created_date, n_rows),
+      "ResModifiedDate" = rep(modified_date, n_rows)
+    ),
+    data
   )
 
   return(data_with_context)
