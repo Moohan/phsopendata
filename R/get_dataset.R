@@ -55,13 +55,14 @@ get_dataset <- function(
   selection_ids <- all_ids[res_index]
 
   # get all resources
-  all_data <- purrr::map(
-    selection_ids,
-    get_resource,
-    rows = rows,
-    row_filters = row_filters,
-    col_select = col_select,
-  )
+  all_data <- lapply(selection_ids, function(id) {
+    get_resource(
+      res_id = id,
+      rows = rows,
+      row_filters = row_filters,
+      col_select = col_select
+    )
+  })
 
   if (length(all_data) == 0) {
     return(tibble::tibble())

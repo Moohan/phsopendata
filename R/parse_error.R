@@ -1,6 +1,6 @@
-#' Generates error message from an "error" element of an `httr::content` object
+#' Generates error message from an "error" element of an `httr2::content` object
 #'
-#' @param error The "error" element of an object produced by `httr::content`.
+#' @param error The "error" element of an object produced by `httr2::content`.
 #' @return character string
 #' @noRd
 #' @keywords internal

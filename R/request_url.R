@@ -29,15 +29,15 @@ request_url <- function(action, query, call = rlang::caller_env()) {
 
   if (action == "dump") {
     # return dump URL
-    url <- httr::modify_url(
+    url <- httr2::url_modify(
       url = base_url,
-      path = c("datastore/dump", query),
+      path = paste(c("datastore/dump", query), collapse = "/"),
       query = list(bom = "true")
     )
   } else {
-    url <- httr::modify_url(
+    url <- httr2::url_modify(
       url = base_url,
-      path = c("api/3/action", action),
+      path = paste(c("api/3/action", action), collapse = "/"),
       query = query
     )
   }
