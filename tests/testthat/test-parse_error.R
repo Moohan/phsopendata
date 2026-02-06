@@ -5,7 +5,9 @@ test_that("correctly extracts error from API response", {
   # Use tryCatch because phs_GET calls error_check() which stops on error
   content <- tryCatch(
     phs_GET("datastore_search", "id=doop"),
-    error = function(e) return(NULL) # We want to test parse_error on content
+    error = function(e) {
+      return(NULL)
+    } # We want to test parse_error on content
   )
 
   # Since phs_GET stops on error, let's call httr2 directly to get the content without stopping
