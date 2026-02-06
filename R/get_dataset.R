@@ -31,10 +31,15 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # If phs_GET failed, handle the error
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found' error
+    # throw error with suggested dataset name
+    if (grepl("Not Found", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # Otherwise, stop with the original error
+    stop(content)
   }
 
   # define list of resource IDs to get
