@@ -31,15 +31,23 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # If phs_GET failed, handle the error
-  if (inherits(content, "try-error")) {
+  # If phs_GET failed or returned an unexpected result, handle the error
+  if (!is.list(content) || inherits(content, "try-error")) {
+    # If it's a character vector (including try-error), check for "Not Found"
+    content_str <- if (is.character(content)) content[1] else ""
+
     # if content contains a 'Not Found' error
     # throw error with suggested dataset name
-    if (grepl("Not Found", content[1])) {
+    if (grepl("Not Found", content_str)) {
       suggest_dataset_name(dataset_name)
     }
-    # Otherwise, stop with the original error
-    stop(content)
+    # Otherwise, stop with the original error if it's an error
+    if (inherits(content, "try-error")) {
+      stop(content)
+    } else {
+      # Handle cases where it returned something else unexpected
+      cli::cli_abort("Unexpected API response structure.", x = content)
+    }
   }
 
   # define list of resource IDs to get
