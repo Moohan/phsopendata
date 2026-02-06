@@ -17,7 +17,12 @@ phs_GET <- function(
   # Build request
   req <- httr2::request(url) %>%
     httr2::req_user_agent("phsopendata (https://github.com/Public-Health-Scotland/phsopendata)") %>%
-    httr2::req_retry(max_tries = 4) %>%
+    httr2::req_retry(
+      max_tries = 5,
+      is_transient = function(resp) {
+        httr2::resp_status(resp) %in% c(429, 500, 502, 503, 504)
+      }
+    ) %>%
     # Don't throw on 4xx/5xx errors so we can handle them manually
     httr2::req_error(is_error = function(resp) FALSE)
 

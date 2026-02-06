@@ -7,11 +7,10 @@ error_check <- function(content, call = rlang::caller_env()) {
   # if content is not a list,
   # stop for content (a string describing an error)
   if (!is.list(content)) {
-    cli::cli_abort(
-      c(
-        "API error",
-        x = content
-      ),
+    # If the response is not a list (e.g. HTML error body),
+    # use rlang::abort to avoid cli's glue interpretation of {}
+    rlang::abort(
+      paste0("API error\n", content),
       call = call
     )
   }
