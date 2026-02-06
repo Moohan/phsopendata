@@ -41,7 +41,8 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1:min(n_res, max_resources)
+  res_limit <- if (is.null(max_resources)) n_res else max_resources
+  res_index <- seq_len(min(n_res, res_limit))
 
   selection_ids <- all_ids[res_index]
 
@@ -54,23 +55,21 @@ get_dataset <- function(
     col_select = col_select,
   )
 
-  # resolve class issues
-  types <- purrr::map(
+  # resolve class issues - use a robust and performant base R pattern
+  # to find columns with inconsistent types across resources.
+  type_list <- lapply(
     all_data,
-    ~ purrr::map_chr(.x, class)
+    function(df) vapply(df, function(col) class(col)[1], character(1))
   )
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten the list of named character vectors
+  all_types <- do.call(c, unname(type_list))
+
+  # Group types by column name and find those with more than one unique type
+  types_by_col <- split(all_types, names(all_types))
+  to_coerce <- names(types_by_col)[
+    vapply(types_by_col, function(x) length(unique(x)) > 1, logical(1))
+  ]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,16 +78,15 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
+    # Perform batch coercion using base R for significant performance gains.
+    # intersect() ensures we only try to coerce columns that actually exist in the df.
+    all_data <- lapply(all_data, function(df) {
+      cols_to_fix <- intersect(to_coerce, names(df))
+      if (length(cols_to_fix) > 0) {
+        df[cols_to_fix] <- lapply(df[cols_to_fix], as.character)
+      }
+      df
+    })
   }
 
   if (include_context) {

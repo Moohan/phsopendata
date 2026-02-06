@@ -28,14 +28,18 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    "ResID" = id,
-    "ResName" = name,
-    "ResCreatedDate" = created_date,
-    "ResModifiedDate" = modified_date,
-    .before = dplyr::everything()
+  # Prepend metadata columns efficiently using bind_cols
+  nr <- nrow(data)
+  context_data <- tibble::tibble(
+    "ResID" = rep(id, nr),
+    "ResName" = rep(name, nr),
+    "ResCreatedDate" = rep(created_date, nr),
+    "ResModifiedDate" = rep(modified_date, nr)
   )
 
-  return(data_with_context)
+  # Remove existing context columns if present to avoid duplicates and ensure overwriting
+  # (matching the behavior of the original dplyr::mutate implementation)
+  data <- data[, setdiff(names(data), names(context_data)), drop = FALSE]
+
+  return(dplyr::bind_cols(context_data, data))
 }
