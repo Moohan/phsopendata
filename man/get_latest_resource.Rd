@@ -46,12 +46,12 @@ resource. As of 1.8.2024 these data sets include:
 }
 }
 \examples{
-dataset_name <- "gp-practice-contact-details-and-list-sizes"
+dataset_name <- "gp-practice-populations"
 
 data <- get_latest_resource(dataset_name)
 
-filters <- list("Postcode" = "DD11 1ES")
-wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
+filters <- list("Sex" = "Male")
+wanted_cols <- c("PracticeCode", "Sex", "AllAges")
 
 filtered_data <- get_latest_resource(
   dataset_name = dataset_name,
