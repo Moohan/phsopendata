@@ -29,17 +29,20 @@ request_url <- function(action, query, call = rlang::caller_env()) {
 
   if (action == "dump") {
     # return dump URL
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("datastore/dump", query),
-      query = list(bom = "true")
-    )
+    url <- paste0(base_url, "/datastore/dump/", query, "?bom=true")
   } else {
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("api/3/action", action),
-      query = query
-    )
+    path <- paste0("/api/3/action/", action)
+    if (is.list(query)) {
+      u <- httr2::url_parse(base_url)
+      u$path <- path
+      u$query <- query
+      url <- httr2::url_build(u)
+    } else if (is.character(query) && length(query) == 1) {
+      # Handle string queries for backward compatibility (mostly for tests)
+      url <- paste0(base_url, path, "?", query)
+    } else {
+      url <- paste0(base_url, path)
+    }
   }
 
   # return standard API endpoint (i.e., not dump)
