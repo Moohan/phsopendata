@@ -37,7 +37,7 @@ request_url <- function(action, query, call = rlang::caller_env()) {
       u$path <- path
       u$query <- query
       url <- httr2::url_build(u)
-    } else if (is.character(query) && length(query) == 1) {
+    } else if (is.character(query) && length(query) == 1 && nzchar(query)) {
       # Handle string queries for backward compatibility (mostly for tests)
       url <- paste0(base_url, path, "?", query)
     } else {
