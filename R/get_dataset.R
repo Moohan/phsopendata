@@ -55,22 +55,18 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    ~ purrr::map_chr(.x, class)
-  )
+  # Robustly get first class of each column for all resources
+  types_list <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1], character(1))
+  })
 
-  # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten the list of type vectors and find columns with inconsistent types
+  all_types <- do.call(c, unname(types_list))
+  split_types <- split(all_types, names(all_types))
+  inconsistent <- vapply(split_types, function(x) length(unique(x)) > 1, logical(1))
+
+  # Get names of columns to coerce
+  to_coerce <- names(inconsistent)[inconsistent]
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,40 +75,60 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        "data" = all_data,
-        "id" = selection_ids,
-        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        "modified_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Fast batch coercion using base R
+    all_data <- lapply(all_data, function(df) {
+      cols <- intersect(to_coerce, names(df))
+      if (length(cols) > 0) {
+        df[cols] <- lapply(df[cols], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Vectorized addition of 'resource context' columns after binding
+    n_rows_list <- vapply(all_data, nrow, integer(1))
+
+    # Extract context values safely
+    res_list <- content$result$resources[res_index]
+    res_names <- vapply(res_list, function(x) {
+      if (is.null(x$name)) NA_character_ else x$name
+    }, character(1))
+    created_dates <- vapply(res_list, function(x) {
+      if (is.null(x$created)) NA_character_ else x$created
+    }, character(1))
+    modified_dates <- vapply(res_list, function(x) {
+      if (is.null(x$last_modified)) NA_character_ else x$last_modified
+    }, character(1))
+
+    # Parse dates once
+    created_dates_posix <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
+    modified_dates_posix <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    fix_idx <- !is.na(modified_dates_posix) & !is.na(created_dates_posix) &
+      modified_dates_posix < created_dates_posix
+    # Ensure fix_idx is logical and doesn't contain NAs for indexing
+    fix_idx[is.na(fix_idx)] <- FALSE
+    modified_dates_posix[fix_idx] <- created_dates_posix[fix_idx]
+
+    context_df <- tibble::tibble(
+      "ResID" = rep(selection_ids, n_rows_list),
+      "ResName" = rep(res_names, n_rows_list),
+      "ResCreatedDate" = rep(created_dates_posix, n_rows_list),
+      "ResModifiedDate" = rep(modified_dates_posix, n_rows_list)
+    )
+
+    # Ensure overwriting behavior
+    combined <- combined[, setdiff(names(combined), names(context_df)), drop = FALSE]
+
+    combined <- dplyr::bind_cols(context_df, combined)
+  }
 
   return(combined)
 }
