@@ -4,6 +4,17 @@
 #' @keywords internal
 #' @noRd
 error_check <- function(content, call = rlang::caller_env()) {
+  # if content is a web page, it's likely a 404 or other server error.
+  if (inherits(content, "xml_document")) {
+    cli::cli_abort(
+      c(
+        "Not Found Error: The requested resource or dataset was not found.",
+        i = "The server returned an HTML error page."
+      ),
+      call = call
+    )
+  }
+
   # if content is not a list,
   # stop for content (a string describing an error)
   if (!is.list(content)) {

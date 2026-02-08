@@ -78,9 +78,18 @@ get_resource <- function(
   )
 
   # if dump should be used, use it
+  data <- NULL
   if (use_dump_check(query, rows)) {
-    data <- dump_download(res_id)
-  } else {
+    data <- tryCatch(
+      dump_download(res_id),
+      error = function(e) {
+        # Fallback to standard fetch if dump fails
+        NULL
+      }
+    )
+  }
+
+  if (is.null(data)) {
     # if there is no row limit set
     # set limit to CKAN max
     if (is.null(query$limit)) query$limit <- 99999

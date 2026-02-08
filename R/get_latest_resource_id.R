@@ -38,7 +38,13 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
     id = id,
     created_date = as.POSIXct(created_date, format = "%FT%X", tz = "UTC"),
     modified_date = as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
-  ) %>%
+  )
+
+  if (nrow(all_id_data) == 0) {
+    cli::cli_abort("No resources found for dataset {.val {dataset_name}}.", call = call)
+  }
+
+  all_id_data <- all_id_data %>%
     dplyr::mutate(most_recent_date_created = max(created_date, na.rm = TRUE))
 
   # get the first row of the resources, this will be the same that appears on the top
