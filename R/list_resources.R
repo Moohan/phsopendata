@@ -21,21 +21,32 @@ list_resources <- function(dataset_name) {
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # if content is a try-error
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # Otherwise, re-throw the original error
+    stop(content)
   }
 
   # define list of resource IDs names date created and date modified within dataset
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-  all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
-  all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
+  resources <- content$result$resources
+  all_ids <- vapply(resources, function(x) {
+    if (is.null(x$id)) NA_character_ else x$id
+  }, character(1))
+  all_names <- vapply(resources, function(x) {
+    if (is.null(x$name)) NA_character_ else x$name
+  }, character(1))
+  all_date_created <- vapply(resources, function(x) {
+    if (is.null(x$created)) NA_character_ else x$created
+  }, character(1)) %>%
     as.POSIXct(format = "%FT%X", tz = "UTC")
-  all_date_modified <- purrr::map_chr(
-    content$result$resources,
-    ~ .x$last_modified
-  ) %>%
+  all_date_modified <- vapply(resources, function(x) {
+    if (is.null(x$last_modified)) NA_character_ else x$last_modified
+  }, character(1)) %>%
     as.POSIXct(format = "%FT%X", tz = "UTC")
   return_value <- tibble::tibble(
     "res_id" = all_ids,

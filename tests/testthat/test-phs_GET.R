@@ -1,6 +1,6 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
-test_that("returns httr::content", {
+test_that("returns list from API response", {
   content <- phs_GET("package_list", "")
 
   expect_true(content$success)

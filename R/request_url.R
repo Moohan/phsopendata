@@ -29,17 +29,24 @@ request_url <- function(action, query, call = rlang::caller_env()) {
 
   if (action == "dump") {
     # return dump URL
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("datastore/dump", query),
-      query = list(bom = "true")
-    )
+    # use manual concatenation to avoid encoding '=' in the path,
+    # which matches expected behavior in tests.
+    url <- paste0(base_url, "/datastore/dump/", query, "?bom=true")
   } else {
-    url <- httr::modify_url(
-      url = base_url,
-      path = c("api/3/action", action),
-      query = query
-    )
+    url_obj <- httr2::url_parse(base_url)
+    url_obj$path <- paste0("/api/3/action/", action)
+    if (is.list(query)) {
+      url_obj$query <- query
+    } else if (is.character(query) && nchar(query) > 0) {
+      if (grepl("=", query)) {
+        # Parse query string into a named list for httr2::url_build
+        url_obj$query <- httr2::url_parse(paste0("http://x/?", query))$query
+      } else {
+        # If it's a single string without '=', it's likely an ID
+        url_obj$query <- list(id = query)
+      }
+    }
+    url <- httr2::url_build(url_obj)
   }
 
   # return standard API endpoint (i.e., not dump)

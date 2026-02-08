@@ -22,25 +22,24 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   query <- list("id" = dataset_name)
   content <- phs_GET("package_show", query)
 
-  # retrieve the resource id's from returned contect
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  # retrieve the resource id's from returned content
+  resources <- content$result$resources
+  id <- vapply(resources, function(x) {
+    if (is.null(x$id)) NA_character_ else x$id
+  }, character(1))
+  created_date <- vapply(resources, function(x) {
+    if (is.null(x$created)) NA_character_ else x$created
+  }, character(1))
+  modified_date <- vapply(resources, function(x) {
+    if (is.null(x$last_modified)) NA_character_ else x$last_modified
+  }, character(1))
 
-  # add the id, created date and last_modified to a dataframe
-  id <- c()
-  created_date <- c()
-  modified_date <- c()
-
-  for (res in content$result$resources) {
-    id <- append(id, res$id)
-    created_date <- append(created_date, res$created)
-    modified_date <- append(modified_date, res$last_modified)
-  }
   all_id_data <- tibble::tibble(
     id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
+    created_date = as.POSIXct(created_date, format = "%FT%X", tz = "UTC"),
+    modified_date = as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
   ) %>%
-    dplyr::mutate(most_recent_date_created = max(created_date))
+    dplyr::mutate(most_recent_date_created = max(created_date, na.rm = TRUE))
 
   # get the first row of the resources, this will be the same that appears on the top
   # on the open data platform

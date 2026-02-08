@@ -31,10 +31,15 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
+  # if content is a try-error
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1])) {
+      suggest_dataset_name(dataset_name)
+    }
+    # Otherwise, re-throw the original error
+    stop(content)
   }
 
   # define list of resource IDs to get
