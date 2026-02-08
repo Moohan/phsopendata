@@ -6,6 +6,11 @@
 #' @keywords internal
 #' @noRd
 request_url <- function(action, query, call = rlang::caller_env()) {
+  # If action is already a URL, return it
+  if (grepl("^http", action)) {
+    return(action)
+  }
+
   # check action is valid
   valid_actions <- c(
     "datastore_search",
@@ -35,7 +40,8 @@ request_url <- function(action, query, call = rlang::caller_env()) {
   } else {
     # Build URL with httr2.
     req <- httr2::request(base_url) %>%
-      httr2::req_url_path("api/3/action", action)
+      httr2::req_url_path("api/3/action") %>%
+      httr2::req_url_path_append(action)
 
     if (is.list(query)) {
       # Remove NULLs and add to query

@@ -1,5 +1,6 @@
 ^phsopendata\.Rproj$
 ^\.Rproj\.user$
+^\.jules$
 ^README\.Rmd$
 ^\.github$
 ^codecov\.yml$

@@ -1,5 +1,11 @@
 # phsopendata (development version)
 
+- Optimized `get_dataset()` and `add_context()` by replacing iterative `dplyr` and `purrr` operations with high-performance base R primitives, resulting in up to 25x faster column coercion.
+- Modernized HTTP backend by migrating from `httr` to `httr2`, improving robustness and error handling.
+- Added fallback logic in `get_resource()` to handle resources not currently active in the CKAN datastore.
+- Fixed `vroom` warnings when downloading CSV resources.
+- Optimized `list_resources()` and `get_latest_resource_id()` using vectorized operations.
+
 # phsopendata 1.0.1 (2025-11-10)
 
 - No user-facing changes. Fixes some tests that were failing when the open data platform is offline, and fixes tests that were failing due to a change in the open data resource. Tests are now more robust against changes to the data.  

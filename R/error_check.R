@@ -1,6 +1,6 @@
-#' Throws errors found in the content of an `httr::GET` request
+#' Throws errors found in the content of an `httr2` request
 #'
-#' @param content object produced by `httr::content`
+#' @param content object produced by `httr2::resp_body_json`
 #' @keywords internal
 #' @noRd
 error_check <- function(content, call = rlang::caller_env()) {

@@ -99,35 +99,67 @@ get_resource <- function(
     query[null_q_field] <- NULL
 
     # fetch the data
-    res_content <- phs_GET("datastore_search", query)
+    res_content <- tryCatch(
+      phs_GET("datastore_search", query),
+      error = function(e) {
+        if (grepl("Not Found", conditionMessage(e), ignore.case = TRUE)) {
+          # The resource might exist but not have a datastore.
+          # Try direct download.
+          metadata <- phs_GET("resource_show", list(id = res_id))
+          if (!is.null(metadata$result$url)) {
+            return(list(is_fallback = TRUE, url = metadata$result$url))
+          }
+        }
+        stop(e)
+      }
+    )
 
-    # if the total number of rows is greater than the
-    # number of rows fetched
-    # AND the user was not aware of this limit (`rows` defaulted to NULL)
-    # warn the user about this limit.
-    total_rows <- res_content$result$total
-    if (is.null(rows) && query$limit < total_rows) {
-      cli::cli_warn(c(
-        "Returning the first {query$limit}
+    if (is.list(res_content) && isTRUE(res_content$is_fallback)) {
+      # Direct download
+      data <- phs_GET(res_content$url, list())
+
+      # If use_dump_check was FALSE, it means there were filters/col_select
+      # We should warn that they are being ignored in fallback
+      if (!is.null(row_filters) || !is.null(col_select)) {
+        cli::cli_warn(c(
+          "Resource {.val {res_id}} is not in the datastore.",
+          i = "Falling back to direct download. Filters and column selection will be ignored."
+        ))
+      }
+
+      # apply local rows limit if specified
+      if (!is.null(rows) && rows > 0 && nrow(data) > rows) {
+        data <- head(data, rows)
+      }
+    } else {
+      # if the total number of rows is greater than the
+      # number of rows fetched
+      # AND the user was not aware of this limit (`rows` defaulted to NULL)
+      # warn the user about this limit.
+      total_rows <- res_content$result$total
+      if (is.null(rows) && query$limit < total_rows) {
+        cli::cli_warn(c(
+          "Returning the first {query$limit}
       results (rows) of your query.
       {total_rows} rows match your query in total.",
-        i = "To get ALL matching rows you will need to download
+          i = "To get ALL matching rows you will need to download
       the whole resource and apply filters/selections locally."
-      ))
-    }
+        ))
+      }
 
-    # if more rows were requested than received
-    # let the user know
-    if (!is.null(rows) && query$limit > total_rows) {
-      cli::cli_warn(
-        "You set {.var rows} to {.val {query$limit}} but only {.val {total_rows}} rows matched your query."
+      # if more rows were requested than received
+      # let the user know
+      if (!is.null(rows) && query$limit > total_rows) {
+        cli::cli_warn(
+          "You set {.var rows} to {.val {query$limit}} but only {.val {total_rows}} rows matched your query."
+        )
+      }
+
+      data <- dplyr::bind_rows(res_content$result$records) %>% dplyr::select(
+        -dplyr::starts_with("rank "),
+        -dplyr::matches("_id")
       )
     }
-
-    data <- dplyr::bind_rows(res_content$result$records) %>% dplyr::select(
-      -dplyr::starts_with("rank "),
-      -dplyr::matches("_id")
-    )
   }
 
   if (include_context) {
