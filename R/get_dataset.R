@@ -38,10 +38,14 @@ get_dataset <- function(
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  resources <- content$result$resources
+  all_ids <- vapply(resources, function(x) {
+    if (is.null(x$id)) NA_character_ else x$id
+  }, character(1))
 
   n_res <- length(all_ids)
-  res_index <- 1:min(n_res, max_resources)
+  res_limit <- if (is.null(max_resources)) n_res else max_resources
+  res_index <- seq_len(min(n_res, res_limit))
 
   selection_ids <- all_ids[res_index]
 
@@ -54,23 +58,24 @@ get_dataset <- function(
     col_select = col_select,
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    ~ purrr::map_chr(.x, class)
-  )
+  # resolve class issues - use vapply for speed and multi-class robustness
+  types <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1], character(1))
+  })
 
   # Check for columns that have multiple types across all resources
-  to_coerce <- types %>%
-    # Convert each element to a tibble
-    purrr::map(~ tibble::enframe(.x, name = "col_name", value = "col_type")) %>%
-    # Bind them into a single tibble efficiently
-    dplyr::bind_rows() %>%
-    # Find columns that have more than one unique type
-    dplyr::group_by(col_name) %>%
-    dplyr::summarise(n_types = dplyr::n_distinct(col_type), .groups = "drop") %>%
-    dplyr::filter(n_types > 1) %>%
-    dplyr::pull(col_name)
+  # Flatten and group by column name to identify inconsistencies efficiently
+  all_types <- do.call(c, unname(types))
+
+  to_coerce <- character(0)
+  if (!is.null(all_types)) {
+    split_types <- split(all_types, names(all_types))
+    to_coerce <- names(split_types)[vapply(
+      split_types,
+      function(x) length(unique(x)) > 1,
+      logical(1)
+    )]
+  }
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -79,33 +84,37 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      ~ dplyr::mutate(
-        .x,
-        dplyr::across(
-          dplyr::any_of(to_coerce),
-          as.character
-        )
-      )
-    )
+    # Fast batch coercion using base R
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0) {
+        df[cols_present] <- lapply(df[cols_present], as.character)
+      }
+      df
+    })
   }
 
   if (include_context) {
+    # Extract metadata once for context addition
+    selection_resources <- resources[res_index]
+    selection_names <- vapply(selection_resources, function(x) {
+      if (is.null(x$name)) NA_character_ else x$name
+    }, character(1))
+    selection_created <- vapply(selection_resources, function(x) {
+      if (is.null(x$created)) NA_character_ else x$created
+    }, character(1))
+    selection_modified <- vapply(selection_resources, function(x) {
+      if (is.null(x$last_modified)) NA_character_ else x$last_modified
+    }, character(1))
+
     # Add the 'resource context' as columns to the data
     all_data <- purrr::pmap(
       list(
         "data" = all_data,
         "id" = selection_ids,
-        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        "modified_date" = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
+        "name" = selection_names,
+        "created_date" = selection_created,
+        "modified_date" = selection_modified
       ),
       add_context
     )
