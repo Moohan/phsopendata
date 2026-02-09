@@ -57,7 +57,6 @@ phs_GET <- function(
     identical(content$success, FALSE)
 
   if (httr::http_error(response) || is_ckan_error) {
-
     # Special case for dump 404
     if (action == "dump" && httr::status_code(response) == 404) {
       cli::cli_abort(
@@ -87,8 +86,7 @@ phs_GET <- function(
       error_details <- parse_error_details(content$error)
 
       error_type <- content$error$`__type`
-      error_class <- switch(
-        error_type,
+      error_class <- switch(error_type,
         "Not Found Error" = "phsopendata_error_not_found",
         "Validation Error" = "phsopendata_error_validation",
         "Authorization Error" = "phsopendata_error_authorization",
