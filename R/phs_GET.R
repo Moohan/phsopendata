@@ -57,6 +57,7 @@ phs_GET <- function(
     identical(content$success, FALSE)
 
   if (httr::http_error(response) || is_ckan_error) {
+
     # Special case for dump 404
     if (action == "dump" && httr::status_code(response) == 404) {
       cli::cli_abort(
@@ -68,10 +69,14 @@ phs_GET <- function(
 
     # If content is not a list, it's likely a raw error message (e.g. HTML)
     if (!is.list(content)) {
+      err_text <- httr::content(response, as = "text", encoding = "UTF-8")
+      if (nchar(err_text) > 500) {
+        err_text <- paste0(substr(err_text, 1, 497), "...")
+      }
       cli::cli_abort(
         c(
           "API error",
-          "x" = "{content}"
+          "x" = "{.val {err_text}}"
         ),
         call = call
       )
@@ -82,7 +87,8 @@ phs_GET <- function(
       error_details <- parse_error_details(content$error)
 
       error_type <- content$error$`__type`
-      error_class <- switch(error_type,
+      error_class <- switch(
+        error_type,
         "Not Found Error" = "phsopendata_error_not_found",
         "Validation Error" = "phsopendata_error_validation",
         "Authorization Error" = "phsopendata_error_authorization",
@@ -125,16 +131,24 @@ parse_error_details <- function(error) {
 
   # special case for validation errors
   if (error_type == "Validation Error") {
-    message <- paste0(names(error[1][1]), ": ", error[1][[1]])
+    # remove __type and message from the error list to only have field errors
+    field_errors <- error[!(names(error) %in% c("__type", "message"))]
 
-    # translate message for package users
-    message <- sub("fields", "col_select", message, fixed = TRUE)
-    message <- sub("q", "row_filters", message, fixed = TRUE)
+    if (length(field_errors) > 0) {
+      message <- "Validation Error"
+      bullets <- purrr::imap_chr(field_errors, function(err, name) {
+        # Translate names for package users
+        name <- sub("fields", "col_select", name, fixed = TRUE)
+        name <- sub("q", "row_filters", name, fixed = TRUE)
+        paste0(name, ": ", paste(unlist(err), collapse = ", "))
+      })
+      names(bullets) <- rep("*", length(bullets))
+    }
   }
 
   # special case for SQL validation errors
   if (!is.null(error$info$orig)) {
-    message <- sub("\\^", "", error$info$orig[[1]], fixed = TRUE)
+    message <- sub("^", "", error$info$orig[[1]], fixed = TRUE)
     message <- sub("LINE 1:", "In SQL:", message, fixed = TRUE)
     message <- sub(
       "relation",

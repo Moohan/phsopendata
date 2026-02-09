@@ -16,7 +16,7 @@ check_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
       c(
         "The dataset name supplied {.var {dataset_name}} is invalid",
         x = "dataset_name must be of type character",
-        i = "You supplied a {.cls {class(dataset_name)[0]}} value"
+        i = "You supplied a {.cls {class(dataset_name)[1]}} value"
       ),
       call = call
     )
