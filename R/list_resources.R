@@ -16,16 +16,12 @@ list_resources <- function(dataset_name) {
 
   # define query and try API call
   query <- list(id = dataset_name)
-  content <- try(
+  content <- tryCatch(
     phs_GET("package_show", query),
-    silent = TRUE
+    phsopendata_error_not_found = function(e) {
+      suggest_dataset_name(dataset_name)
+    }
   )
-
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
-  }
 
   # define list of resource IDs names date created and date modified within dataset
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)

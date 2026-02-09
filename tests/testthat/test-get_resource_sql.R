@@ -8,7 +8,7 @@ test_that("throws errors on invalid sql argument", {
   # wrong length
   expect_error(
     get_resource_sql(letters),
-    regexp = "must be length 1 not 26\\."
+    regexp = "must be length 1, not 26"
   )
 
   # wrong start

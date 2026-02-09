@@ -33,22 +33,22 @@
 get_resource_sql <- function(sql) {
   if (length(sql) != 1L) {
     cli::cli_abort(c(
-      x = "SQL validation error.",
-      i = "{.var sql} must be length 1 not {length(sql)}."
+      "SQL validation error",
+      i = "{.var sql} must be length 1, not {length(sql)}"
     ))
   }
 
   if (!inherits(sql, "character")) {
     cli::cli_abort(c(
-      x = "SQL validation error.",
-      i = "{.var sql} must be of class {.cls character} not {.cls {class(sql)}}."
+      "SQL validation error",
+      i = "{.var sql} must be of class {.cls character}, not {.cls {class(sql)}}"
     ))
   }
 
   # check query is a SELECT statement
   if (!grepl("^\\s*?SELECT", sql)) {
     cli::cli_abort(c(
-      x = "SQL validation error.",
+      "SQL validation error",
       i = "{.var sql} must start with {.val SELECT}"
     ))
   }

@@ -11,7 +11,7 @@ test_that("returns httr::content", {
   )
 })
 
-test_that("error_check() works as expected", {
+test_that("phs_GET handles errors as expected", {
   skip_if_offline(host = "www.opendata.nhs.scot")
 
   # no error for valid endpoint
@@ -20,17 +20,26 @@ test_that("error_check() works as expected", {
     "list"
   )
 
-  # not found error
+  # not found error with correct class and message
   expect_error(
     phs_GET("datastore_search", "id=doop"),
-    regexp = 'Resource "doop" was not found.'
+    regexp = 'Resource "doop" was not found.',
+    class = "phsopendata_error_not_found"
+  )
+
+  # validation error with correct class
+  expect_error(
+    phs_GET("datastore_search", ""),
+    regexp = 'resource_id: Missing value',
+    class = "phsopendata_error_validation"
   )
 })
 
-test_that("request_url() works as expected (offline test)", {
+test_that("phs_GET fails for invalid action (offline test)", {
   # invalid action argument
   expect_error(
     phs_GET("", ""),
-    regexp = "API call failed"
+    regexp = "API call failed",
+    class = "rlang_error"
   )
 })
