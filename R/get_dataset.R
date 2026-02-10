@@ -33,7 +33,7 @@ get_dataset <- function(
   query <- list(id = dataset_name)
   content <- tryCatch(
     phs_GET("package_show", query),
-    phsopendata_error_not_found = function(e) {
+    phsopendata_error_dataset_not_found = function(e) {
       suggest_dataset_name(dataset_name)
     }
   )
