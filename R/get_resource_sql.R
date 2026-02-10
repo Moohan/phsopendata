@@ -62,7 +62,7 @@ get_resource_sql <- function(sql) {
   if (!is.null(content[["result"]][["records_truncated"]])) {
     cli::cli_warn(
       "The data was truncated because your query matched more than the
-      maximum number of rows."
+      maximum number of rows"
     )
   }
 
@@ -97,9 +97,9 @@ get_resource_sql <- function(sql) {
   # warn if limit may have been surpassed
   if (nrow(cleaner) == 32000L) {
     cli::cli_warn(c(
-      "Row number limit",
-      i = "SQL queries are limitted to returning 32,000 results.
-      This may have affected the results of your query."
+      "Row number limit reached",
+      i = "SQL queries are limited to returning 32,000 results",
+      "*" = "This may have affected the results of your query"
     ))
   }
 
