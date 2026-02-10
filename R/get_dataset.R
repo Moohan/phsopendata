@@ -86,9 +86,8 @@ get_dataset <- function(
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
-      "Due to conflicts between column types across resources,
-      the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
-      "{.val {to_coerce}}"
+      "Due to conflicts between column types across resources, {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to character",
+      "*" = "{.val {to_coerce}}"
     ))
 
     all_data <- purrr::map(

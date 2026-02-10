@@ -19,21 +19,17 @@ use_dump_check <- function(query, rows) {
     if (null_query) {
       # No filters specified but rows over 99999 requested. - Use dump
       cli::cli_warn(c(
-        "Getting all rows of resource.",
-        i = "All rows will be returned if you
-      request over 99,999 rows of data.",
-        i = "You set {.var rows} to
-      {format(rows, big.mark = ',', scientific = FALSE)}"
+        "Returning all rows of resource",
+        i = "All rows are returned when more than 99,999 rows are requested",
+        i = "You set {.var rows} to {format(rows, big.mark = ',', scientific = FALSE)}"
       ))
       return(TRUE)
     } else {
       # Filters specified and rows over 99999 requested. - Use dump
       cli::cli_warn(c(
-        "Invalid combination of {.var rows}, {.var row_filters}
-      and/or {.var col_select}.",
-        x = "Can't request over 99,999 rows of a resource
-      AND query its rows/columns.",
-        i = "ALL rows and columns of the resource will be downloaded."
+        "Invalid combination of {.var rows}, {.var row_filters}, and/or {.var col_select}",
+        x = "Can't request more than 99,999 rows and query rows or columns simultaneously",
+        i = "All rows and columns of the resource will be downloaded"
       ))
       return(TRUE)
     }
