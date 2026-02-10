@@ -18,8 +18,8 @@ request_url <- function(action, query, call = rlang::caller_env()) {
   if (!(action %in% valid_actions)) {
     cli::cli_abort(
       c(
-        "API call failed.",
-        x = "{.val {action}} is an invalid {.arg action} argument."
+        "API call failed",
+        x = "{.val {action}} is an invalid {.arg action} argument"
       ),
       call = call
     )

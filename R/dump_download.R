@@ -6,17 +6,7 @@
 #' @noRd
 dump_download <- function(res_id, call = rlang::caller_env()) {
   # fetch the data
-  content <- suppressMessages(
-    phs_GET("dump", res_id)
-  )
-
-  # if content is a web page
-  if (inherits(content, "xml_document")) {
-    cli::cli_abort(
-      "Can't find resource with ID {.var {res_id}} in datastore.",
-      call = call
-    )
-  }
+  content <- phs_GET("dump", res_id, call = call)
 
   # return data
   return(content[, -1L])

@@ -15,7 +15,7 @@ test_that("errors for incorrect type", {
 test_that("errors for invalid format", {
   expect_error(
     check_res_id("wrong format"),
-    regexp = "is in an invalid format."
+    regexp = "is in an invalid format"
   )
 })
 

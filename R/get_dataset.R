@@ -31,16 +31,12 @@ get_dataset <- function(
 
   # define query and try API call
   query <- list(id = dataset_name)
-  content <- try(
+  content <- tryCatch(
     phs_GET("package_show", query),
-    silent = TRUE
+    phsopendata_error_dataset_not_found = function(e) {
+      suggest_dataset_name(dataset_name)
+    }
   )
-
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
-  }
 
   # define list of resource IDs to get
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
@@ -90,9 +86,8 @@ get_dataset <- function(
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
-      "Due to conflicts between column types across resources,
-      the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
-      "{.val {to_coerce}}"
+      "Due to conflicts between column types across resources, {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to character",
+      "*" = "{.val {to_coerce}}"
     ))
 
     all_data <- purrr::map(

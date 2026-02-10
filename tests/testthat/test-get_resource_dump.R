@@ -17,7 +17,7 @@ test_that("returns full data if rows is set to over 99999", {
       rows = 9999999,
       row_filters = list(GPPracticeName = "The Blue Practice")
     ),
-    regexp = "Can't request over 99,999 rows"
+    regexp = "Can't request more than 99,999 rows"
   )
 
   expect_identical(nrow(data), 926L)
@@ -28,7 +28,7 @@ test_that("first 99999 rows returned if query matches > 99999 rows", {
 
   expect_warning(
     df <- get_resource(prescriptions_apr_2021, col_select = "HBT"),
-    regexp = "(Returning the first 99999 results)"
+    regexp = "Returning the first 99999 results"
   )
 
   expect_identical(nrow(df), 99999L)

@@ -100,11 +100,9 @@ get_resource <- function(
     total_rows <- res_content$result$total
     if (is.null(rows) && query$limit < total_rows) {
       cli::cli_warn(c(
-        "Returning the first {query$limit}
-      results (rows) of your query.
-      {total_rows} rows match your query in total.",
-        i = "To get ALL matching rows you will need to download
-      the whole resource and apply filters/selections locally."
+        "Returning the first {query$limit} results (rows) of your query",
+        "*" = "{total_rows} rows match your query in total",
+        i = "To get ALL matching rows you will need to download the whole resource and apply filters/selections locally"
       ))
     }
 
@@ -112,7 +110,7 @@ get_resource <- function(
     # let the user know
     if (!is.null(rows) && query$limit > total_rows) {
       cli::cli_warn(
-        "You set {.var rows} to {.val {query$limit}} but only {.val {total_rows}} rows matched your query."
+        "You set {.var rows} to {.val {query$limit}} but only {.val {total_rows}} rows matched your query"
       )
     }
 

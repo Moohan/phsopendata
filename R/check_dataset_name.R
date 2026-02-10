@@ -14,9 +14,9 @@ check_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
   if (!inherits(dataset_name, "character")) {
     cli::cli_abort(
       c(
-        "The dataset name supplied {.var {dataset_name}} is invalid.",
-        x = "dataset_name must be of type character.",
-        i = "You supplied a {.cls {class(dataset_name)[0]}} value."
+        "The dataset name supplied {.var {dataset_name}} is invalid",
+        x = "dataset_name must be of type character",
+        i = "You supplied a {.cls {class(dataset_name)[1]}} value"
       ),
       call = call
     )
@@ -27,9 +27,9 @@ check_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
       c(
         "The dataset name supplied {.var {dataset_name}} is invalid",
         x = "dataset_name must be in dash-case
-      (e.g., lowercase-words-separated-by-dashes).",
+      (e.g., lowercase-words-separated-by-dashes)",
         i = "You can find dataset names in the URL
-      of a dataset's page on {.url www.opendata.nhs.scot}."
+      of a dataset's page on {.url www.opendata.nhs.scot}"
       ),
       call = call
     )
