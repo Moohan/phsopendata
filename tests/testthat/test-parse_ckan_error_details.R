@@ -22,6 +22,17 @@ test_that("parse_ckan_error_details handles validation errors with bullets", {
   expect_equal(names(res$bullets), c("*", "*"))
 })
 
+test_that("parse_ckan_error_details does not over-translate field names", {
+  error <- list(
+    message = "Validation Error",
+    `__type` = "Validation Error",
+    field_names = list("invalid"),
+    query = list("invalid")
+  )
+  res <- parse_ckan_error_details(error)
+  expect_equal(unname(res$bullets), c("field_names: invalid", "query: invalid"))
+})
+
 test_that("parse_ckan_error_details handles SQL errors", {
   error <- list(
     message = "SQL Error",

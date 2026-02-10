@@ -22,8 +22,11 @@ parse_ckan_error_details <- function(error) {
       message <- "Validation Error"
       bullets <- purrr::imap_chr(field_errors, function(err, name) {
         # Translate names for package users
-        name <- sub("fields", "col_select", name, fixed = TRUE)
-        name <- sub("q", "row_filters", name, fixed = TRUE)
+        if (name == "fields") {
+          name <- "col_select"
+        } else if (name == "q") {
+          name <- "row_filters"
+        }
         paste0(name, ": ", paste(unlist(err), collapse = ", "))
       })
       names(bullets) <- rep("*", length(bullets))

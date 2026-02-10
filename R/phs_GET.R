@@ -57,6 +57,7 @@ phs_GET <- function(
     identical(content$success, FALSE)
 
   if (httr::http_error(response) || is_ckan_error) {
+
     # Special case for dump 404
     if (action == "dump" && httr::status_code(response) == 404) {
       cli::cli_abort(

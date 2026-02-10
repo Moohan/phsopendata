@@ -40,7 +40,7 @@ check_res_id <- function(res_id, call = rlang::caller_env()) {
     cli::cli_abort(
       c(
         "Argument {.var res_id} is in an invalid format",
-        i = "You can find a resource's ID in the URL of its page on {.url www.opendata.nhs.scot}"
+        i = "You can find a resource's ID in the URL of it's page on {.url www.opendata.nhs.scot}"
       ),
       call = call
     )
