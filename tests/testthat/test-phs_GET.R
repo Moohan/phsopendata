@@ -30,7 +30,7 @@ test_that("phs_GET handles errors as expected", {
   # validation error with correct class
   expect_error(
     phs_GET("datastore_search", ""),
-    regexp = 'resource_id: Missing value',
+    regexp = "resource_id: Missing value",
     class = "phsopendata_error_validation"
   )
 })
