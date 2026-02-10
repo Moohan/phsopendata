@@ -18,25 +18,30 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values using a robust format string
+  created_date <- as.POSIXct(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  modified_date <- as.POSIXct(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
+  # created_date is always <= modified_date. Handle NAs safely.
+  if (!is.na(modified_date) && !is.na(created_date) && modified_date < created_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+  # Create a metadata tibble with explicit repetition for 0-row robustness
+  n_rows <- nrow(data)
+  context_data <- tibble::tibble(
+    ResID = rep(id, n_rows),
+    ResName = rep(name, n_rows),
+    ResCreatedDate = rep(created_date, n_rows),
+    ResModifiedDate = rep(modified_date, n_rows)
   )
+
+  # Prepend metadata columns using bind_cols for better performance.
+  # Explicitly remove target columns first to ensure overwrite behavior.
+  data <- data[, setdiff(names(data), names(context_data)), drop = FALSE]
+  data_with_context <- dplyr::bind_cols(context_data, data)
 
   return(data_with_context)
 }
