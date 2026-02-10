@@ -102,8 +102,7 @@ get_resource <- function(
       cli::cli_warn(c(
         "Returning the first {query$limit} results (rows) of your query",
         "*" = "{total_rows} rows match your query in total",
-        i = "To get ALL matching rows you will need to download
-      the whole resource and apply filters/selections locally"
+        i = "To get ALL matching rows you will need to download the whole resource and apply filters/selections locally"
       ))
     }
 
