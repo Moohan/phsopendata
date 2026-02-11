@@ -19,24 +19,26 @@ add_context <- function(data, id, name, created_date, modified_date) {
   }
 
   # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  created_date <- as.POSIXct(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  modified_date <- as.POSIXct(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
+  if (!is.na(modified_date) && !is.na(created_date) && modified_date < created_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+  n <- nrow(data)
+  context_data <- tibble::tibble(
+    ResID = rep(id, n),
+    ResName = rep(name, n),
+    ResCreatedDate = rep(created_date, n),
+    ResModifiedDate = rep(modified_date, n)
   )
 
-  return(data_with_context)
+  # Overwrite columns if they already exist
+  data <- data[, setdiff(names(data), names(context_data)), drop = FALSE]
+
+  return(dplyr::bind_cols(context_data, data))
 }

@@ -1,0 +1,1 @@
+## 2026-02-11 - [Vectorized Context Addition] **Learning:** Moving context addition from iterative 'purrr::pmap' to a vectorized 'dplyr::bind_cols' after 'list_rbind' significantly reduces overhead (approx. 45x speedup for many resources). **Action:** Always combine data frames first before adding metadata columns in batch.
