@@ -46,7 +46,8 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  # Optimized: use seq_len for robustness with 0-row/NULL limits
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -59,34 +60,19 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
+  # Optimized: use a high-performance base R pattern for type resolution
+  types_list <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1L], character(1L))
+  })
+
+  all_types <- do.call(c, unname(types_list))
+  types_by_name <- split(all_types, names(all_types))
+  is_inconsistent <- vapply(
+    types_by_name,
+    function(x) length(unique(x)) > 1L,
+    logical(1L)
   )
-
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  to_coerce <- names(is_inconsistent)[is_inconsistent]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -95,38 +81,48 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Optimized: Base R batch coercion is much faster than dplyr::mutate
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0L) {
+        df[cols_present] <- lapply(df[cols_present], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Optimized: Vectorizing resource context addition after combining data
+    # yields significant performance gains.
+    row_counts <- vapply(all_data, nrow, integer(1L))
+
+    res_names <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1L)
+    )
+    res_created <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1L)
+    )
+    res_modified <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    combined <- add_context(
+      data = combined,
+      id = rep(selection_ids, row_counts),
+      name = rep(res_names, row_counts),
+      created_date = rep(res_created, row_counts),
+      modified_date = rep(res_modified, row_counts)
+    )
+  }
 
   return(combined)
 }
