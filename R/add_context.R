@@ -25,17 +25,20 @@ add_context <- function(data, id, name, created_date, modified_date) {
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # Use robust vectorized comparison to handle potential NAs and multiple rows
+  swap_idx <- !is.na(modified_date) & !is.na(created_date) &
+    modified_date < created_date
+  modified_date[swap_idx] <- created_date[swap_idx]
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+  data_with_context <- dplyr::bind_cols(
+    tibble::tibble(
+      ResID = id,
+      ResName = name,
+      ResCreatedDate = created_date,
+      ResModifiedDate = modified_date
+    ),
+    # Remove existing context columns if they exist to mimic mutate behavior
+    data[, setdiff(names(data), c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")), drop = FALSE]
   )
 
   return(data_with_context)
