@@ -43,10 +43,16 @@ get_dataset <- function(
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  # Safe extraction using vapply to handle potential NULL values
+  all_ids <- vapply(
+    content$result$resources,
+    function(x) if (is.null(x$id)) NA_character_ else x$id,
+    character(1)
+  )
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  # Handle NULL/zero cases robustly for resource indexing
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -59,34 +65,20 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
+  # Resolve class issues across resources
+  # Optimized vectorized approach: flatten and split type vectors
+  all_types <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1], character(1))
+  })
+  flat_types <- do.call(c, unname(all_types))
+  split_types <- split(flat_types, names(flat_types))
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # Identify columns with more than one unique class
+  to_coerce <- names(split_types)[vapply(
+    split_types,
+    function(x) length(unique(x)) > 1,
+    logical(1)
+  )]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -95,38 +87,67 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Base R batch coercion is significantly faster than dplyr::mutate(across())
+    all_data <- lapply(all_data, function(df) {
+      cols <- intersect(to_coerce, names(df))
+      if (length(cols) > 0) {
+        df[cols] <- lapply(df[cols], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # Vectorized context addition after combining is significantly faster
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # Extract metadata safely from API response
+    res_names <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1)
+    )
+    res_created <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1)
+    )
+    res_modified <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1)
+    )
+
+    # Parse and fix dates in a vectorized way
+    # Use robust ISO8601 format that handles sub-seconds
+    created_date <- as.POSIXct(res_created, format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
+    modified_date <- as.POSIXct(res_modified, format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
+
+    # Fix modified dates that appear earlier than created dates due to rounding
+    too_early <- !is.na(modified_date) & !is.na(created_date) &
+      modified_date < created_date
+    modified_date[too_early] <- created_date[too_early]
+
+    # Map res_idx back to indices and extract metadata
+    # list_rbind uses indices (as character) for names_to if the list is unnamed
+    res_indices <- as.integer(combined$res_idx)
+
+    # Prepend context columns
+    combined <- dplyr::bind_cols(
+      ResID = selection_ids[res_indices],
+      ResName = res_names[res_indices],
+      ResCreatedDate = created_date[res_indices],
+      ResModifiedDate = modified_date[res_indices],
+      combined
+    )
+
+    # Remove the index column
+    combined$res_idx <- NULL
+  }
 
   return(combined)
 }

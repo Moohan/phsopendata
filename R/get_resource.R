@@ -117,11 +117,8 @@ get_resource <- function(
     }
 
     # extract data from response content
-    data <- purrr::map(
-      res_content$result$records,
-      ~.x
-    ) %>%
-      dplyr::bind_rows() %>%
+    # Vectorized extraction is more memory efficient than purrr::map
+    data <- dplyr::bind_rows(res_content$result$records) %>%
       dplyr::select(
         -dplyr::starts_with("rank "),
         -dplyr::matches("_id")
