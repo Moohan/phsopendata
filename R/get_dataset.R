@@ -46,7 +46,10 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  # Optimization: Use seq_len for robustness against n_res = 0 or max_resources = NULL
+  res_index <- seq_len(
+    min(n_res, if (is.null(max_resources)) n_res else max_resources)
+  )
 
   selection_ids <- all_ids[res_index]
 
@@ -105,28 +108,58 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # Optimization: Using names_to allows for vectorized context addition later
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # Optimization: Vectorized context addition is significantly faster than
+    # adding context iteratively to each resource.
+    resources <- content$result$resources[res_index]
+
+    # Use vapply with NULL checks for better performance and robustness
+    res_names <- vapply(
+      resources,
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1)
+    )
+    res_created <- vapply(
+      resources,
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1)
+    )
+    res_modified <- vapply(
+      resources,
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1)
+    )
+
+    # Parse dates for the entire set at once
+    res_created <- as.POSIXct(res_created, format = "%FT%X", tz = "UTC")
+    res_modified <- as.POSIXct(res_modified, format = "%FT%X", tz = "UTC")
+
+    # Correct any microsecond rounding issues where modified < created
+    mask <- !is.na(res_modified) & !is.na(res_created) & res_modified < res_created
+    res_modified[mask] <- res_created[mask]
+
+    res_idx <- as.integer(combined$res_idx)
+
+    context_data <- tibble::tibble(
+      ResID = selection_ids[res_idx],
+      ResName = res_names[res_idx],
+      ResCreatedDate = res_created[res_idx],
+      ResModifiedDate = res_modified[res_idx]
+    )
+
+    # Pre-remove potential target columns to ensure overwrite behavior
+    combined <- combined[, setdiff(names(combined), names(context_data)), drop = FALSE]
+
+    combined <- dplyr::bind_cols(context_data, combined) %>%
+      dplyr::select(-res_idx)
+  }
 
   return(combined)
 }

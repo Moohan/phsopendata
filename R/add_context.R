@@ -19,6 +19,7 @@ add_context <- function(data, id, name, created_date, modified_date) {
   }
 
   # Parse the date values
+  # Optimization: Use explicit format string for faster and more robust parsing
   created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
   modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
 
@@ -29,14 +30,22 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
+  # Optimization: Using bind_cols is significantly faster than mutate()
+  # for prepending metadata columns.
+  context_data <- tibble::tibble(
     ResID = id,
     ResName = name,
     ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+    ResModifiedDate = modified_date
   )
+
+  # Ensure robustness for 0-row data frames by explicitly repeating/subsetting
+  context_data <- context_data[rep(1L, nrow(data)), ]
+
+  # Overwrite columns if they already exist in the data
+  data <- data[, setdiff(names(data), names(context_data)), drop = FALSE]
+
+  data_with_context <- dplyr::bind_cols(context_data, data)
 
   return(data_with_context)
 }

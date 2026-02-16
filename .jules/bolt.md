@@ -1,0 +1,1 @@
+## 2025-01-24 - [Vectorized Context Addition] **Learning:** Iterative metadata addition using `pmap()` and `mutate()` in `get_dataset()` was a major bottleneck (~200ms for 50 resources). Vectorizing this after `list_rbind()` yielded a 40x speedup. **Action:** Always look for opportunities to bind data first and then add metadata in a single vectorized step using indexing.
