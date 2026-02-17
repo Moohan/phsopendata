@@ -46,7 +46,9 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(
+    min(n_res, if (is.null(max_resources)) n_res else max_resources)
+  )
 
   selection_ids <- all_ids[res_index]
 
@@ -60,33 +62,25 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
+  all_types <- lapply(all_data, function(df) {
+    vapply(df, function(col) class(col)[1L], character(1L))
+  })
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
+  # Find columns that have different classes across data frames
+  first_classes <- list()
+  to_coerce <- character()
 
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
+  for (types in all_types) {
+    for (col in names(types)) {
+      cls <- types[[col]]
+      if (is.null(first_classes[[col]])) {
+        first_classes[[col]] <- cls
+      } else if (first_classes[[col]] != cls) {
+        to_coerce <- c(to_coerce, col)
+      }
+    }
   }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  to_coerce <- unique(to_coerce)
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -95,38 +89,77 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0L) {
+        df[cols_present] <- lapply(df[cols_present], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context && nrow(combined) > 0L) {
+    # Add the 'resource context' as columns to the data
+    res_info <- content$result$resources[res_index]
+
+    ids <- selection_ids
+    names <- vapply(
+      res_info,
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1L)
+    )
+    created_dates <- vapply(
+      res_info,
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1L)
+    )
+    modified_dates <- vapply(
+      res_info,
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    # Parse the date values
+    created_dates_posix <- as.POSIXct(
+      created_dates,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+    modified_dates_posix <- as.POSIXct(
+      modified_dates,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+
+    # Handle cases where the modified date is recorded as before the created date
+    invalid_modified <- !is.na(modified_dates_posix) &
+      !is.na(created_dates_posix) &
+      modified_dates_posix < created_dates_posix
+
+    modified_dates_posix[invalid_modified] <- created_dates_posix[invalid_modified]
+
+    # Map to combined data frame
+    res_idx <- as.integer(combined$res_idx)
+
+    context_data <- tibble::tibble(
+      ResID = ids[res_idx],
+      ResName = names[res_idx],
+      ResCreatedDate = created_dates_posix[res_idx],
+      ResModifiedDate = modified_dates_posix[res_idx]
+    )
+
+    # Prepend context columns and remove temporary res_idx
+    combined <- dplyr::bind_cols(
+      context_data,
+      combined[, setdiff(names(combined), "res_idx"), drop = FALSE]
+    )
+  }
 
   return(combined)
 }
