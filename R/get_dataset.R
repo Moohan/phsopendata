@@ -46,7 +46,9 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(
+    min(n_res, if (is.null(max_resources)) n_res else max_resources)
+  )
 
   selection_ids <- all_ids[res_index]
 
@@ -60,10 +62,11 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
+  # Use vapply and class()[1] for performance and robustness with multi-class
+  # objects (e.g., POSIXct)
+  types <- lapply(
     all_data,
-    purrr::map_chr,
-    class
+    function(df) vapply(df, function(col) class(col)[1L], character(1L))
   )
 
   # for each df, check if next df class matches
@@ -95,38 +98,78 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Batch coerce columns to character using fast base R pattern
+    all_data <- lapply(all_data, function(df) {
+      cols_to_coerce <- intersect(to_coerce, names(df))
+      if (length(cols_to_coerce) > 0L) {
+        df[cols_to_coerce] <- lapply(df[cols_to_coerce], as.character)
+      }
+      return(df)
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # If include_context is TRUE, we use names_to = "res_idx" to keep track
+  # of which row belongs to which resource for vectorized context addition.
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data in a vectorized way
+    # Extract metadata for selected resources
+    res_metadata <- content$result$resources[res_index]
+    res_ids <- selection_ids
+    res_names <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1L)
+    )
+    res_created <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1L)
+    )
+    res_modified <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    # Parse dates (vectorized)
+    res_created <- as.POSIXct(res_created, format = "%FT%X", tz = "UTC")
+    res_modified <- as.POSIXct(res_modified, format = "%FT%X", tz = "UTC")
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    is_earlier <- !is.na(res_modified) & !is.na(res_created) &
+      res_modified < res_created
+    res_modified[is_earlier] <- res_created[is_earlier]
+
+    # Use res_idx to map metadata back to rows.
+    # list_rbind with names_to returns a character vector of indices.
+    idx <- as.integer(combined$res_idx)
+
+    # Prepend context columns to the data using bind_cols for performance.
+    # We explicitly remove existing context columns first to ensure overwrite
+    # behavior, mimicking the previous mutate(..., .before = everything()) logic.
+    context_data <- tibble::tibble(
+      ResID = res_ids[idx],
+      ResName = res_names[idx],
+      ResCreatedDate = res_created[idx],
+      ResModifiedDate = res_modified[idx]
+    )
+
+    combined <- combined[
+      ,
+      setdiff(names(combined), names(context_data)),
+      drop = FALSE
+    ]
+    combined <- dplyr::bind_cols(context_data, combined)
+    combined$res_idx <- NULL
+  }
 
   return(combined)
 }
