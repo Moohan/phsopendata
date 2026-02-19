@@ -60,10 +60,9 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
+  types <- lapply(
     all_data,
-    purrr::map_chr,
-    class
+    function(df) vapply(df, function(col) class(col)[1], character(1))
   )
 
   # for each df, check if next df class matches
@@ -95,38 +94,74 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_to_coerce <- intersect(to_coerce, names(df))
+      if (length(cols_to_coerce) > 0L) {
+        df[cols_to_coerce] <- lapply(df[cols_to_coerce], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data
+    res_metadata <- content$result$resources[res_index]
+
+    res_ids <- selection_ids
+    res_names <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1)
+    )
+    res_created_dates <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1)
+    )
+    res_modified_dates <- vapply(
+      res_metadata,
+      function(x) {
+        if (is.null(x$last_modified)) NA_character_ else x$last_modified
+      },
+      character(1)
+    )
+
+    # Parse the date values
+    res_created_dates <- as.POSIXct(
+      res_created_dates,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+    res_modified_dates <- as.POSIXct(
+      res_modified_dates,
+      format = "%FT%X",
+      tz = "UTC"
+    )
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    too_early <- !is.na(res_modified_dates) &
+      !is.na(res_created_dates) &
+      res_modified_dates < res_created_dates
+
+    res_modified_dates[too_early] <- res_created_dates[too_early]
+
+    res_idx <- rep(seq_along(all_data), vapply(all_data, nrow, integer(1L)))
+
+    context_data <- tibble::tibble(
+      ResID = res_ids[res_idx],
+      ResName = res_names[res_idx],
+      ResCreatedDate = res_created_dates[res_idx],
+      ResModifiedDate = res_modified_dates[res_idx]
+    )
+
+    # Prepend context columns
+    combined <- dplyr::bind_cols(context_data, combined)
+  }
 
   return(combined)
 }
