@@ -46,7 +46,7 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -60,10 +60,11 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
+  # Optimization: vapply is faster than purrr::map_chr and handles multi-class
+  # objects (like POSIXct) safely by taking the first class name.
+  types <- lapply(
     all_data,
-    purrr::map_chr,
-    class
+    function(df) vapply(df, function(col) class(col)[1], character(1))
   )
 
   # for each df, check if next df class matches
@@ -95,38 +96,66 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Optimization: Base R batch coercion via lapply is significantly faster
+    # than dplyr::mutate(across(...)) for large lists of data frames.
+    all_data <- lapply(all_data, function(df) {
+      cols <- intersect(to_coerce, names(df))
+      if (length(cols) > 0L) {
+        df[cols] <- lapply(df[cols], as.character)
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Optimization: Adding context columns in a vectorized way after
+    # binding is much faster than adding them to each data frame individually.
+    # Add the 'resource context' as columns to the data
+    res_metadata <- content$result$resources[res_index]
+
+    res_names <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1L)
+    )
+    res_created <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1L)
+    )
+    res_modified <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    # Parse the date values
+    res_created_date <- as.POSIXct(res_created, format = "%FT%X", tz = "UTC")
+    res_modified_date <- as.POSIXct(res_modified, format = "%FT%X", tz = "UTC")
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    swap_idx <- !is.na(res_modified_date) & res_modified_date < res_created_date
+    res_modified_date[swap_idx] <- res_created_date[swap_idx]
+
+    # Create an index for expansion
+    res_counts <- vapply(all_data, nrow, integer(1L))
+    idx <- rep(seq_along(all_data), res_counts)
+
+    # Prepend the context columns to the data
+    context_data <- tibble::tibble(
+      ResID = selection_ids[idx],
+      ResName = res_names[idx],
+      ResCreatedDate = res_created_date[idx],
+      ResModifiedDate = res_modified_date[idx]
+    )
+
+    combined <- dplyr::bind_cols(context_data, combined)
+  }
 
   return(combined)
 }

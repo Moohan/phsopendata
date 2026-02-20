@@ -29,14 +29,22 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+  # Prepending context columns with bind_cols() is faster than mutate()
+  # and we explicitly repeat values to ensure robustness for 0-row data.
+  # Optimization: bind_cols() is significantly more performant than
+  # mutate(..., .before = everything()) for prepending metadata.
+  n_rows <- nrow(data)
+  context_data <- tibble::tibble(
+    ResID = rep(id, n_rows),
+    ResName = rep(name, n_rows),
+    ResCreatedDate = rep(created_date, n_rows),
+    ResModifiedDate = rep(modified_date, n_rows)
   )
+
+  # Remove context columns if they already exist to mimic mutate's overwrite behavior
+  data <- data[, setdiff(names(data), names(context_data)), drop = FALSE]
+
+  data_with_context <- dplyr::bind_cols(context_data, data)
 
   return(data_with_context)
 }
