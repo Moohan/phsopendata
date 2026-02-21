@@ -18,16 +18,17 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
-
   # The platform can record the modified date as being before the created date
-  # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
+  # by a few microseconds. Comparing them as strings before parsing is more
+  # robust against parsing-induced NAs.
+  if (!is.na(modified_date) && !is.na(created_date) &&
+    modified_date < created_date) {
     modified_date <- created_date
   }
+
+  # Parse the date values to POSIXct
+  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
 
   # Base R column assignment and reordering is faster than dplyr::mutate()
   data$ResID <- id

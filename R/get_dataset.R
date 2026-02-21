@@ -36,10 +36,16 @@ get_dataset <- function(
     silent = TRUE
   )
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
+  # if phs_GET failed
+  if (inherits(content, "try-error")) {
+    # if content contains a 'Not Found Error'
+    # throw error with suggested dataset name
+    if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
+      suggest_dataset_name(dataset_name)
+    } else {
+      # Re-throw the original error if it's not a 'Not Found' error
+      stop(content)
+    }
   }
 
   # define list of resource IDs to get
@@ -110,24 +116,27 @@ get_dataset <- function(
       function(x) if (is.null(x$name)) NA_character_ else x$name,
       character(1L)
     )
-    created_dates <- vapply(
+    created_chr <- vapply(
       content$result$resources[res_index],
       function(x) if (is.null(x$created)) NA_character_ else x$created,
       character(1L)
     )
-    modified_dates <- vapply(
+    modified_chr <- vapply(
       content$result$resources[res_index],
       function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
       character(1L)
     )
 
-    created_dates <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
-    modified_dates <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
-
     # Handle modified_date < created_date due to microsecond rounding
-    m_before_c <- !is.na(modified_dates) & !is.na(created_dates) &
-      modified_dates < created_dates
-    modified_dates[m_before_c] <- created_dates[m_before_c]
+    # Lexicographical comparison on ISO8601 strings is robust and fast
+    m_before_c <- !is.na(modified_chr) & !is.na(created_chr) &
+      modified_chr < created_chr
+    modified_chr[m_before_c] <- created_chr[m_before_c]
+
+    # Convert to POSIXct to maintain existing API behavior
+    # Using format = "%FT%X" for consistency with existing package logic
+    created_dates <- as.POSIXct(created_chr, format = "%FT%X", tz = "UTC")
+    modified_dates <- as.POSIXct(modified_chr, format = "%FT%X", tz = "UTC")
 
     combined$ResID <- ids[res_idx]
     combined$ResName <- names[res_idx]
