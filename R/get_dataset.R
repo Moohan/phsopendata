@@ -46,7 +46,7 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -60,33 +60,18 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
+  # use vapply for faster and safer class extraction (handles multi-class objects)
+  types_list <- lapply(all_data, function(df) {
+    vapply(df, function(x) class(x)[1L], character(1L))
+  })
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # Flatten and find inconsistencies across ALL data frames
+  # split() + vapply(unique) is faster and more robust than pairwise comparison
+  all_types <- do.call(c, unname(types_list))
+  type_counts <- split(all_types, names(all_types))
+  to_coerce <- names(type_counts)[
+    vapply(type_counts, function(x) length(unique(x)) > 1L, logical(1L))
+  ]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -95,38 +80,65 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    # Base R batch coercion is significantly faster than dplyr::mutate(across(...))
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0L) {
+        for (col in cols_present) {
+          df[[col]] <- as.character(df[[col]])
+        }
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # use names_to to facilitate vectorized context addition if requested
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # Vectorized addition of resource context is significantly faster
+    # than calling add_context() iteratively
+    res_idx <- as.integer(combined$res_idx)
+
+    ids <- selection_ids
+    names <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$name)) NA_character_ else x$name,
+      character(1L)
+    )
+    created_dates <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$created)) NA_character_ else x$created,
+      character(1L)
+    )
+    modified_dates <- vapply(
+      content$result$resources[res_index],
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    created_dates <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
+    modified_dates <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
+
+    # Handle modified_date < created_date due to microsecond rounding
+    m_before_c <- !is.na(modified_dates) & !is.na(created_dates) &
+      modified_dates < created_dates
+    modified_dates[m_before_c] <- created_dates[m_before_c]
+
+    combined$ResID <- ids[res_idx]
+    combined$ResName <- names[res_idx]
+    combined$ResCreatedDate <- created_dates[res_idx]
+    combined$ResModifiedDate <- modified_dates[res_idx]
+
+    # Reorder columns to place context at the beginning
+    context_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+    original_cols <- setdiff(names(combined), c(context_cols, "res_idx"))
+    combined <- combined[, c(context_cols, original_cols)]
+  }
 
   return(combined)
 }
