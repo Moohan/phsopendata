@@ -29,14 +29,15 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- created_date
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
-  )
+  # Prepend context columns using performant base R assignment
+  data$ResID <- id
+  data$ResName <- name
+  data$ResCreatedDate <- created_date
+  data$ResModifiedDate <- modified_date
 
-  return(data_with_context)
+  # Reorder columns to the front
+  context_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+  data <- data[, c(context_cols, setdiff(names(data), context_cols))]
+
+  return(data)
 }

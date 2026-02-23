@@ -117,10 +117,7 @@ get_resource <- function(
     }
 
     # extract data from response content
-    data <- purrr::map(
-      res_content$result$records,
-      ~.x
-    ) %>%
+    data <- res_content$result$records %>%
       dplyr::bind_rows() %>%
       dplyr::select(
         -dplyr::starts_with("rank "),
