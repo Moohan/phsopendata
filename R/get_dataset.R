@@ -60,73 +60,77 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
+  # Identify type inconsistencies across resources using a vectorized approach.
+  # This avoids nested loops and is significantly faster for many resources.
+  col_names <- unlist(lapply(all_data, names), use.names = FALSE)
+  col_types <- unlist(
+    lapply(
+      all_data,
+      function(df) vapply(df, function(x) class(x)[1L], character(1L))
+    ),
+    use.names = FALSE
   )
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  type_splits <- split(col_types, col_names)
+  is_inconsistent <- vapply(
+    type_splits,
+    function(x) length(unique(x)) > 1L,
+    logical(1L)
+  )
+  to_coerce <- names(is_inconsistent)[is_inconsistent]
 
   if (length(to_coerce) > 0L) {
+    # Coerce inconsistent columns to character across all resources using lapply.
+    # Base R batch coercion is faster than dplyr::mutate(across(...)) here.
     cli::cli_warn(c(
       "Due to conflicts between column types across resources,
       the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0L) {
+        df[cols_present] <- lapply(df[cols_present], as.character)
+      }
+      return(df)
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context && nrow(combined) > 0L) {
+    # Vectorized context addition: apply metadata once to the combined data frame.
+    # This is much more efficient than adding context to each resource individually.
+    # Extract metadata for all resources
+    res_metadata <- content$result$resources[res_index]
+    res_idx <- as.integer(combined$res_idx)
+
+    # Pre-parse metadata into vectors to avoid repeated work
+    all_ids <- selection_ids[res_idx]
+    all_names <- purrr::map_chr(res_metadata, ~ .x$name)[res_idx]
+    all_created <- purrr::map_chr(res_metadata, ~ .x$created)[res_idx]
+    all_modified <- purrr::map_chr(
+      res_metadata,
+      ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
+    )[res_idx]
+
+    # Add the 'resource context' as columns to the data
+    combined <- add_context(
+      data = combined,
+      id = all_ids,
+      name = all_names,
+      created_date = all_created,
+      modified_date = all_modified
+    )
+
+    # Remove the temporary res_idx column
+    combined$res_idx <- NULL
+  }
 
   return(combined)
 }

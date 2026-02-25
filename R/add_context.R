@@ -25,18 +25,23 @@ add_context <- function(data, id, name, created_date, modified_date) {
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
+  to_fix <- !is.na(modified_date) & !is.na(created_date) &
+    modified_date < created_date
+
+  if (any(to_fix)) {
+    modified_date[to_fix] <- created_date[to_fix]
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
-  )
+  # Use base R column assignment for performance in hot paths.
+  # This avoids the overhead of dplyr::mutate when adding many columns.
+  data$ResID <- id
+  data$ResName <- name
+  data$ResCreatedDate <- created_date
+  data$ResModifiedDate <- modified_date
 
-  return(data_with_context)
+  # Reorder columns to put context first
+  context_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+  other_cols <- setdiff(names(data), context_cols)
+
+  return(data[, c(context_cols, other_cols)])
 }
