@@ -18,25 +18,34 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values if they aren't already POSIXct
+  # Optimization: only parse if necessary to avoid overhead in vectorized calls
+  if (!inherits(created_date, "POSIXct")) {
+    created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  }
+  if (!inherits(modified_date, "POSIXct")) {
+    modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  }
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
+  # Vectorized comparison to handle multiple resources efficiently
+  conflict <- !is.na(modified_date) & !is.na(created_date) & modified_date < created_date
+  if (any(conflict)) {
+    modified_date[conflict] <- created_date[conflict]
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
-    ResID = id,
-    ResName = name,
-    ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
-  )
+  # Base R optimization: significantly faster than dplyr::mutate for adding columns
+  # and avoids copy-on-modify overhead of multiple mutate steps.
+  data$ResID <- id
+  data$ResName <- name
+  data$ResCreatedDate <- created_date
+  data$ResModifiedDate <- modified_date
 
-  return(data_with_context)
+  # Reorder columns to put context first (mimics .before = everything())
+  context_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+  data <- data[, c(context_cols, setdiff(names(data), context_cols))]
+
+  return(data)
 }

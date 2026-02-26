@@ -105,28 +105,39 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context && nrow(combined) > 0L) {
+    # Optimized: Add 'resource context' as columns to the data in a vectorized way
+    # significantly reducing the number of calls to add_context and avoiding
+    # repeated overhead.
+    row_counts <- vapply(all_data, nrow, integer(1))
+
+    # Pre-parse dates once before expansion to minimize overhead in add_context
+    created_dates <- purrr::map_chr(
+      content$result$resources[res_index],
+      ~ .x$created
+    )
+    modified_dates <- purrr::map_chr(
+      content$result$resources[res_index],
+      ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
+    )
+
+    created_posix <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
+    modified_posix <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
+
+    combined <- add_context(
+      data = combined,
+      id = rep(selection_ids, row_counts),
+      name = rep(
+        purrr::map_chr(content$result$resources[res_index], ~ .x$name),
+        row_counts
+      ),
+      created_date = rep(created_posix, row_counts),
+      modified_date = rep(modified_posix, row_counts)
+    )
+  }
 
   return(combined)
 }
