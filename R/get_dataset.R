@@ -60,33 +60,23 @@ get_dataset <- function(
   )
 
   # resolve class issues
+  # vapply is used for type-safety and robustly handles multi-class objects (e.g. POSIXct)
   types <- purrr::map(
     all_data,
-    purrr::map_chr,
-    class
+    vapply,
+    function(x) class(x)[1],
+    character(1)
   )
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
+  # Identify columns with inconsistent types across resources using a vectorized approach.
+  # We flatten all types and group them by column name to find discrepancies.
+  all_types <- unlist(types, use.names = FALSE)
+  all_names <- unlist(lapply(types, names), use.names = FALSE)
+  types_by_col <- split(all_types, all_names)
+  is_inconsistent <- vapply(types_by_col, function(x) length(unique(x)) > 1L, logical(1))
 
   # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  to_coerce <- names(is_inconsistent)[is_inconsistent]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
