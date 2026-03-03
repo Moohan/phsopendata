@@ -18,25 +18,42 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values if they are not already POSIXct
+  if (!inherits(created_date, "POSIXct")) {
+    created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  }
+  if (!inherits(modified_date, "POSIXct")) {
+    modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  }
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
+  # Vectorized comparison to handle both scalar and vector inputs
+  invalid_mod <- !is.na(created_date) & !is.na(modified_date) &
+    modified_date < created_date
+
+  if (any(invalid_mod)) {
+    modified_date[invalid_mod] <- created_date[invalid_mod]
   }
 
-  data_with_context <- dplyr::mutate(
-    data,
+  # Use base R for faster column addition and reordering.
+  # Prepend context columns by removing them first if they exist
+  # (to mimic dplyr::mutate behavior) and then using cbind.
+  target_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+  data <- data[, setdiff(names(data), target_cols), drop = FALSE]
+
+  # Using a tibble here to avoid class mismatch issues and maintain tidyverse
+  # expectations for the return type.
+  context_df <- tibble::tibble(
     ResID = id,
     ResName = name,
     ResCreatedDate = created_date,
-    ResModifiedDate = modified_date,
-    .before = dplyr::everything()
+    ResModifiedDate = modified_date
   )
+
+  # bind_cols handles recycling and maintains the tibble class
+  data_with_context <- dplyr::bind_cols(context_df, data)
 
   return(data_with_context)
 }
