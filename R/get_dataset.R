@@ -105,28 +105,37 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # If context is requested, we keep a track of which row belongs to which
+  # resource so we can add metadata in a vectorized way
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    res_idx <- as.integer(combined[["res_idx"]])
+
+    # Add the 'resource context' as columns to the data in a vectorized way
+    # This is significantly faster than adding context to each resource
+    # individually, especially for datasets with many resources.
+    combined <- add_context(
+      data = combined,
+      id = selection_ids[res_idx],
+      name = purrr::map_chr(content$result$resources[res_index], ~ .x$name)[res_idx],
+      created_date = purrr::map_chr(
+        content$result$resources[res_index],
+        ~ .x$created
+      )[res_idx],
+      modified_date = purrr::map_chr(
+        content$result$resources[res_index],
+        ~ .x$last_modified
+      )[res_idx]
+    )
+
+    # Remove the temporary resource index column
+    combined[["res_idx"]] <- NULL
+  }
 
   return(combined)
 }
