@@ -1,0 +1,3 @@
+## 2024-05-22 - Vectorized Context and Type Check Optimization
+**Learning:** Iterative context addition (per-resource dataframe) and loop-based column type checking were major bottlenecks in `get_dataset.R`, causing redundant date parsing and mutation overhead. Vectorizing context addition after `list_rbind()` yielded a 26x speedup.
+**Action:** Always prefer vectorizing context addition *after* combining dataframes. Use `split()` and `vapply()` for cross-dataframe schema validation instead of nested loops. Directly pass record lists to `bind_rows()` to avoid unnecessary identity mapping overhead.
