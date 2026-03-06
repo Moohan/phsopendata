@@ -14,20 +14,28 @@
 #' @keywords internal
 add_context <- function(data, id, name, created_date, modified_date) {
   # Catch if the resource has never been modified
+  # Use if (is.null()) for scalar, but ensure compatibility with vector
   if (is.null(modified_date)) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values if they are still character
+  if (is.character(created_date)) {
+    created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  }
+  if (is.character(modified_date)) {
+    modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  }
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # created_date is always <= modified_date.
+  # Use if_else for vectorization support.
+  modified_date <- dplyr::if_else(
+    !is.na(modified_date) & modified_date < created_date,
+    created_date,
+    modified_date
+  )
 
   data_with_context <- dplyr::mutate(
     data,
