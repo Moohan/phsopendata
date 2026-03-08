@@ -46,7 +46,7 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -59,34 +59,25 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
+  # resolve class issues by identifying columns with inconsistent types
+  # across resources (e.g., numeric in one, character in another)
+  types_list <- lapply(all_data, function(df) {
+    vapply(df, function(x) class(x)[1L], character(1L))
+  })
+
+  all_types <- unlist(types_list, use.names = FALSE)
+  all_names <- unlist(lapply(types_list, names), use.names = FALSE)
+
+  # Group types by column name and find those with > 1 unique type
+  type_splits <- split(all_types, all_names)
+  inconsistent_types <- vapply(
+    type_splits,
+    function(x) length(unique(x)) > 1L,
+    logical(1L)
   )
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
   # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  to_coerce <- names(inconsistent_types)[inconsistent_types]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
