@@ -105,28 +105,44 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
   combined <- purrr::list_rbind(all_data)
+
+  if (include_context) {
+    # Extract metadata for the selected resources
+    res_metadata <- content$result$resources[res_index]
+    res_names <- purrr::map_chr(res_metadata, ~ .x$name)
+    res_created <- purrr::map_chr(res_metadata, ~ .x$created)
+    res_modified <- purrr::map_chr(
+      res_metadata,
+      ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
+    )
+
+    # Parse dates in a vectorized way to avoid repeated parsing
+    res_created_dt <- as.POSIXct(res_created, format = "%FT%X", tz = "UTC")
+    res_modified_dt <- as.POSIXct(res_modified, format = "%FT%X", tz = "UTC")
+
+    # The platform can record the modified date as being before the created date
+    # by a few microseconds, this will catch any rounding which ensure
+    # created_date is always <= modified_date
+    fix_idx <- !is.na(res_modified_dt) & res_modified_dt < res_created_dt
+    res_modified_dt[fix_idx] <- res_created_dt[fix_idx]
+
+    # Calculate row counts for each resource to expand metadata
+    row_counts <- vapply(all_data, nrow, integer(1L))
+
+    # Add the 'resource context' as columns to the combined data
+    # Vectorizing this step is significantly faster than adding context to
+    # each resource individually.
+    combined <- combined %>%
+      dplyr::mutate(
+        ResID = rep(selection_ids, row_counts),
+        ResName = rep(res_names, row_counts),
+        ResCreatedDate = rep(res_created_dt, row_counts),
+        ResModifiedDate = rep(res_modified_dt, row_counts),
+        .before = dplyr::everything()
+      )
+  }
 
   return(combined)
 }
