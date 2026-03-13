@@ -4,16 +4,16 @@
 #' date) to a data frame returned from a resource query.
 #'
 #' @param data A data frame or tibble containing resource data.
-#' @param id The resource ID (character).
-#' @param name The resource name (character).
-#' @param created_date The resource creation date (character or POSIXct).
-#' @param modified_date The resource last modified date (character or POSIXct).
+#' @param id The resource ID (character vector).
+#' @param name The resource name (character vector).
+#' @param created_date The resource creation date (character or POSIXct vector).
+#' @param modified_date The resource last modified date (character or POSIXct vector).
 #'
 #' @return A data frame or tibble with context columns prepended.
 #' @noRd
 #' @keywords internal
 add_context <- function(data, id, name, created_date, modified_date) {
-  # Catch if the resource has never been modified
+  # Catch if the resource has never been modified (for scalar case)
   if (is.null(modified_date)) {
     modified_date <- NA_character_
   }
@@ -24,10 +24,12 @@ add_context <- function(data, id, name, created_date, modified_date) {
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # created_date is always <= modified_date. Vectorized for performance.
+  modified_date <- dplyr::if_else(
+    !is.na(modified_date) & !is.na(created_date) & modified_date < created_date,
+    created_date,
+    modified_date
+  )
 
   data_with_context <- dplyr::mutate(
     data,

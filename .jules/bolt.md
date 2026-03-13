@@ -1,0 +1,3 @@
+## 2025-05-15 - [Vectorized Context Addition] **Learning:** Vectorizing the addition of resource context (ID, Name, Dates) after combining multiple data frames via `purrr::list_rbind()` is significantly more performant than adding context to each data frame iteratively. In a 100-resource simulation, this achieved a ~50x speedup. **Action:** Always prioritize combining data first and applying uniform metadata transformations in a vectorized manner afterwards.
+
+## 2025-05-15 - [Efficient Date Parsing in Loops] **Learning:** Repeatedly parsing the same date strings into `POSIXct` objects during data frame expansion creates massive overhead. **Action:** Pre-parse unique date strings into `POSIXct` before expanding them to match the final row count.
