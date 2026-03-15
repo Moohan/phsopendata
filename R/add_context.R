@@ -13,7 +13,7 @@
 #' @noRd
 #' @keywords internal
 add_context <- function(data, id, name, created_date, modified_date) {
-  # Catch if the resource has never been modified
+  # Handle NULL modified_date
   if (is.null(modified_date)) {
     modified_date <- NA_character_
   }
@@ -24,10 +24,13 @@ add_context <- function(data, id, name, created_date, modified_date) {
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # created_date is always <= modified_date.
+  # Using if_else for vectorization.
+  modified_date <- dplyr::if_else(
+    !is.na(modified_date) & !is.na(created_date) & modified_date < created_date,
+    created_date,
+    modified_date
+  )
 
   data_with_context <- dplyr::mutate(
     data,
