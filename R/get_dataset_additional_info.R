@@ -22,21 +22,15 @@ get_dataset_additional_info <- function(dataset_name) {
   amount_of_resources <- length(content$result$resources)
 
   # get the last recourse created and modified dates
-  last_resource_created_date <- purrr::map_chr(
-    content$result$resources,
-    ~ .$created
-  )
-  last_resource_modified_date <- purrr::map_chr(
-    content$result$resources,
-    ~ .$last_modified
-  )
+  resource_dates <- vapply(content$result$resources, function(res) {
+    created <- res$created
+    modified <- if (is.null(res$last_modified)) created else res$last_modified
+    max(created, modified)
+  }, character(1L))
 
   # get the latest between the created and modified dates and
   # change to datetime format
-  most_recent_resource_date <- max(
-    last_resource_modified_date,
-    last_resource_created_date
-  ) %>%
+  most_recent_resource_date <- max(resource_dates) %>%
     as.POSIXct(format = "%FT%X", tz = "UTC")
 
   # create tibble to return

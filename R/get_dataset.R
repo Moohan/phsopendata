@@ -36,19 +36,32 @@ get_dataset <- function(
     silent = TRUE
   )
 
+  # Handle connection errors or other phs_GET failures
+  if (inherits(content, "try-error")) {
+    error_msg <- as.character(content)
+    if (grepl("Not Found Error", error_msg, fixed = TRUE)) {
+      suggest_dataset_name(dataset_name)
+    }
+    cli::cli_abort(
+      c(
+        "Can't connect to the CKAN server.",
+        i = "Check your network or proxy settings."
+      ),
+      call = rlang::caller_env()
+    )
+  }
+
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
   if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
     suggest_dataset_name(dataset_name)
   }
 
-  # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  n_res <- length(content$result$resources)
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
-  n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
-
-  selection_ids <- all_ids[res_index]
+  # define list of resource IDs and names to get
+  selection_ids <- vapply(content$result$resources[res_index], function(x) x$id, character(1L))
 
   # get all resources
   all_data <- purrr::map(
@@ -105,21 +118,20 @@ get_dataset <- function(
       vapply(all_data, nrow, integer(1L))
     )
 
+    # Extract metadata once for efficiency
+    res_metadata <- content$result$resources[res_index]
+    res_names <- vapply(res_metadata, function(x) x$name, character(1L))
+    res_created <- vapply(res_metadata, function(x) x$created, character(1L))
+    res_modified <- vapply(res_metadata, function(x) {
+      if (is.null(x$last_modified)) NA_character_ else x$last_modified
+    }, character(1L))
+
     combined <- add_context(
       data = combined,
       id = selection_ids[res_idx],
-      name = purrr::map_chr(
-        content$result$resources[res_index],
-        ~ .x$name
-      )[res_idx],
-      created_date = purrr::map_chr(
-        content$result$resources[res_index],
-        ~ .x$created
-      )[res_idx],
-      modified_date = purrr::map_chr(
-        content$result$resources[res_index],
-        ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
-      )[res_idx]
+      name = res_names[res_idx],
+      created_date = res_created[res_idx],
+      modified_date = res_modified[res_idx]
     )
   }
 

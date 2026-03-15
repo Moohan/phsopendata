@@ -28,15 +28,22 @@ list_resources <- function(dataset_name) {
   }
 
   # define list of resource IDs names date created and date modified within dataset
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-  all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
-  all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
-  all_date_modified <- purrr::map_chr(
-    content$result$resources,
-    ~ .x$last_modified
-  ) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
+  res_metadata <- content$result$resources
+  all_ids <- vapply(res_metadata, function(x) x$id, character(1L))
+  all_names <- vapply(res_metadata, function(x) x$name, character(1L))
+  all_date_created <- as.POSIXct(
+    vapply(res_metadata, function(x) x$created, character(1L)),
+    format = "%FT%X",
+    tz = "UTC"
+  )
+  all_date_modified <- as.POSIXct(
+    vapply(res_metadata, function(x) {
+      if (is.null(x$last_modified)) NA_character_ else x$last_modified
+    }, character(1L)),
+    format = "%FT%X",
+    tz = "UTC"
+  )
+
   return_value <- tibble::tibble(
     res_id = all_ids,
     name = all_names,

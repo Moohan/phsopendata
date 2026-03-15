@@ -23,19 +23,20 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   content <- phs_GET("package_show", query)
 
   # add the id, created date and last_modified to a data.frame
-  id <- vector("character")
-  created_date <- vector("character")
-  modified_date <- vector("character")
-
-  for (res in content$result$resources) {
-    id <- append(id, res$id)
-    created_date <- append(created_date, res$created)
-    modified_date <- append(modified_date, res$last_modified)
-  }
   all_id_data <- tibble::tibble(
-    id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
+    id = vapply(content$result$resources, function(x) x$id, character(1L)),
+    created_date = strptime(
+      vapply(content$result$resources, function(x) x$created, character(1L)),
+      format = "%FT%X",
+      tz = "UTC"
+    ),
+    modified_date = strptime(
+      vapply(content$result$resources, function(x) {
+        if (is.null(x$last_modified)) NA_character_ else x$last_modified
+      }, character(1L)),
+      format = "%FT%X",
+      tz = "UTC"
+    )
   ) %>%
     dplyr::mutate(most_recent_date_created = max(created_date))
 
