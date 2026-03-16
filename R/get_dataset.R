@@ -46,7 +46,8 @@ get_dataset <- function(
 
     cli::cli_abort(
       c("Failed to fetch dataset information from the API.",
-        "i" = "The error was: {.val {as.character(content)}}")
+        "i" = "The error was: {.val {as.character(content)}}"
+      )
     )
   }
 
