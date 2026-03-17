@@ -10,3 +10,6 @@
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^revdep$
+^\.jules$
+^benchmark_.*\.R$
+^test_class_issue\.R$
