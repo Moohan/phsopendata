@@ -1,0 +1,3 @@
+## 2025-01-24 - Vectorizing Context Addition in `get_dataset`
+**Learning:** Iteratively adding metadata columns to many small data frames before combining them (using `pmap` and `mutate`) is significantly slower than combining them first and adding columns via vectorized assignment. Furthermore, calling `as.POSIXct` on recycled character vectors in a hot path creates massive overhead; pre-parsing dates once at the metadata level before expansion yields a substantial performance boost.
+**Action:** Always combine data frames first using `list_rbind` and apply context/metadata enrichment vectorially using row indexing. Pre-parse date strings to `POSIXct` objects before they are repeated to match the combined data frame's row count.
