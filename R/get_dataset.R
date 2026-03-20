@@ -59,34 +59,24 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
+  # identify column types to check for inconsistencies
+  # extract first class of each column for all dataframes
+  all_types <- unlist(
+    lapply(
+      all_data,
+      function(df) vapply(df, function(x) class(x)[1L], character(1L))
+    ),
+    use.names = FALSE
   )
+  all_names <- unlist(lapply(all_data, names), use.names = FALSE)
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
+  # group types by column name
+  type_groups <- split(all_types, all_names)
 
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # find columns with more than one unique type
+  to_coerce <- names(type_groups)[
+    vapply(type_groups, function(x) length(unique(x)) > 1L, logical(1L))
+  ]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -105,28 +95,56 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # add the 'resource context' as columns to the data
+    # pre-parsing dates to avoid redundant parsing for every row
+    # of the combined data frame
+    res_names <- vapply(
+      content$result$resources[res_index],
+      function(x) x$name,
+      character(1L)
+    )
+    res_created <- as.POSIXct(
+      vapply(
+        content$result$resources[res_index],
+        function(x) x$created,
+        character(1L)
+      ),
+      format = "%FT%X",
+      tz = "UTC"
+    )
+    res_modified <- as.POSIXct(
+      vapply(
+        content$result$resources[res_index],
+        function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+        character(1L)
+      ),
+      format = "%FT%X",
+      tz = "UTC"
+    )
+
+    # ensure created_date is always <= modified_date
+    fix_idx <- !is.na(res_modified) & res_modified < res_created
+    res_modified[fix_idx] <- res_created[fix_idx]
+
+    # map resource index back to metadata
+    idx <- as.integer(combined$res_idx)
+
+    combined$ResID <- selection_ids[idx]
+    combined$ResName <- res_names[idx]
+    combined$ResCreatedDate <- res_created[idx]
+    combined$ResModifiedDate <- res_modified[idx]
+
+    # reorder columns to put context first and remove res_idx
+    nc <- ncol(combined)
+    combined <- combined[, c((nc - 3L):nc, 2:(nc - 4L)), drop = FALSE]
+  }
 
   return(combined)
 }
