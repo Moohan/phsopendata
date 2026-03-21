@@ -1,12 +1,5 @@
-^phsopendata\.Rproj$
-^\.Rproj\.user$
-^README\.Rmd$
+^.*\.Rproj$
+^\.jules$
 ^\.github$
-^codecov\.yml$
-^_pkgdown\.yml$
-^docs$
-^pkgdown$
-^cran-comments\.md$
-^LICENSE\.md$
-^CRAN-SUBMISSION$
-^revdep$
+^benchmark_.*\.R$
+^test_.*\.R$

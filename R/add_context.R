@@ -24,10 +24,13 @@ add_context <- function(data, id, name, created_date, modified_date) {
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # created_date is always <= modified_date. Vectorized check.
+  fix_idx <- !is.na(modified_date) & !is.na(created_date) & modified_date < created_date
+  modified_date[fix_idx] <- created_date[fix_idx]
+
+  # Ensure context columns are removed if they already exist
+  target_cols <- c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+  data <- data[, setdiff(names(data), target_cols), drop = FALSE]
 
   data_with_context <- dplyr::mutate(
     data,
