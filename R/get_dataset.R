@@ -59,34 +59,23 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
-
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
-
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
+  if (length(all_data) == 0L) {
+    return(tibble::tibble())
   }
 
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # identify type inconsistencies across resources
+  all_cols <- unlist(lapply(all_data, names), use.names = FALSE)
+  all_types <- unlist(lapply(all_data, function(df) {
+    vapply(df, function(x) class(x)[1L], character(1L))
+  }), use.names = FALSE)
+
+  # split types by column names and find columns with more than one unique type
+  types_by_col <- split(all_types, all_cols)
+  to_coerce <- names(types_by_col)[vapply(
+    types_by_col,
+    function(x) length(unique(x)) > 1L,
+    logical(1L)
+  )]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -105,28 +94,68 @@ get_dataset <- function(
     )
   }
 
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
-
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  # Use res_idx to map context if required
+  combined <- purrr::list_rbind(
+    all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data in a single vectorized step
+    res_metadata <- content$result$resources[res_index]
+
+    # Pre-parse dates to avoid redundant parsing for every row
+    # last_modified can be NULL in CKAN API
+    created_dates <- vapply(
+      res_metadata,
+      function(x) x$created,
+      character(1L)
+    )
+    modified_dates <- vapply(
+      res_metadata,
+      function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified,
+      character(1L)
+    )
+
+    created_dates_ct <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
+    modified_dates_ct <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
+
+    # Fix date discrepancies before expansion
+    m_lt_c <- !is.na(modified_dates_ct) &
+      !is.na(created_dates_ct) &
+      modified_dates_ct < created_dates_ct
+    modified_dates_ct[m_lt_c] <- created_dates_ct[m_lt_c]
+
+    res_names <- vapply(res_metadata, function(x) x$name, character(1L))
+    res_ids <- selection_ids
+
+    if (nrow(combined) > 0L) {
+      # Map metadata back to rows using the resource index
+      # names_to in list_rbind returns names if they exist, or 1, 2, 3 as characters
+      # since selection_ids is unnamed, it will be characters "1", "2", ...
+      idx <- as.integer(combined$res_idx)
+
+      combined <- add_context(
+        data = combined,
+        id = res_ids[idx],
+        name = res_names[idx],
+        created_date = created_dates_ct[idx],
+        modified_date = modified_dates_ct[idx]
+      )
+    } else {
+      # Handle 0-row case to ensure consistent output schema
+      combined <- add_context(
+        data = combined,
+        id = character(0L),
+        name = character(0L),
+        created_date = created_dates_ct[0L],
+        modified_date = modified_dates_ct[0L]
+      )
+    }
+
+    combined$res_idx <- NULL
+  }
 
   return(combined)
 }

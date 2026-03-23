@@ -67,17 +67,16 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+  # bind_rows handles NULLs from the API by assigning NA to the result
+  query_data <- dplyr::bind_rows(content$result$records)
 
-      tibble::as_tibble(.x)
-    }
-  ) %>%
-    purrr::list_rbind()
+  # replace NA with "" so results are consistent with the CKAN API
+  if (nrow(query_data) > 0L) {
+    query_data[] <- lapply(query_data, function(x) {
+      x[is.na(x)] <- ""
+      return(x)
+    })
+  }
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {
