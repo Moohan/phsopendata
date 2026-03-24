@@ -67,17 +67,19 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+  query_data <- dplyr::bind_rows(content$result$records)
 
-      tibble::as_tibble(.x)
-    }
-  ) %>%
-    purrr::list_rbind()
+  # replace NA (from NULL in JSON) with "" to maintain existing behavior
+  # do this efficiently using lapply on the data frame
+  if (nrow(query_data) > 0L) {
+    query_data[] <- lapply(query_data, function(x) {
+      if (is.character(x) || is.numeric(x) || is.logical(x)) {
+        x[is.na(x)] <- ""
+      }
+      return(x)
+    })
+    query_data <- tibble::as_tibble(query_data)
+  }
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {

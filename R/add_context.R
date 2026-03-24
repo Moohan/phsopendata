@@ -18,17 +18,25 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
-  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  # Parse the date values if they aren't already POSIXct
+  if (!inherits(created_date, "POSIXct")) {
+    created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  }
+  if (!inherits(modified_date, "POSIXct")) {
+    modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
+  }
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
+  # Vectorized comparison handles both scalar and vector inputs
+  m_lt_c <- !is.na(modified_date) & modified_date < created_date
+  if (any(m_lt_c, na.rm = TRUE)) {
+    modified_date[m_lt_c] <- created_date[m_lt_c]
   }
 
+  # Use base R for performance in hot paths (re-ordering/adding columns)
+  # But mutate is more robust for 0-row data frames and ensures .before
   data_with_context <- dplyr::mutate(
     data,
     ResID = id,
