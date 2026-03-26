@@ -62,8 +62,7 @@ get_dataset <- function(
   # resolve class issues
   types <- purrr::map(
     all_data,
-    purrr::map_chr,
-    class
+    ~ vapply(.x, function(x) class(x)[1], character(1))
   )
 
   # for each df, check if next df class matches
