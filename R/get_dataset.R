@@ -104,28 +104,46 @@ get_dataset <- function(
     )
   }
 
+  # Combine the list of resources into a single tibble
+  combined <- purrr::list_rbind(all_data, names_to = if (include_context) "res_idx" else NULL)
+
   if (include_context) {
     # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
-  }
+    # We do this after list_rbind for significantly better performance
+    res_info <- content$result$resources[res_index]
 
-  # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+    # Pre-parse metadata to avoid redundant parsing for every row
+    u_id <- selection_ids
+    u_name <- purrr::map_chr(res_info, ~ .x$name)
+    u_created <- as.POSIXct(
+      purrr::map_chr(res_info, ~ .x$created),
+      format = "%FT%X", tz = "UTC"
+    )
+    u_modified <- as.POSIXct(
+      purrr::map_chr(res_info, ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified),
+      format = "%FT%X", tz = "UTC"
+    )
+
+    # Fix 'modified < created' discrepancy on the unique metadata
+    m_lt_c <- !is.na(u_modified) & u_modified < u_created
+    u_modified[m_lt_c] <- u_created[m_lt_c]
+
+    # Map metadata back to all rows using the index from list_rbind
+    idx <- as.integer(combined$res_idx)
+
+    combined$ResID <- u_id[idx]
+    combined$ResName <- u_name[idx]
+    combined$ResCreatedDate <- u_created[idx]
+    combined$ResModifiedDate <- u_modified[idx]
+
+    # Reorder columns and remove temporary index
+    combined <- combined %>%
+      dplyr::select(
+        dplyr::all_of(c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")),
+        dplyr::everything(),
+        -dplyr::all_of("res_idx")
+      )
+  }
 
   return(combined)
 }
