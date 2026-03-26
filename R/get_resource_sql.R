@@ -67,21 +67,23 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
-
-      tibble::as_tibble(.x)
-    }
-  ) %>%
-    purrr::list_rbind()
+  records <- content$result$records
+  query_data <- dplyr::bind_rows(records)
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {
     return(query_data)
+  }
+
+  # Replace NULLs with "" to maintain original behavior (coerced character type)
+  # This is only applied to columns that actually contained NULLs in the raw response.
+  null_cols <- unique(unlist(lapply(records, function(x) {
+    names(x)[vapply(x, is.null, logical(1))]
+  }), use.names = FALSE))
+
+  for (col in null_cols) {
+    query_data[[col]] <- as.character(query_data[[col]])
+    query_data[[col]][is.na(query_data[[col]])] <- ""
   }
 
   # get correct order of columns
