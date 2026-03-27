@@ -46,7 +46,7 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, if (is.null(max_resources)) n_res else max_resources)
+  res_index <- seq_len(min(n_res, if (is.null(max_resources)) n_res else max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -66,6 +66,9 @@ get_dataset <- function(
     use.names = FALSE
   )
   all_names <- unlist(lapply(all_data, names), use.names = FALSE)
+
+  if (is.null(all_types)) all_types <- character(0L)
+  if (is.null(all_names)) all_names <- character(0L)
 
   types_by_col <- split(all_types, all_names)
   to_coerce <- names(types_by_col)[vapply(types_by_col, function(x) length(unique(x)) > 1L, logical(1L))]
@@ -128,7 +131,13 @@ get_dataset <- function(
   }
 
   # Clean up temporary res_idx column
-  combined$res_idx <- NULL
+  if ("res_idx" %in% names(combined)) {
+    combined$res_idx <- NULL
+  }
+
+  if (!inherits(combined, "tbl_df")) {
+    combined <- tibble::as_tibble(combined)
+  }
 
   return(combined)
 }
