@@ -38,7 +38,7 @@ get_dataset <- function(
 
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
+  if (inherits(content, "try-error")) {
     suggest_dataset_name(dataset_name)
   }
 
@@ -80,19 +80,17 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
+    all_data <- lapply(all_data, function(df) {
+      target_cols <- intersect(names(df), to_coerce)
+      for (col in target_cols) {
+        df[[col]] <- as.character(df[[col]])
+      }
+      df
+    })
   }
 
   # Combine the list of resources into a single tibble
-  # Keep track of which rows came from which resource for context addition
-  combined <- purrr::list_rbind(all_data, names_to = "res_idx")
+  combined <- purrr::list_rbind(all_data)
 
   if (include_context) {
     # Extract and pre-parse metadata
@@ -104,37 +102,30 @@ get_dataset <- function(
       ~ if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
     )
 
-    # Date parsing (once)
+    # Parse dates
     p_created <- as.POSIXct(created_dates, format = "%FT%X", tz = "UTC")
     p_modified <- as.POSIXct(modified_dates, format = "%FT%X", tz = "UTC")
 
-    # Expand metadata to match the combined rows using res_idx
-    if (nrow(combined) > 0L) {
-      res_idx_int <- as.integer(combined$res_idx)
-      combined <- add_context(
-        data = combined,
-        id = selection_ids[res_idx_int],
-        name = res_names[res_idx_int],
-        created_date = p_created[res_idx_int],
-        modified_date = p_modified[res_idx_int]
-      )
-    } else {
-      # Handle 0-row combined data frame
-      combined <- add_context(
-        data = combined,
-        id = character(0),
-        name = character(0),
-        created_date = p_created[0],
-        modified_date = p_modified[0]
-      )
+    # Correct modified < created on the metadata vector (highly efficient)
+    m_lt_c <- !is.na(p_modified) & !is.na(p_created) & p_modified < p_created
+    if (any(m_lt_c)) {
+      p_modified[m_lt_c] <- p_created[m_lt_c]
     }
+
+    # Expand metadata to match combined rows
+    row_counts <- vapply(all_data, nrow, integer(1L))
+    meta_idx <- rep(seq_along(all_data), row_counts)
+
+    combined <- add_context(
+      data = combined,
+      id = selection_ids[meta_idx],
+      name = res_names[meta_idx],
+      created_date = p_created[meta_idx],
+      modified_date = p_modified[meta_idx]
+    )
   }
 
-  # Clean up temporary res_idx column
-  if ("res_idx" %in% names(combined)) {
-    combined$res_idx <- NULL
-  }
-
+  # Ensure tibble output
   if (!inherits(combined, "tbl_df")) {
     combined <- tibble::as_tibble(combined)
   }
