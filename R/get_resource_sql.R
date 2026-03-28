@@ -67,17 +67,18 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+  query_data <- dplyr::bind_rows(content$result$records)
 
-      tibble::as_tibble(.x)
+  # replace NA (from NULL) with "" so existing behavior is maintained
+  # this co-erces columns containing NA to character
+  if (nrow(query_data) > 0) {
+    # Only co-erce columns that actually contain NAs to avoid unnecessary work
+    # and type changes for clean columns.
+    cols_with_na <- names(query_data)[vapply(query_data, anyNA, logical(1))]
+    for (col in cols_with_na) {
+      query_data[[col]][is.na(query_data[[col]])] <- ""
     }
-  ) %>%
-    purrr::list_rbind()
+  }
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {

@@ -60,33 +60,16 @@ get_dataset <- function(
   )
 
   # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
+  # extract first class only for performance (fixes issues with POSIXct having two classes)
+  all_types <- unlist(lapply(all_data, function(df) {
+    vapply(df, function(x) class(x)[1], character(1))
+  }), use.names = FALSE)
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
+  all_names <- unlist(lapply(all_data, names), use.names = FALSE)
 
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
-
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  # Identify columns with more than one unique class
+  split_types <- split(all_types, all_names)
+  to_coerce <- names(split_types)[vapply(split_types, function(x) length(unique(x)) > 1, logical(1))]
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -95,38 +78,74 @@ get_dataset <- function(
       "{.val {to_coerce}}"
     ))
 
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+    all_data <- lapply(all_data, function(df) {
+      cols_present <- intersect(to_coerce, names(df))
+      if (length(cols_present) > 0) {
+        for (col in cols_present) {
+          df[[col]] <- as.character(df[[col]])
+        }
+      }
+      return(df)
+    })
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  combined <- purrr::list_rbind(all_data, names_to = "res_idx")
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data frame in a vectorized way
+    res_meta <- content$result$resources[res_index]
+    res_names <- vapply(res_meta, function(x) x$name, character(1))
+    res_created <- vapply(res_meta, function(x) x$created, character(1))
+    res_modified <- vapply(res_meta, function(x) {
+      if (is.null(x$last_modified)) NA_character_ else x$last_modified
+    }, character(1))
+
+    # Parse dates only for the unique resources, not every row
+    # Use pre-parsed dates to avoid repeated parsing in add_context
+    unique_created <- unique(res_created)
+    unique_modified <- unique(res_modified)
+
+    created_parsed_map <- stats::setNames(
+      as.POSIXct(unique_created, format = "%FT%X", tz = "UTC"),
+      unique_created
+    )
+    modified_parsed_map <- stats::setNames(
+      as.POSIXct(unique_modified, format = "%FT%X", tz = "UTC"),
+      unique_modified
+    )
+
+    created_date_vec <- created_parsed_map[res_created]
+    modified_date_vec <- modified_parsed_map[res_modified]
+    names(created_date_vec) <- NULL
+    names(modified_date_vec) <- NULL
+
+    # Handle 0-row cases where list_rbind doesn't produce res_idx as expected
+    if (nrow(combined) > 0) {
+      res_idx <- combined$res_idx
+      combined <- add_context(
+        data = combined,
+        id = selection_ids[res_idx],
+        name = res_names[res_idx],
+        created_date = created_date_vec[res_idx],
+        modified_date = modified_date_vec[res_idx]
+      )
+    } else {
+        # Ensure context columns exist even if 0 rows
+        combined <- add_context(
+          data = combined,
+          id = character(),
+          name = character(),
+          created_date = as.POSIXct(character(), tz = "UTC"),
+          modified_date = as.POSIXct(character(), tz = "UTC")
+        )
+    }
+  }
+
+  # Clean up temporary column if it exists
+  if ("res_idx" %in% names(combined)) {
+    combined$res_idx <- NULL
+  }
 
   return(combined)
 }
