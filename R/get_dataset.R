@@ -131,14 +131,14 @@ get_dataset <- function(
         modified_date = modified_date_vec[res_idx]
       )
     } else {
-        # Ensure context columns exist even if 0 rows
-        combined <- add_context(
-          data = combined,
-          id = character(),
-          name = character(),
-          created_date = as.POSIXct(character(), tz = "UTC"),
-          modified_date = as.POSIXct(character(), tz = "UTC")
-        )
+      # Ensure context columns exist even if 0 rows
+      combined <- add_context(
+        data = combined,
+        id = character(),
+        name = character(),
+        created_date = as.POSIXct(character(), tz = "UTC"),
+        modified_date = as.POSIXct(character(), tz = "UTC")
+      )
     }
   }
 
