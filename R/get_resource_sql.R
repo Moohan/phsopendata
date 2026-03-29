@@ -67,17 +67,33 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+  records <- content$result$records
 
-      tibble::as_tibble(.x)
+  # Perform targeted character coercion for columns that contained NULLs
+  # to match the original behavior where NULL was replaced by "" per-record,
+  # forcing those columns to character.
+  if (length(records) > 0L) {
+    # Identify columns that contained at least one NULL in the raw records
+    null_cols <- unique(unlist(
+      lapply(records, function(x) names(x)[vapply(x, is.null, logical(1L))]),
+      use.names = FALSE
+    ))
+
+    # Coerce only those columns to character across all records before binding.
+    # This is much faster than per-record as_tibble conversion.
+    for (col in null_cols) {
+      for (i in seq_along(records)) {
+        if (!is.null(records[[i]][[col]])) {
+          records[[i]][[col]] <- as.character(records[[i]][[col]])
+        } else if (col %in% names(records[[i]])) {
+          # Only replace with "" if the key was actually present
+          records[[i]][[col]] <- ""
+        }
+      }
     }
-  ) %>%
-    purrr::list_rbind()
+  }
+
+  query_data <- dplyr::bind_rows(records)
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {
