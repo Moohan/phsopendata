@@ -25,8 +25,11 @@ add_context <- function(data, id, name, created_date, modified_date) {
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
+  m_lt_c <- !is.na(modified_date) & !is.na(created_date) &
+    modified_date < created_date
+
+  if (any(m_lt_c, na.rm = TRUE)) {
+    modified_date[m_lt_c] <- created_date[m_lt_c]
   }
 
   data_with_context <- dplyr::mutate(
