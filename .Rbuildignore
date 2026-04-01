@@ -10,3 +10,7 @@
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^revdep$
+^\.jules$
+^benchmark_.*\.R$
+^install_output\.log$
+^benchmark_get_resource_sql_output\.log$
