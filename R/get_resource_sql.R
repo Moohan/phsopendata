@@ -67,17 +67,27 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  query_data <- purrr::map(
+  # identify columns that contain NULLs and coerce them to character to ensure
+  # consistent binding, as NULLs are replaced with "" to match existing behavior.
+  null_cols <- unique(unlist(lapply(
     content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+    function(x) names(x)[vapply(x, is.null, logical(1))]
+  ), use.names = FALSE))
 
-      tibble::as_tibble(.x)
+  query_data <- lapply(
+    content$result$records,
+    function(x) {
+      for (col in null_cols) {
+        if (is.null(x[[col]])) {
+          x[[col]] <- ""
+        } else {
+          x[[col]] <- as.character(x[[col]])
+        }
+      }
+      return(x)
     }
   ) %>%
-    purrr::list_rbind()
+    dplyr::bind_rows()
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {
