@@ -6,7 +6,7 @@
 #' @param rows (optional) Maximum number of rows to return (integer).
 #' @param row_filters (optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
 #' @param col_select (optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
-#' @param include_context (optional) If `TRUE`, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.
+#' @param include_context (optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.
 #'
 #' @seealso [get_dataset()] for downloading all resources from a given dataset.
 #'
@@ -121,11 +121,35 @@ get_resource <- function(
       res_content$result$records,
       ~.x
     ) %>%
-      dplyr::bind_rows() %>%
-      dplyr::select(
-        -dplyr::starts_with("rank "),
-        -dplyr::matches("_id")
-      )
+      dplyr::bind_rows()
+
+    if (nrow(data) > 0) {
+      data <- data %>%
+        dplyr::select(
+          -dplyr::starts_with("rank "),
+          -dplyr::matches("_id")
+        )
+    } else {
+      # If 0 rows, ensure requested columns are present
+      if (!is.null(col_select)) {
+        data <- tibble::as_tibble(
+          stats::setNames(
+            rep(list(character()), length(col_select)),
+            col_select
+          )
+        )
+      } else {
+        # Try to get column names from fields in response if available
+        field_names <- purrr::map_chr(res_content$result$fields, ~ .x$id)
+        field_names <- field_names[field_names != "_id"]
+        data <- tibble::as_tibble(
+          stats::setNames(
+            rep(list(character()), length(field_names)),
+            field_names
+          )
+        )
+      }
+    }
   }
 
   if (include_context) {
