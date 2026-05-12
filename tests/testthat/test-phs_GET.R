@@ -1,7 +1,7 @@
-test_that("returns httr::content", {
+test_that("returns content", {
   skip_if_offline(host = "www.opendata.nhs.scot")
 
-  content <- phs_GET("package_list", "")
+  content <- phs_GET("package_list", list())
 
   expect_true(content$success)
 
@@ -16,13 +16,13 @@ test_that("error_check() works as expected", {
 
   # no error for valid endpoint
   expect_type(
-    phs_GET("package_list", ""),
+    phs_GET("package_list", list()),
     "list"
   )
 
   # not found error
   expect_error(
-    phs_GET("datastore_search", "id=doop"),
+    phs_GET("datastore_search", list(id = "doop")),
     regexp = 'Resource "doop" was not found.'
   )
 })
@@ -30,7 +30,7 @@ test_that("error_check() works as expected", {
 test_that("request_url() works as expected (offline test)", {
   # invalid action argument
   expect_error(
-    phs_GET("", ""),
+    phs_GET("", list()),
     regexp = "API call failed"
   )
 })

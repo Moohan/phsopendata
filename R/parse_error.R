@@ -1,6 +1,6 @@
-#' Generates error message from an "error" element of an `httr::content` object
+#' Generates error message from an "error" element of an API response
 #'
-#' @param error The "error" element of an object produced by `httr::content`.
+#' @param error The "error" element of a CKAN response.
 #' @return character string
 #' @noRd
 #' @keywords internal
@@ -16,7 +16,7 @@ parse_error <- function(error) {
   )
 
   # special case for validation errors
-  if (error_type == "Validation Error") {
+  if (!is.null(error_type) && error_type == "Validation Error") {
     error_output <- paste0(names(error[1][1]), ": ", error[1][[1]])
 
     # translate message for package users
