@@ -50,7 +50,7 @@ request_url <- function(action, query, call = rlang::caller_env()) {
         parts <- strsplit(query, "&")[[1]]
         kv <- strsplit(parts, "=")
         query_list <- stats::setNames(
-          lapply(kv, function(x) if(length(x) > 1) x[2] else ""),
+          lapply(kv, function(x) if (length(x) > 1) x[2] else ""),
           vapply(kv, function(x) x[1], character(1))
         )
         req <- req |> httr2::req_url_query(!!!query_list)
