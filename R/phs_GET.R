@@ -25,20 +25,17 @@ phs_GET <- function(
     httr2::req_retry(max_tries = 3) |>
     httr2::req_error(
       body = function(resp) {
-        tryCatch(
-          {
-            # CKAN often returns error details in JSON body even for 4xx/5xx
-            if (httr2::resp_has_body(resp) &&
+        tryCatch({
+          # CKAN often returns error details in JSON body even for 4xx/5xx
+          if (httr2::resp_has_body(resp) &&
               httr2::resp_content_type(resp) == "application/json") {
-              body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
-              if (!is.null(body$error)) {
-                return(parse_error(body$error))
-              }
+            body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
+            if (!is.null(body$error)) {
+              return(parse_error(body$error))
             }
-            return(character())
-          },
-          error = function(e) character()
-        )
+          }
+          return(character())
+        }, error = function(e) character())
       }
     )
 
@@ -64,8 +61,10 @@ phs_GET <- function(
   # Extract the content from the HTTP response
   type <- httr2::resp_content_type(response)
 
-  if (type %in% c("text/html", "application/json")) {
+  if (type == "application/json") {
     content <- httr2::resp_body_json(response, simplifyVector = FALSE)
+  } else if (type == "text/html") {
+    content <- xml2::read_html(httr2::resp_body_string(response))
   } else if (type == "text/csv") {
     content <- readr::read_csv(
       file = I(httr2::resp_body_string(response)),

@@ -4,14 +4,11 @@ test_that("returns correct URL format", {
     "https://www.opendata.nhs.scot/api/3/action/datastore_search?id=doop"
   )
 
-  # For dump, httr2 versions may differ in escaping = in path
-  # We'll allow both for robustness across httr2 1.1.0 and 1.2.x
-  actual_url <- request_url("dump", "id=doop")$url
-  expect_true(
-    actual_url %in% c(
-      "https://www.opendata.nhs.scot/datastore/dump/id=doop?bom=true",
-      "https://www.opendata.nhs.scot/datastore/dump/id%3Ddoop?bom=true"
-    )
+  # For dump, we now build the URL manually to ensure = is not escaped in the path,
+  # matching the previous httr-based behavior and API expectations.
+  expect_identical(
+    request_url("dump", "id=doop")$url,
+    "https://www.opendata.nhs.scot/datastore/dump/id=doop?bom=true"
   )
 })
 
