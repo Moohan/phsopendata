@@ -15,10 +15,9 @@ Platform.
 }
 \section{Lifecycle}{
 
-
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-\code{list_datasets()} has been superseded by \code{list_resources()}.
+\code{list_datasets()} has been superseded by \code{\link[=list_resources]{list_resources()}}.
 While \code{list_datasets()} only returns a list of dataset packages,
 \code{list_resources()} provides a more comprehensive and flexible
 interface for exploring the PHS Open Data platform. It returns both
