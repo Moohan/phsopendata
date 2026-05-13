@@ -33,11 +33,11 @@ get_dataset_additional_info <- function(dataset_name) {
 
   # get the latest between the created and modified dates and
   # change to datetime format
-  most_recent_resource_date <- max(
-    last_resource_modified_date,
-    last_resource_created_date
-  ) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
+  most_recent_resource_date <- as.POSIXct(
+    max(last_resource_modified_date, last_resource_created_date),
+    format = "%Y-%m-%dT%H:%M:%S",
+    tz = "UTC"
+  )
 
   # create tibble to return
   return_value <- tibble::tibble(

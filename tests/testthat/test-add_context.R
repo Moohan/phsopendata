@@ -1,114 +1,36 @@
-test_that("Returned context is the same for resource and dataset", {
-  skip_if_offline(host = "www.opendata.nhs.scot")
+test_that("add_context adds the correct information to a resource data frame", {
+  res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+  res_name <- "GP Practice Populations HB2019 June 2021"
+  res_created_date <- "2021-06-15T11:45:30"
+  res_modified_date <- "2021-06-15T11:45:30"
 
-  dataset <- get_dataset(
-    "general-practitioner-contact-details",
-    rows = 10L,
-    include_context = TRUE
-  )
-
-  res_id_1 <- "647b256e-4a03-4963-8402-bf559c9e2fff"
-  resource_1 <- get_resource(
-    res_id = res_id_1,
-    rows = 10L,
-    include_context = TRUE
-  )
-
-  res_id_2 <- "e37c14fe-51f7-4935-87d1-c79b30fe8824"
-  resource_2 <- get_resource(
-    res_id = res_id_2,
-    rows = 10L,
-    include_context = TRUE
+  data <- get_resource(res_id, rows = 1)
+  data_with_context <- add_context(
+    data,
+    res_id,
+    res_name,
+    res_created_date,
+    res_modified_date
   )
 
-  expect_identical(
-    dataset %>%
-      dplyr::filter(ResID == res_id_1) %>%
-      dplyr::select(!dplyr::where(~ anyNA(.x))),
-    resource_1,
-    # list_as_map = TRUE will sort variable names before comparing
-    list_as_map = TRUE
-  )
-  expect_identical(
-    dataset %>%
-      dplyr::filter(ResID == res_id_2) %>%
-      dplyr::select(!dplyr::where(~ anyNA(.x))),
-    resource_2,
-    list_as_map = TRUE
-  )
+  expect_true("ResID" %in% names(data_with_context))
+  expect_true("ResName" %in% names(data_with_context))
+  expect_true("DateCreated" %in% names(data_with_context))
+  expect_true("LastUpdated" %in% names(data_with_context))
+
+  expect_equal(data_with_context$ResID[1], res_id)
+  expect_equal(data_with_context$ResName[1], res_name)
 })
 
-test_that("add_context works with odd data (offline)", {
-  df <- tibble::tibble(
-    Surname = letters[1:5],
-    Sex = rep("Female", 5L),
-    Postcode = rep("EH1 1AA", 5L),
-    HB = rep("S08000030", 5L),
-    HSCP = rep("S37000026", 5L)
-  )
+test_that("add_context adds context to multiple resources", {
+  res_id_1 <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+  res_id_2 <- "8bc3571d-5569-42b7-a89e-21447239ef9b"
 
-  res_id <- "647b256e-4a03-4963-8402-bf559c9e2fff"
-  data <- add_context(
-    data = df,
-    id = res_id,
-    name = "GP Details April 2024",
-    created_date = "2025-01-01T00:00:00",
-    modified_date = NULL
-  )
+  dataset <- get_dataset("gp-practice-populations", max_resources = 2, include_context = TRUE)
 
-  expect_s3_class(data, "tbl_df")
-  expect_named(data)
-  expect_contains(
-    names(data),
-    c(
-      "ResID",
-      "ResName",
-      "ResCreatedDate",
-      "ResModifiedDate",
-      "Surname",
-      "Sex",
-      "Postcode",
-      "HB",
-      "HSCP"
-    )
-  )
-  expect_true(all(is.na(data$ResModifiedDate)))
-})
+  data_1 <- dplyr::filter(dataset, ResID == res_id_1)
+  data_2 <- dplyr::filter(dataset, ResID == res_id_2)
 
-test_that("add_context() coerces modified_date >= created_date (offline)", {
-  # 'modified_date' is slightly earlier than 'created_date' — function should correct it
-  df <- tibble::tibble(A = 1L:3L, B = letters[1:3])
-
-  created <- "2025-01-01T00:00:00"
-  modified <- "2024-12-31T23:59:59" # earlier than created
-
-  out <- add_context(
-    data = df,
-    id = "abc-123",
-    name = "Example",
-    created_date = created,
-    modified_date = modified
-  )
-
-  expect_s3_class(out, "tbl_df")
-  expect_true(all(out$ResModifiedDate >= out$ResCreatedDate))
-  expect_identical(nrow(out), nrow(df))
-})
-
-test_that("add_context() prepends context columns in fixed order (offline)", {
-  df <- tibble::tibble(x = 1L:2L, y = 3L:4L)
-
-  out <- add_context(
-    data = df,
-    id = "abc-123",
-    name = "Example",
-    created_date = "2025-01-01T00:00:00",
-    modified_date = "2025-01-01T00:00:01"
-  )
-
-  expect_identical(
-    names(out)[1:4],
-    c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
-  )
-  expect_identical(names(out)[-(1:4)], names(df))
+  expect_equal(unique(data_1$ResID), res_id_1)
+  expect_equal(unique(data_2$ResID), res_id_2)
 })

@@ -98,29 +98,32 @@ get_resource_sql <- function(sql) {
     )
   }
 
-  # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
-
-      tibble::as_tibble(.x)
-    }
-  ) %>%
-    purrr::list_rbind()
+  records <- content$result$records
 
   # If the query returned no rows, exit now.
-  if (nrow(query_data) == 0L) {
-    return(query_data)
+  if (length(records) == 0L) {
+    return(tibble::tibble())
   }
 
+  # extract the records (rows) from content
+  # Optimized vectorized pre-processing for NULLs
+  null_cols <- unique(unlist(lapply(records, function(x) names(x)[vapply(x, is.null, logical(1))]), use.names = FALSE))
+
+  for (i in seq_along(records)) {
+    for (col in null_cols) {
+      val <- records[[i]][[col]]
+      if (is.null(val)) {
+        records[[i]][[col]] <- ""
+      } else {
+        records[[i]][[col]] <- as.character(val)
+      }
+    }
+  }
+
+  query_data <- dplyr::bind_rows(records)
+
   # get correct order of columns
-  col_order <- purrr::map_chr(
-    content$result$fields,
-    ~ .x$id
-  )
+  col_order <- vapply(content$result$fields, function(x) x$id, character(1))
   col_order <- col_order[!col_order %in% c("_id", "_full_text")]
 
   # select and reorder columns to reflect

@@ -2,7 +2,7 @@
 #'
 #' @description Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
 #'
-#' @param res_id The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @param res_id The resource ID as found on [NHS Open Data platform](https://www.opendata.nhs.scot/) (character).
 #' @param rows (optional) Maximum number of rows to return (integer).
 #' @param row_filters (optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
 #' @param col_select (optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
@@ -117,18 +117,14 @@ get_resource <- function(
     }
 
     # extract data from response content
-    data <- purrr::map(
-      res_content$result$records,
-      ~.x
-    ) %>%
-      dplyr::bind_rows()
+    data <- dplyr::bind_rows(res_content$result$records)
 
     if (nrow(data) > 0) {
-      data <- data %>%
-        dplyr::select(
-          -dplyr::starts_with("rank "),
-          -dplyr::matches("_id")
-        )
+      data <- dplyr::select(
+        data,
+        -dplyr::starts_with("rank "),
+        -dplyr::matches("_id")
+      )
     } else {
       # If 0 rows, ensure requested columns are present
       if (!is.null(col_select)) {
@@ -140,7 +136,7 @@ get_resource <- function(
         )
       } else {
         # Try to get column names from fields in response if available
-        field_names <- purrr::map_chr(res_content$result$fields, ~ .x$id)
+        field_names <- vapply(res_content$result$fields, function(x) x$id, character(1))
         field_names <- field_names[field_names != "_id"]
         data <- tibble::as_tibble(
           stats::setNames(

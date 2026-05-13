@@ -15,13 +15,13 @@ request_url <- function(action, query) {
     return(httr2::request(full_url))
   }
 
-  req <- httr2::request(base_url) |>
-    httr2::req_url_path_append("api/3/action") |>
-    httr2::req_url_path_append(action)
+  req <- httr2::request(base_url)
+  req <- httr2::req_url_path_append(req, "api/3/action")
+  req <- httr2::req_url_path_append(req, action)
 
   if (length(query) > 0) {
     if (is.list(query)) {
-      req <- req |> httr2::req_url_query(!!!query)
+      req <- httr2::req_url_query(req, !!!query)
     } else if (is.character(query)) {
       # Parse query string, splitting only on first "=" per part
       parts <- strsplit(query, "&")[[1]]
@@ -34,7 +34,7 @@ request_url <- function(action, query) {
           query_list[[part]] <- ""
         }
       }
-      req <- req |> httr2::req_url_query(!!!query_list)
+      req <- httr2::req_url_query(req, !!!query_list)
     }
   }
 

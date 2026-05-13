@@ -29,15 +29,27 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
 
   for (res in content$result$resources) {
     id <- append(id, res$id)
-    created_date <- append(created_date, res$created)
-    modified_date <- append(modified_date, res$last_modified)
+    # Ensure created date is not NULL
+    res_created <- if (is.null(res$created)) NA_character_ else res$created
+    created_date <- append(created_date, res_created)
+    # Ensure modified date is not NULL
+    res_modified <- if (is.null(res$last_modified)) NA_character_ else res$last_modified
+    modified_date <- append(modified_date, res_modified)
   }
   all_id_data <- tibble::tibble(
     id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
-  ) %>%
-    dplyr::mutate(most_recent_date_created = max(created_date))
+    created_date = strptime(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"),
+    modified_date = strptime(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  )
+
+  # Explicitly convert to POSIXct to avoid strptime issues in tibble
+  all_id_data$created_date <- as.POSIXct(all_id_data$created_date)
+  all_id_data$modified_date <- as.POSIXct(all_id_data$modified_date)
+
+  all_id_data <- dplyr::mutate(
+    all_id_data,
+    most_recent_date_created = max(created_date, na.rm = TRUE)
+  )
 
   # get the first row of the resources, this will be the same that appears
   # on the top on the open data platform
@@ -46,6 +58,7 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # If the resource at the top as appearing on the open data platform also has the most
   # recent date created, return it. Otherwise, error
   if (
+    !is.na(all_id_data_first_row$created_date) &&
     all_id_data_first_row$created_date ==
       all_id_data_first_row$most_recent_date_created
   ) {

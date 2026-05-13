@@ -18,29 +18,27 @@ phs_GET <- function(
   # - Set user agent
   # - Retry up to 3 times for transient errors (429, 503, etc.)
   # - Custom error handling to extract information from CKAN error bodies
-  req <- req |>
-    httr2::req_user_agent(
-      "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
-    ) |>
-    httr2::req_retry(max_tries = 3) |>
-    httr2::req_error(
-      body = function(resp) {
-        tryCatch(
-          {
-            # CKAN often returns error details in JSON body even for 4xx/5xx
-            if (httr2::resp_has_body(resp) &&
-              httr2::resp_content_type(resp) == "application/json") {
-              body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
-              if (!is.null(body$error)) {
-                return(parse_error(body$error))
-              }
-            }
-            return(character())
-          },
-          error = function(e) character()
-        )
-      }
-    )
+  req <- httr2::req_user_agent(
+    req,
+    "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
+  )
+  req <- httr2::req_retry(req, max_tries = 3)
+  req <- httr2::req_error(
+    req,
+    body = function(resp) {
+      tryCatch({
+        # CKAN often returns error details in JSON body even for 4xx/5xx
+        if (httr2::resp_has_body(resp) &&
+            httr2::resp_content_type(resp) == "application/json") {
+          body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
+          if (!is.null(body$error)) {
+            return(parse_error(body$error))
+          }
+        }
+        return(character())
+      }, error = function(e) character())
+    }
+  )
 
   # Attempt GET request
   response <- httr2::req_perform(req)
