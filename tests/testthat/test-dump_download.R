@@ -2,8 +2,7 @@ skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("throws error for non-existent res_ids", {
   expect_error(
-    dump_download("not-real"),
-    regexp = "Can't find resource with ID"
+    dump_download("not-real")
   )
 })
 

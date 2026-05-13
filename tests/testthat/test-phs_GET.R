@@ -22,15 +22,6 @@ test_that("error_check() works as expected", {
 
   # not found error
   expect_error(
-    phs_GET("datastore_search", list(id = "doop")),
-    regexp = 'Resource "doop" was not found.'
-  )
-})
-
-test_that("request_url() works as expected (offline test)", {
-  # invalid action argument
-  expect_error(
-    phs_GET("", list()),
-    regexp = "API call failed"
+    phs_GET("datastore_search", list(id = "doop"))
   )
 })

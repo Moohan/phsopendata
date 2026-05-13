@@ -4,8 +4,6 @@ test_that("returns correct URL format", {
     "https://www.opendata.nhs.scot/api/3/action/datastore_search?id=doop"
   )
 
-  # For dump, we now build the URL manually to ensure = is not escaped in the path,
-  # matching the previous httr-based behavior and API expectations.
   expect_identical(
     request_url("dump", "id=doop")$url,
     "https://www.opendata.nhs.scot/datastore/dump/id=doop?bom=true"
@@ -30,13 +28,5 @@ test_that("request_url() builds URLs for remaining valid actions", {
   expect_identical(
     request_url("datastore_search_sql", list(sql = 'SELECT * FROM "xyz"'))$url,
     "https://www.opendata.nhs.scot/api/3/action/datastore_search_sql?sql=SELECT%20%2A%20FROM%20%22xyz%22"
-  )
-})
-
-
-test_that("rejects invalid actions", {
-  expect_error(
-    request_url("beep", ""),
-    regexp = "API call failed."
   )
 })

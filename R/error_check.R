@@ -1,6 +1,6 @@
 #' Throws errors found in the content of a request
 #'
-#' @param content object produced by \code{httr2::resp_body_json}
+#' @param content object produced by [httr2::resp_body_json()]
 #' @keywords internal
 #' @noRd
 error_check <- function(content, call = rlang::caller_env()) {

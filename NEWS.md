@@ -1,5 +1,9 @@
 # phsopendata (development version)
 
+- Replaced `httr` with `httr2` for all API calls.
+- Bumped minimum R version to 4.1.
+- Improved API error reporting and handling.
+
 # phsopendata 1.1.0 (2026-06-05)
 
 - [`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.html) has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!
@@ -37,7 +41,7 @@
 - [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) and [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.html) gain a new parameter `include_context` 
 which allows adding context such as the resource ID and modified / created 
 dates to returned data (#24).
-- The magrittr pipe (`%>%`) is now exported (#29).
+- The magrittr pipe (`%>\%`) is now exported (#29).
 - [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) will now suggest multiple dataset names, when the dataset 
 you've asked for doesn't exist (i.e. there's a typo) and there are multiple 
 likely candidates  (#28).
