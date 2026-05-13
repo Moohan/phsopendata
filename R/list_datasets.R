@@ -5,17 +5,14 @@
 #' Platform.
 #'
 #' @section Lifecycle:
-#'
-#'
 #' `r lifecycle::badge("superseded")`
 #'
-#' `list_datasets()` has been superseded by `list_resources()`.
+#' `list_datasets()` has been superseded by [list_resources()].
 #' While `list_datasets()` only returns a list of dataset packages,
 #' `list_resources()` provides a more comprehensive and flexible
 #' interface for exploring the PHS Open Data platform. It returns both
 #' datasets and their associated resources in a single tibble, and
 #' supports filtering by dataset titles or resource names.
-
 #'
 #' @return A tibble.
 #' @export

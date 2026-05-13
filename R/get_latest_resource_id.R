@@ -22,29 +22,21 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   query <- list(id = dataset_name)
   content <- phs_GET("package_show", query)
 
-  # add the id, created date and last_modified to a data.frame
-  id <- vector("character")
-  created_date <- vector("character")
-  modified_date <- vector("character")
-
-  for (res in content$result$resources) {
-    id <- append(id, res$id)
-    # Ensure created date is not NULL
-    res_created <- if (is.null(res$created)) NA_character_ else res$created
-    created_date <- append(created_date, res_created)
-    # Ensure modified date is not NULL
-    res_modified <- if (is.null(res$last_modified)) NA_character_ else res$last_modified
-    modified_date <- append(modified_date, res_modified)
+  resources <- content$result$resources
+  if (length(resources) == 0) {
+    cli::cli_abort("No resources found for dataset {.val {dataset_name}}", call = call)
   }
+
+  # extract metadata safely
+  id <- vapply(resources, function(x) if (is.null(x$id)) "" else x$id, character(1))
+  created <- vapply(resources, function(x) if (is.null(x$created)) NA_character_ else x$created, character(1))
+  modified <- vapply(resources, function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified, character(1))
+
   all_id_data <- tibble::tibble(
     id = id,
-    created_date = strptime(created_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+    created_date = as.POSIXct(created, format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC"),
+    modified_date = as.POSIXct(modified, format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
   )
-
-  # Explicitly convert to POSIXct to avoid strptime issues in tibble
-  all_id_data$created_date <- as.POSIXct(all_id_data$created_date)
-  all_id_data$modified_date <- as.POSIXct(all_id_data$modified_date)
 
   all_id_data <- dplyr::mutate(
     all_id_data,
@@ -59,8 +51,8 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # recent date created, return it. Otherwise, error
   if (
     !is.na(all_id_data_first_row$created_date) &&
-      all_id_data_first_row$created_date ==
-        all_id_data_first_row$most_recent_date_created
+    all_id_data_first_row$created_date ==
+      all_id_data_first_row$most_recent_date_created
   ) {
     return(all_id_data_first_row$id)
   }

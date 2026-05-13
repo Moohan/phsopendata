@@ -38,15 +38,29 @@ get_dataset <- function(
 
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
+  if (inherits(content, "try-error")) {
+    if (grepl("Not Found Error", as.character(content), fixed = TRUE)) {
+      suggest_dataset_name(dataset_name)
+    } else {
+      cli::cli_abort("Failed to fetch dataset metadata for {.val {dataset_name}}.",
+                     parent = attr(content, "condition"))
+    }
+  }
+
+  if (is.null(content$result)) {
+     cli::cli_abort("API returned an unexpected response for {.val {dataset_name}}.")
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_ids <- vapply(content$result$resources, function(x) x$id, character(1))
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_limit <- if (is.null(max_resources)) n_res else max_resources
+  res_index <- seq_len(min(n_res, res_limit))
+
+  if (length(res_index) == 0) {
+    return(tibble::tibble())
+  }
 
   selection_ids <- all_ids[res_index]
 
@@ -60,14 +74,14 @@ get_dataset <- function(
   )
 
   # resolve class issues
+  # Use first class for comparison (handles POSIXct which returns multiple)
   types <- purrr::map(
     all_data,
-    purrr::map_chr,
-    class
+    function(df) vapply(df, function(x) class(x)[1L], character(1L))
   )
 
   # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
+  inconsistencies <- list()
   for (i in seq_along(types)) {
     if (i == length(types)) break
 
@@ -75,18 +89,19 @@ get_dataset <- function(
     next_types <- types[[i + 1L]]
 
     # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
+    common_names <- intersect(names(this_types), names(next_types))
 
     # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
+    if (length(common_names) > 0) {
+      inconsistent_cols <- common_names[this_types[common_names] != next_types[common_names]]
+      if (length(inconsistent_cols) > 0) {
+        inconsistencies <- c(inconsistencies, inconsistent_cols)
+      }
+    }
   }
 
   # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
+  to_coerce <- unique(unlist(inconsistencies))
 
   if (length(to_coerce) > 0L) {
     cli::cli_warn(c(
@@ -97,29 +112,31 @@ get_dataset <- function(
 
     all_data <- purrr::map(
       all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
+      function(df) {
+        # Using loop for robust coercion on tibbles
+        for (col in intersect(names(df), to_coerce)) {
+          df[[col]] <- as.character(df[[col]])
+        }
+        df
+      }
     )
   }
 
   if (include_context) {
+    # Extract metadata safely
+    res_list <- content$result$resources[res_index]
+    res_names <- vapply(res_list, function(x) if(is.null(x$name)) "" else x$name, character(1))
+    res_created <- vapply(res_list, function(x) if(is.null(x$created)) NA_character_ else x$created, character(1))
+    res_modified <- vapply(res_list, function(x) if(is.null(x$last_modified)) NA_character_ else x$last_modified, character(1))
+
     # Add the 'resource context' as columns to the data
     all_data <- purrr::pmap(
       list(
         data = all_data,
         id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
+        name = res_names,
+        created_date = res_created,
+        modified_date = res_modified
       ),
       add_context
     )

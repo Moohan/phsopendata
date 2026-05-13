@@ -26,20 +26,17 @@ phs_GET <- function(
   req <- httr2::req_error(
     req,
     body = function(resp) {
-      tryCatch(
-        {
-          # CKAN often returns error details in JSON body even for 4xx/5xx
-          if (httr2::resp_has_body(resp) &&
+      tryCatch({
+        # CKAN often returns error details in JSON body even for 4xx/5xx
+        if (httr2::resp_has_body(resp) &&
             httr2::resp_content_type(resp) == "application/json") {
-            body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
-            if (!is.null(body$error)) {
-              return(parse_error(body$error))
-            }
+          body <- httr2::resp_body_json(resp, simplifyVector = FALSE)
+          if (!is.null(body$error)) {
+            return(parse_error(body$error))
           }
-          return(character())
-        },
-        error = function(e) character()
-      )
+        }
+        return(character())
+      }, error = function(e) character())
     }
   )
 
