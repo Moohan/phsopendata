@@ -51,8 +51,8 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # recent date created, return it. Otherwise, error
   if (
     !is.na(all_id_data_first_row$created_date) &&
-    all_id_data_first_row$created_date ==
-      all_id_data_first_row$most_recent_date_created
+      all_id_data_first_row$created_date ==
+        all_id_data_first_row$most_recent_date_created
   ) {
     return(all_id_data_first_row$id)
   }

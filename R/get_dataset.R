@@ -43,12 +43,13 @@ get_dataset <- function(
       suggest_dataset_name(dataset_name)
     } else {
       cli::cli_abort("Failed to fetch dataset metadata for {.val {dataset_name}}.",
-                     parent = attr(content, "condition"))
+        parent = attr(content, "condition")
+      )
     }
   }
 
   if (is.null(content$result)) {
-     cli::cli_abort("API returned an unexpected response for {.val {dataset_name}}.")
+    cli::cli_abort("API returned an unexpected response for {.val {dataset_name}}.")
   }
 
   # define list of resource IDs to get
@@ -125,9 +126,9 @@ get_dataset <- function(
   if (include_context) {
     # Extract metadata safely
     res_list <- content$result$resources[res_index]
-    res_names <- vapply(res_list, function(x) if(is.null(x$name)) "" else x$name, character(1))
-    res_created <- vapply(res_list, function(x) if(is.null(x$created)) NA_character_ else x$created, character(1))
-    res_modified <- vapply(res_list, function(x) if(is.null(x$last_modified)) NA_character_ else x$last_modified, character(1))
+    res_names <- vapply(res_list, function(x) if (is.null(x$name)) "" else x$name, character(1))
+    res_created <- vapply(res_list, function(x) if (is.null(x$created)) NA_character_ else x$created, character(1))
+    res_modified <- vapply(res_list, function(x) if (is.null(x$last_modified)) NA_character_ else x$last_modified, character(1))
 
     # Add the 'resource context' as columns to the data
     all_data <- purrr::pmap(
