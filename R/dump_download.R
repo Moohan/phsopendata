@@ -10,7 +10,7 @@ dump_download <- function(res_id, call = rlang::caller_env()) {
   content <- tryCatch(
     suppressMessages(phs_GET("dump", res_id)),
     httr2_http_404 = function(cnd) {
-       cli::cli_abort(
+      cli::cli_abort(
         "Can't find resource with ID {.var {res_id}} in datastore.",
         parent = cnd,
         call = call
