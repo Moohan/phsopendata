@@ -29,14 +29,14 @@ Imports:
     readr (>= 1.0.0),
     rlang (>= 1.0.0),
     stringdist,
-    tibble (>= 3.0.0)
+    tibble (>= 3.0.0),
+    xml2
 Suggests:
     covr,
     curl,
     jsonlite (>= 1.1),
     spelling,
-    testthat (>= 3.0.0),
-    xml2
+    testthat (>= 3.0.0)
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3

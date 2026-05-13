@@ -1,9 +1,11 @@
-test_that("returns more than 1 dataset", {
+test_that("returns data with expected type and non-zero rows", {
   skip_if_offline(host = "www.opendata.nhs.scot")
 
-  data <- get_dataset("gp-practice-populations")
+  data <- get_dataset("gp-practice-populations", max_resources = 1L)
 
-  expect_gt(nrow(data), 1000L)
+  expect_s3_class(data, "tbl_df")
+  expect_gt(nrow(data), 0L)
+  expect_true("PracticeCode" %in% names(data))
 })
 
 test_that("works with max_resources argument", {
@@ -32,9 +34,7 @@ test_that("get_dataset works when 0 resources match criteria", {
 
   expect_s3_class(data, "tbl_df")
   expect_identical(nrow(data), 0L)
-  # When 0 rows are returned from CKAN, it seems it might not return the requested columns
-  # in the same way. But our test expects them.
-  # If it failed, it's because 'data' was empty or names didn't match.
+  expect_identical(names(data), c("PracticeCode", "HSCP"))
 })
 
 test_that("get_dataset filters error properly", {

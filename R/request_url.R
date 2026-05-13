@@ -32,11 +32,6 @@ request_url <- function(action, query, call = rlang::caller_env()) {
     # return dump request
     # For dump, query is the resource ID (character string)
     # We must avoid URL-encoding = in the path (e.g., id=doop becoming id%3Ddoop).
-    # Since httr2::request() may still escape the path even if passed a full URL,
-    # we use httr2::req_url() to manually set the URL and then bypass escaping if possible.
-    # However, httr2 always tries to maintain a valid URL.
-    # A safer way to bypass escaping in the path is not directly supported in httr2's higher level API.
-    # We will use req_url() on a base request.
     full_url <- paste0(base_url, "/datastore/dump/", query, "?bom=true")
     req <- httr2::request(base_url) |>
       httr2::req_url(full_url)
@@ -51,11 +46,20 @@ request_url <- function(action, query, call = rlang::caller_env()) {
       } else if (is.character(query) && length(query) == 1 && nzchar(query)) {
         # Split query string into components to avoid escaping issues with req_url_query
         parts <- strsplit(query, "&")[[1]]
-        kv <- strsplit(parts, "=")
-        query_list <- stats::setNames(
-          lapply(kv, function(x) if (length(x) > 1) x[2] else ""),
-          vapply(kv, function(x) x[1], character(1))
-        )
+
+        # Parse each part, splitting only on the first "="
+        query_list <- list()
+        for (part in parts) {
+          pos <- regexpr("=", part, fixed = TRUE)
+          if (pos > 0) {
+            name <- substr(part, 1, pos - 1)
+            value <- substr(part, pos + 1, nchar(part))
+            query_list[[name]] <- value
+          } else {
+            query_list[[part]] <- ""
+          }
+        }
+
         req <- req |> httr2::req_url_query(!!!query_list)
       }
     }
