@@ -40,37 +40,6 @@ delimiter, i.e. \code{r"[...]"}, because \verb{)"} within a query, e.g.
 is \code{r"{...}"}, in the rare case that the query contains \verb{]"}.
 }
 
-\examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
-# Basic query
-cancelled_ops <- get_resource_sql(r"[
-SELECT
-    "TotalCancelled",
-    "TotalOperations",
-    "Hospital",
-    "Month"
-FROM
-    "bcc860a4-49f4-4232-a76b-f559cf6eb885"
-WHERE
-    "Hospital" = 'D102H'
-]")
-
-# Joining two resources
-hb_pop <- get_resource_sql(r"[
-SELECT
-    pops."Year",
-    pops."HB",
-    lookup."HBName",
-    pops."AllAges"
-FROM
-    "27a72cc8-d6d8-430c-8b4f-3109a9ceadb1" AS pops
-    JOIN "652ff726-e676-4a20-abda-435b98dd7bdc" AS lookup ON pops."HB" = lookup."HB"
-WHERE
-    pops."Sex" = 'All'
-    AND pops."Year" > 2006
-]")
-\dontshow{\}) # examplesIf}
-}
 \seealso{
 \code{\link[=get_resource]{get_resource()}} for downloading a resource without using a SQL query.
 }
