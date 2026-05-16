@@ -1,8 +1,10 @@
 #' Create fields query for GET
 #'
-#' @description Produces a comma separated list of column names for use in a GET request.
+#' @description Produces a comma separated list of column names for use in a GET
+#' request.
 #'
-#' @param col_select A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
+#' @param col_select A character vector containing the names of desired
+#' columns/fields (e.g., c("Date", "Sex")).
 #'
 #' @return a character string
 #' @noRd
@@ -21,10 +23,13 @@ parse_col_select <- function(col_select, call = rlang::caller_env()) {
 
   if (!inherits(col_select, "character")) {
     cli::cli_abort(
-      "{.arg col_select} must be a {.cls character} vector, not a {.cls {class(col_select)}} vector.",
+      paste0(
+        "{.arg col_select} must be a {.cls character} vector, ",
+        "not a {.cls {class(col_select)}} vector."
+      ),
       call = call
     )
   }
 
-  return(paste(col_select, collapse = ","))
+  paste(col_select, collapse = ",")
 }

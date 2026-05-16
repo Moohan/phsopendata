@@ -13,23 +13,25 @@
 #' @noRd
 #' @keywords internal
 add_context <- function(data, id, name, created_date, modified_date) {
-  # Catch if the resource has never been modified
+  # Handle NULL modified_date
   if (is.null(modified_date)) {
     modified_date <- NA_character_
   }
 
-  # Parse the date values
+  # Vectorized date parsing
   created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
   modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
 
-  # The platform can record the modified date as being before the created date
-  # by a few microseconds, this will catch any rounding which ensure
-  # created_date is always <= modified_date
-  if (!is.na(modified_date) && modified_date < created_date) {
-    modified_date <- created_date
-  }
+  # Vectorized identity correction (ensures created <= modified) using purrr
+  # Actually, logical indexing is already vectorized and efficient.
+  # But we can use purrr if preferred for consistency.
+  # For simple vector logic, standard R indexing is usually better,
+  # but here's a purrr-flavored alternative for the correction:
+  m_lt_c <- !is.na(modified_date) & modified_date < created_date
+  modified_date[m_lt_c] <- created_date[m_lt_c]
 
-  data_with_context <- dplyr::mutate(
+  # Efficient prepending of context columns
+  dplyr::mutate(
     data,
     ResID = id,
     ResName = name,
@@ -37,6 +39,4 @@ add_context <- function(data, id, name, created_date, modified_date) {
     ResModifiedDate = modified_date,
     .before = dplyr::everything()
   )
-
-  return(data_with_context)
 }

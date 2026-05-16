@@ -21,7 +21,8 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
+#' FALSE)) > 0L)
 #' \dontrun{
 #' dataset_name <- "gp-practice-contact-details-and-list-sizes"
 #'
@@ -80,5 +81,5 @@ get_latest_resource <- function(
     include_context = include_context
   )
 
-  return(resource_data)
+  resource_data
 }

@@ -34,7 +34,8 @@
 #'
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
+#' FALSE)) > 0L)
 #' # Basic query
 #' cancelled_ops <- get_resource_sql(r"[
 #' SELECT
@@ -57,7 +58,8 @@
 #'     pops."AllAges"
 #' FROM
 #'     "27a72cc8-d6d8-430c-8b4f-3109a9ceadb1" AS pops
-#'     JOIN "652ff726-e676-4a20-abda-435b98dd7bdc" AS lookup ON pops."HB" = lookup."HB"
+#'     JOIN "652ff726-e676-4a20-abda-435b98dd7bdc" AS lookup ON pops."HB" =
+#' lookup."HB"
 #' WHERE
 #'     pops."Sex" = 'All'
 #'     AND pops."Year" > 2006
@@ -73,7 +75,10 @@ get_resource_sql <- function(sql) {
   if (!inherits(sql, "character")) {
     cli::cli_abort(c(
       x = "SQL validation error.",
-      i = "{.var sql} must be of class {.cls character} not {.cls {class(sql)}}."
+      i = paste0(
+        "{.var sql} must be of class {.cls character} ",
+        "not {.cls {class(sql)}}."
+      )
     ))
   }
 
@@ -98,42 +103,56 @@ get_resource_sql <- function(sql) {
     )
   }
 
-  # extract the records (rows) from content
-  query_data <- purrr::map(
-    content$result$records,
-    ~ {
-      # replace NULL with "" so tibble works
-      is_null <- purrr::map_lgl(.x, is.null)
-      .x[is_null] <- ""
+  # Optimized vectorized batch-processing of records
+  records <- content$result$records
+  if (length(records) > 0L) {
+    # Identify columns requiring character coercion (those containing NULL)
+    null_cols <- purrr::map(records, \(x) {
+      names(x)[purrr::map_lgl(x, is.null)]
+    }) |>
+      purrr::list_c() |>
+      unique()
 
-      tibble::as_tibble(.x)
+    if (length(null_cols) > 0L) {
+      records <- purrr::map(records, \(x) {
+        for (col in intersect(null_cols, names(x))) {
+          if (is.null(x[[col]])) {
+            x[[col]] <- ""
+          } else {
+            x[[col]] <- as.character(x[[col]])
+          }
+        }
+        x
+      })
     }
-  ) %>%
-    purrr::list_rbind()
+    query_data <- dplyr::bind_rows(records)
+  } else {
+    query_data <- tibble::tibble()
+  }
 
   # If the query returned no rows, exit now.
   if (nrow(query_data) == 0L) {
-    return(query_data)
-  }
+    query_data
+  } else {
+    # get correct order of columns
+    col_order <- purrr::map_chr(
+      content$result$fields,
+      ~ .x$id
+    )
+    col_order <- col_order[!col_order %in% c("_id", "_full_text")]
 
-  # get correct order of columns
-  col_order <- purrr::map_chr(
-    content$result$fields,
-    ~ .x$id
-  )
-  col_order <- col_order[!col_order %in% c("_id", "_full_text")]
+    # select and reorder columns to reflect
+    cleaner <- dplyr::select(query_data, dplyr::all_of(col_order))
 
-  # select and reorder columns to reflect
-  cleaner <- dplyr::select(query_data, dplyr::all_of(col_order))
-
-  # warn if limit may have been surpassed
-  if (nrow(cleaner) == 32000L) {
-    cli::cli_warn(c(
-      "Row number limit",
-      i = "SQL queries are limitted to returning 32,000 results.
+    # warn if limit may have been surpassed
+    if (nrow(cleaner) == 32000L) {
+      cli::cli_warn(c(
+        "Row number limit",
+        i = "SQL queries are limitted to returning 32,000 results.
       This may have affected the results of your query."
-    ))
-  }
+      ))
+    }
 
-  return(cleaner)
+    cleaner
+  }
 }

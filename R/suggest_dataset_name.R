@@ -15,10 +15,11 @@ suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
   if (min(string_distances) > 10.0) {
     cli::cli_abort(
       c(
-        "Can't find the dataset name
-      {.var {dataset_name}}, or a close match.",
-        i = "Find a dataset's name in the URL
-      of its page on {.url www.opendata.nhs.scot.}"
+        "Can't find the dataset name {.var {dataset_name}}, or a close match.",
+        i = paste0(
+          "Find a dataset's name in the URL of its page on ",
+          "{.url www.opendata.nhs.scot.}"
+        )
       ),
       call = call
     )

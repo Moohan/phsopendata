@@ -9,7 +9,8 @@
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
+#' FALSE)) > 0L)
 #' get_dataset_additional_info("gp-practice-populations")
 get_dataset_additional_info <- function(dataset_name) {
   # define query
@@ -36,15 +37,13 @@ get_dataset_additional_info <- function(dataset_name) {
   most_recent_resource_date <- max(
     last_resource_modified_date,
     last_resource_created_date
-  ) %>%
+  ) |>
     as.POSIXct(format = "%FT%X", tz = "UTC")
 
   # create tibble to return
-  return_value <- tibble::tibble(
+  tibble::tibble(
     name = dataset_name,
     n_resources = amount_of_resources,
     last_updated = most_recent_resource_date
   )
-
-  return(return_value)
 }

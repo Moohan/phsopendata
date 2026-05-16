@@ -2,7 +2,8 @@
 #'
 #' @description Formats a list or named vector into a valid query
 #'
-#' @param row_filters A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#' @param row_filters A named list or vector specifying values of columns/fields
+#' to keep (e.g., list(Date = 20220216, Sex = "Female")).
 #'
 #' @param row_filters list or named vectors matching fields to values
 #' @return a json as a character string
@@ -21,7 +22,10 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
       !rlang::is_bare_numeric(row_filters)
   ) {
     cli::cli_abort(
-      "{.arg row_filters} must be a named {.cls list}, not a {.cls {class(row_filters)}}.",
+      paste0(
+        "{.arg row_filters} must be a named {.cls list}, ",
+        "not a {.cls {class(row_filters)}}."
+      ),
       call = call
     )
   }
@@ -40,8 +44,14 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
     cli::cli_abort(
       c(
         "Invalid input for {.arg row_filters}",
-        x = "The {.val {names(row_filters)[which(duplicates)]}} filter{?s} {?is/are} duplicated.",
-        i = "Only one filter per field is currently supported by {.fun get_resource}."
+        x = paste0(
+          "The {.val {names(row_filters)[which(duplicates)]}} ",
+          "filter{?s} {?is/are} duplicated."
+        ),
+        i = paste0(
+          "Only one filter per field is currently supported ",
+          "by {.fun get_resource}."
+        )
       ),
       call = call
     )
@@ -70,5 +80,5 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
     collapse = ","
   )
 
-  return(paste0("{", filter_body, "}"))
+  paste0("{", filter_body, "}")
 }

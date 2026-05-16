@@ -1,18 +1,20 @@
 #' Provides an overview of all resources available on the Open Data platform.
 #'
 #' @description Provides an overview of all resources available from
-#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both dataset
+#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to
+#' limit results based on both dataset
 #'  and resource names. The returned tibble can be used to look-up dataset
 #'  and resource ids, and is useful for exploring the available data sets.
 #'
 #' @param dataset_contains A character string containing an expression to be
-#' @param dataset_contains A character string containing an expression to be
 #'  used as search criteria against the dataset name.
-#' @param resource_contains A character string containing a [regular expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
+#' @param resource_contains A character string containing a [regular
+#' expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
 #'  to be matched against available resource names.
 #' @param dataset_name Deprecated. Use dataset_contains instead.
 #'
-#' @return A [tibble][tibble::tibble-package] containing details of all available datasets and
+#' @return A [tibble][tibble::tibble-package] containing details of all
+#' available datasets and
 #'  resources, or those containing the string specified in the
 #'  `dataset_contains` and `resource_contains` arguments.
 #'
@@ -25,11 +27,9 @@
 #' )
 #'
 #' @export
-list_resources <- function(
-  dataset_contains = NULL,
-  resource_contains = NULL,
-  dataset_name = lifecycle::deprecated()
-) {
+list_resources <- function(dataset_contains = NULL,
+                           resource_contains = NULL,
+                           dataset_name = lifecycle::deprecated()) {
   # Handling any use of "list_resources(dataset_name)"
   if (lifecycle::is_present(dataset_name)) {
     lifecycle::deprecate_warn(
@@ -58,7 +58,7 @@ list_resources <- function(
     if (identical(string_trimmed, "")) {
       return(NULL)
     }
-    return(string_trimmed)
+    string_trimmed
   }
   dataset_contains <- normalise(dataset_contains)
   resource_contains <- normalise(resource_contains)
@@ -67,11 +67,17 @@ list_resources <- function(
   if (!is.null(dataset_contains)) {
     if (!inherits(dataset_contains, "character")) {
       cli::cli_abort(c(
-        "i" = "{.arg dataset_contains} must be {.class character} not a {.class {class(dataset_contains)}}."
+        "i" = paste0(
+          "{.arg dataset_contains} must be {.class character} ",
+          "not a {.class {class(dataset_contains)}}."
+        )
       ))
     } else if (length(dataset_contains) != 1) {
       cli::cli_abort(c(
-        "x" = "{.arg dataset_contains} must be {.val NULL} or length 1 not length {length(dataset_contains)}.",
+        "x" = paste0(
+          "{.arg dataset_contains} must be {.val NULL} or length 1 ",
+          "not length {length(dataset_contains)}."
+        ),
         "i" = "Provide a single string (or leave it NULL) for this filter."
       ))
     }
@@ -81,11 +87,17 @@ list_resources <- function(
   if (!is.null(resource_contains)) {
     if (!inherits(resource_contains, "character")) {
       cli::cli_abort(c(
-        "i" = "{.arg resource_contains} must be {.class character} not a {.class {class(resource_contains)}}."
+        "i" = paste0(
+          "{.arg resource_contains} must be {.class character} ",
+          "not a {.class {class(resource_contains)}}."
+        )
       ))
     } else if (length(resource_contains) != 1) {
       cli::cli_abort(c(
-        "!" = "{.arg resource_contains} must be {.val NULL} or length 1 not length {length(resource_contains)}.",
+        "!" = paste0(
+          "{.arg resource_contains} must be {.val NULL} or length 1 ",
+          "not length {length(resource_contains)}."
+        ),
         "i" = "Provide a single string (or leave it NULL) for this filter."
       ))
     }
@@ -138,9 +150,10 @@ list_resources <- function(
       ),
     ]
     if (nrow(data_tibble) == 0) {
-      cli::cli_warn(
-        "No resources found for {.arg resource_contains} = {.val {resource_contains}}. Returning an empty tibble."
-      )
+      cli::cli_warn(paste0(
+        "No resources found for {.arg resource_contains} = ",
+        "{.val {resource_contains}}. Returning an empty tibble."
+      ))
     }
   }
 
@@ -164,13 +177,14 @@ list_resources <- function(
     data_tibble <- data_tibble[name_match | title_match, ]
 
     if (nrow(data_tibble) == 0) {
-      cli::cli_warn(
-        "No resources found for the provided arguments. Returning an empty tibble."
-      )
+      cli::cli_warn(c(
+        "No resources found for the provided arguments. ",
+        "Returning an empty tibble."
+      ))
     }
   }
 
-  return(data_tibble)
+  data_tibble
 }
 
 
@@ -217,7 +231,5 @@ list_resources_query <- function() {
     }
   )
 
-  data_tibble <- purrr::list_rbind(datasets_list)
-
-  return(data_tibble)
+  purrr::list_rbind(datasets_list)
 }

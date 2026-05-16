@@ -19,5 +19,5 @@ dump_download <- function(res_id, call = rlang::caller_env()) {
   }
 
   # return data
-  return(content[, -1L])
+  content[, -1L]
 }

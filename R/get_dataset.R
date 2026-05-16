@@ -14,18 +14,17 @@
 #' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
+#' FALSE)) > 0L)
 #' \dontrun{
 #' get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 #' }
-get_dataset <- function(
-  dataset_name,
-  max_resources = NULL,
-  rows = NULL,
-  row_filters = NULL,
-  col_select = NULL,
-  include_context = FALSE
-) {
+get_dataset <- function(dataset_name,
+                        max_resources = NULL,
+                        rows = NULL,
+                        row_filters = NULL,
+                        col_select = NULL,
+                        include_context = FALSE) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
@@ -46,7 +45,8 @@ get_dataset <- function(
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_limit <- if (is.null(max_resources)) n_res else max_resources
+  res_index <- seq_len(min(n_res, res_limit))
 
   selection_ids <- all_ids[res_index]
 
@@ -59,74 +59,74 @@ get_dataset <- function(
     col_select = col_select
   )
 
-  # resolve class issues
-  types <- purrr::map(
-    all_data,
-    purrr::map_chr,
-    class
-  )
+  # Identify column type inconsistencies using purrr
+  all_col_types <- purrr::map(all_data, \(df) {
+    purrr::map_chr(df, \(x) class(x)[1L])
+  }) |>
+    purrr::list_c()
 
-  # for each df, check if next df class matches
-  inconsistencies <- vector(length = length(types) - 1L, mode = "list")
-  for (i in seq_along(types)) {
-    if (i == length(types)) break
+  if (!is.null(all_col_types)) {
+    type_splits <- split(all_col_types, names(all_col_types))
+    to_coerce <- names(type_splits)[purrr::map_lgl(type_splits, \(x) {
+      length(unique(x)) > 1L
+    })]
 
-    this_types <- types[[i]]
-    next_types <- types[[i + 1L]]
+    if (length(to_coerce) > 0L) {
+      cli::cli_warn(c(
+        "Due to conflicts between column types across resources, ",
+        "the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been ",
+        "coerced to type character:",
+        "{.val {to_coerce}}"
+      ))
 
-    # find matching names
-    matching_names <- suppressWarnings(
-      names(this_types) == names(next_types)
-    )
-
-    # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] !=
-      next_types[matching_names]
-    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
-  }
-
-  # define which columns to coerce and warn
-  to_coerce <- unique(names(unlist(inconsistencies)))
-
-  if (length(to_coerce) > 0L) {
-    cli::cli_warn(c(
-      "Due to conflicts between column types across resources,
-      the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
-      "{.val {to_coerce}}"
-    ))
-
-    all_data <- purrr::map(
-      all_data,
-      dplyr::mutate,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
-      )
-    )
-  }
-
-  if (include_context) {
-    # Add the 'resource context' as columns to the data
-    all_data <- purrr::pmap(
-      list(
-        data = all_data,
-        id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
-      ),
-      add_context
-    )
+      all_data <- purrr::map(all_data, \(df) {
+        for (col in intersect(to_coerce, names(df))) {
+          df[[col]] <- as.character(df[[col]])
+        }
+        df
+      })
+    }
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
+  combined <- purrr::list_rbind(all_data,
+    names_to = if (include_context) "res_idx" else NULL
+  )
 
-  return(combined)
+  if (include_context) {
+    # Optimized batch context addition
+    meta <- content$result$resources[res_index]
+
+    # Extract metadata using purrr
+    meta_df <- tibble::tibble(
+      res_idx = seq_along(selection_ids),
+      ResID = purrr::map_chr(meta, ~ .x$id),
+      ResName = purrr::map_chr(meta, ~ .x$name),
+      created = purrr::map_chr(meta, ~ .x$created),
+      modified = purrr::map_chr(meta, ~ {
+        if (is.null(.x$last_modified)) NA_character_ else .x$last_modified
+      })
+    )
+
+    # Vectorized date parsing and identity correction
+    meta_df$ResCreatedDate <- as.POSIXct(meta_df$created,
+      format = "%FT%X", tz = "UTC")
+    meta_df$ResModifiedDate <- as.POSIXct(meta_df$modified,
+      format = "%FT%X", tz = "UTC")
+
+    m_lt_c <- !is.na(meta_df$ResModifiedDate) &
+              meta_df$ResModifiedDate < meta_df$ResCreatedDate
+    meta_df$ResModifiedDate[m_lt_c] <- meta_df$ResCreatedDate[m_lt_c]
+
+    # Map metadata back to the combined data frame via res_idx
+    combined <- combined |>
+      dplyr::left_join(
+        meta_df |> dplyr::select(res_idx, dplyr::starts_with("Res")),
+        by = "res_idx"
+      ) |>
+      dplyr::select(-res_idx) |>
+      dplyr::relocate(dplyr::starts_with("Res"), .before = dplyr::everything())
+  }
+
+  combined
 }

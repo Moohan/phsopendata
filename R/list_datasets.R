@@ -20,7 +20,8 @@
 #' @return A tibble.
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
+#' FALSE)) > 0L)
 #' head(list_datasets())
 #' @seealso [list_resources()]
 list_datasets <- function() {
@@ -29,5 +30,5 @@ list_datasets <- function() {
 
   data_sets <- tibble::tibble(name = unlist(content$result))
 
-  return(data_sets)
+  data_sets
 }

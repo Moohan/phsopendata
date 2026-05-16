@@ -3,7 +3,9 @@
 #' @param query a list of items to query
 #' @param rows Integer(1) or NULL. Number of rows requested.
 #'
-#' @return TRUE to use the datastore dump; FALSE to use the standard endpoint.#' @keywords internal
+#' @return TRUE to use the datastore dump; FALSE to use the standard endpoint.
+#'
+#' @keywords internal
 #' @noRd
 use_dump_check <- function(query, rows) {
   null_query <- purrr::every(list(query$q, query$filter, query$fields), is.null)
@@ -20,19 +22,24 @@ use_dump_check <- function(query, rows) {
       # No filters specified but rows over 99999 requested. - Use dump
       cli::cli_warn(c(
         "Getting all rows of resource.",
-        i = "All rows will be returned if you
-      request over 99,999 rows of data.",
-        i = "You set {.var rows} to
-      {format(rows, big.mark = ',', scientific = FALSE)}"
+        i = paste0(
+          "All rows will be returned if you request over 99,999 rows of data."
+        ),
+        i = paste0(
+          "You set {.var rows} to ",
+          "{format(rows, big.mark = ',', scientific = FALSE)}"
+        )
       ))
       return(TRUE)
     } else {
       # Filters specified and rows over 99999 requested. - Use dump
       cli::cli_warn(c(
-        "Invalid combination of {.var rows}, {.var row_filters}
-      and/or {.var col_select}.",
-        x = "Can't request over 99,999 rows of a resource
-      AND query its rows/columns.",
+        "Invalid combination of {.var rows}, {.var row_filters} ",
+        "and/or {.var col_select}.",
+        x = paste0(
+          "Can't request over 99,999 rows of a resource AND query its ",
+          "rows/columns."
+        ),
         i = "ALL rows and columns of the resource will be downloaded."
       ))
       return(TRUE)
@@ -40,5 +47,5 @@ use_dump_check <- function(query, rows) {
   }
 
   # Normal query with filters and/or small num of rows - Don't use dump
-  return(FALSE)
+  FALSE
 }

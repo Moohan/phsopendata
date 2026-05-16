@@ -22,34 +22,33 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   query <- list(id = dataset_name)
   content <- phs_GET("package_show", query)
 
-  # add the id, created date and last_modified to a data.frame
-  id <- vector("character")
-  created_date <- vector("character")
-  modified_date <- vector("character")
-
-  for (res in content$result$resources) {
-    id <- append(id, res$id)
-    created_date <- append(created_date, res$created)
-    modified_date <- append(modified_date, res$last_modified)
-  }
+  # extract resource metadata using purrr
+  resources <- content$result$resources
   all_id_data <- tibble::tibble(
-    id = id,
-    created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-    modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
-  ) %>%
+    id = purrr::map_chr(resources, ~ .x$id),
+    created_date = as.POSIXct(
+      purrr::map_chr(resources, ~ .x$created),
+      format = "%FT%X",
+      tz = "UTC"
+    ),
+    modified_date = as.POSIXct(
+      purrr::map_chr(resources, ~ .x$last_modified),
+      format = "%FT%X",
+      tz = "UTC"
+    )
+  ) |>
     dplyr::mutate(most_recent_date_created = max(created_date))
 
-  # get the first row of the resources, this will be the same that appears
-  # on the top on the open data platform
+  # get the first row of the resources
   all_id_data_first_row <- dplyr::slice_head(all_id_data, n = 1L)
 
-  # If the resource at the top as appearing on the open data platform also has the most
-  # recent date created, return it. Otherwise, error
+  # Check if the top resource has the most recent created date
   if (
     all_id_data_first_row$created_date ==
       all_id_data_first_row$most_recent_date_created
   ) {
-    return(all_id_data_first_row$id)
+    all_id_data_first_row$id
+  } else {
+    cli::cli_abort("The most recent id could not be identified", call = call)
   }
-  cli::cli_abort("The most recent id could not be identified", call = call)
 }

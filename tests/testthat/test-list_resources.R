@@ -28,7 +28,8 @@ test_that("returns data in the expected format", {
   expect_false(anyNA(all_data$dataset_id))
 })
 
-test_that("filters by resource_contains (case-insensitive) and warns when empty", {
+test_that(
+  "filters by resource_contains (case-insensitive) and warns when empty", {
   # Pick a common term likely present across resources; adjust if needed
   data_eu <- list_resources(resource_contains = "european")
   expect_s3_class(data_eu, "tbl_df")
@@ -50,7 +51,8 @@ test_that("filters by resource_contains (case-insensitive) and warns when empty"
   expect_equal(nrow(data_none), 0)
 })
 
-test_that("filters by dataset_contains (case-insensitive) and warns when empty", {
+test_that(
+  "filters by dataset_contains (case-insensitive) and warns when empty", {
   data_pkg <- list_resources(dataset_contains = "hospital")
   expect_s3_class(data_pkg, "tbl_df")
   expect_gte(nrow(data_pkg), 0)
@@ -142,7 +144,8 @@ test_that("invalid regex patterns error clearly", {
 })
 
 
-test_that("input validation: dataset_contains/resource_contains must be NULL or length-1", {
+test_that(
+  "input validation: dataset_contains/resource_contains must be NULL or length-1", {
   # Length > 1 should error
   expect_error(
     list_resources(dataset_contains = c("a", "b")),
@@ -167,7 +170,8 @@ test_that("dataset_name argument is deprecated", {
   )
 })
 
-test_that("dataset_contains is AND-anywhere (any order): 'Flu covid' == 'covid flu'", {
+test_that(
+  "dataset_contains is AND-anywhere (any order): 'Flu covid' == 'covid flu'", {
   res1 <- list_resources(dataset_contains = "Flu covid")
   res2 <- list_resources(dataset_contains = "covid flu")
 

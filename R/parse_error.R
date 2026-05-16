@@ -36,5 +36,5 @@ parse_error <- function(error) {
     )
   }
 
-  return(error_output)
+  error_output
 }
