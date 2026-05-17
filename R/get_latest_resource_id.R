@@ -36,8 +36,10 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
       format = "%FT%X",
       tz = "UTC"
     )
-  ) |>
-    dplyr::mutate(most_recent_date_created = max(created_date))
+  )
+
+  all_id_data$most_recent_date_created <- max(all_id_data$created_date,
+                                              na.rm = TRUE)
 
   # get the first row of the resources
   all_id_data_first_row <- dplyr::slice_head(all_id_data, n = 1L)

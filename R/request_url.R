@@ -38,9 +38,21 @@ request_url <- function(action, query, call = rlang::caller_env()) {
     url_obj$path <- paste0("api/3/action/", action)
 
     # Handle string queries (legacy support) vs named lists
-    if (is.character(query) && length(query) == 1L && grepl("=", query)) {
-      # Manual construction to avoid httr2 query validation on strings
-      url <- paste0(base_url, "/api/3/action/", action, "?", query)
+    if (is.character(query) && length(query) == 1L && nzchar(query)) {
+      if (grepl("=", query)) {
+        # Manual construction to avoid httr2 query validation on strings
+        url <- paste0(base_url, "/api/3/action/", action, "?", query)
+      } else {
+        # String without '=' is likely an invalid query format for httr2
+        # but common in legacy phsopendata calls like phs_GET("pkg_show", id)
+        url_obj$query <- list(id = query)
+        url <- httr2::url_build(url_obj)
+      }
+    } else if (is.null(query) ||
+               (is.character(query) && length(query) == 1L && !nzchar(query))) {
+      # Empty or NULL query
+      url_obj$query <- NULL
+      url <- httr2::url_build(url_obj)
     } else {
       url_obj$query <- query
       url <- httr2::url_build(url_obj)

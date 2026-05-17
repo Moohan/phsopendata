@@ -1,0 +1,2900 @@
+{
+  "version": 3,
+  "created": "2026-05-17T00:46:52+00:00",
+  "last_scan": "2026-05-17T01:00:51+00:00",
+  "scan_count": 6,
+  "overall_score": 22.4,
+  "objective_score": 89.6,
+  "strict_score": 22.4,
+  "verified_strict_score": 89.6,
+  "stats": {
+    "total": 64,
+    "auto_resolved": 0,
+    "deferred": 0,
+    "false_positive": 0,
+    "fixed": 0,
+    "open": 64,
+    "triaged_out": 0,
+    "wontfix": 0,
+    "by_tier": {
+      "3": {
+        "auto_resolved": 0,
+        "deferred": 0,
+        "false_positive": 0,
+        "fixed": 0,
+        "open": 64,
+        "triaged_out": 0,
+        "wontfix": 0
+      }
+    }
+  },
+  "work_items": {
+    "lintr_lint::R/check_res_id.R::lintr_lint::43": {
+      "id": "lintr_lint::R/check_res_id.R::lintr_lint::43",
+      "detector": "lintr_lint",
+      "file": "R/check_res_id.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 99 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/dump_download.R::lintr_lint::10": {
+      "id": "lintr_lint::R/dump_download.R::lintr_lint::10",
+      "detector": "lintr_lint",
+      "file": "R/dump_download.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/error_check.R::lintr_lint::29": {
+      "id": "lintr_lint::R/error_check.R::lintr_lint::29",
+      "detector": "lintr_lint",
+      "file": "R/error_check.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_error'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20": {
+      "id": "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset_additional_info.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::29": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::29",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'check_dataset_name'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::34": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::34",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::41": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::41",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'suggest_dataset_name'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::56": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::56",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible binding for global variable 'get_resource'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::127": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::127",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23": {
+      "id": "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource_id.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::63": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 95 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::74": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_latest_resource_id'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::76": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource_sql.R::lintr_lint::97": {
+      "id": "lintr_lint::R/get_resource_sql.R::lintr_lint::97",
+      "detector": "lintr_lint",
+      "file": "R/get_resource_sql.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::42": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::42",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'check_res_id'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::44": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::44",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_col_select'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::45": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::45",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_row_filters'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::62": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::62",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'use_dump_check'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::63": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::63",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'dump_download'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::102": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::102",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource_sql'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::109": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::109",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::139": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::139",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::144": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::144",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'add_context'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/list_datasets.R::lintr_lint::28": {
+      "id": "lintr_lint::R/list_datasets.R::lintr_lint::28",
+      "detector": "lintr_lint",
+      "file": "R/list_datasets.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/list_resources.R::lintr_lint::196": {
+      "id": "lintr_lint::R/list_resources.R::lintr_lint::196",
+      "detector": "lintr_lint",
+      "file": "R/list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/parse_error.R::lintr_lint::1": {
+      "id": "lintr_lint::R/parse_error.R::lintr_lint::1",
+      "detector": "lintr_lint",
+      "file": "R/parse_error.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 87 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/parse_error.R::lintr_lint::3": {
+      "id": "lintr_lint::R/parse_error.R::lintr_lint::3",
+      "detector": "lintr_lint",
+      "file": "R/parse_error.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 85 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/parse_row_filters.R::lintr_lint::61": {
+      "id": "lintr_lint::R/parse_row_filters.R::lintr_lint::61",
+      "detector": "lintr_lint",
+      "file": "R/parse_row_filters.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 84 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::9": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::9",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [object_name_linter] Variable and function name style should match snake_case or symbols.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::14": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::14",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'request_url'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::46": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::46",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::62": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::62",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'error_check'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/request_url.R::lintr_lint::52": {
+      "id": "lintr_lint::R/request_url.R::lintr_lint::52",
+      "detector": "lintr_lint",
+      "file": "R/request_url.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 17 spaces but is 15 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7": {
+      "id": "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7",
+      "detector": "lintr_lint",
+      "file": "R/suggest_dataset_name.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29": {
+      "id": "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29",
+      "detector": "lintr_lint",
+      "file": "R/suggest_dataset_name.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] local variable 'closest_match' assigned but may not be used",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::README.Rmd::lintr_lint::52": {
+      "id": "lintr_lint::README.Rmd::lintr_lint::52",
+      "detector": "lintr_lint",
+      "file": "README.Rmd",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [commented_code_linter] Remove commented code.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::README.Rmd::lintr_lint::118": {
+      "id": "lintr_lint::README.Rmd::lintr_lint::118",
+      "detector": "lintr_lint",
+      "file": "README.Rmd",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 85 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-add_context.R::lintr_lint::79": {
+      "id": "lintr_lint::tests/testthat/test-add_context.R::lintr_lint::79",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-add_context.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 88 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::32": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::32",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 10 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::33": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::33",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::44": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::44",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::55": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::55",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 10 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::56": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::56",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::60": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::60",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::63": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::63",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::65": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::65",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::74": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::74",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 87 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::148": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::148",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 84 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::149": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::149",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::155": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::155",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::174": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::174",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 10 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::175": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::175",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::178": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::178",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::181": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::181",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::184": {
+      "id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::184",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-list_resources.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::33": {
+      "id": "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::33",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-parse_col_select.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 84 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::34": {
+      "id": "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::34",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-parse_col_select.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 12 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::8": {
+      "id": "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::8",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-parse_error.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [trailing_whitespace_linter] Remove trailing whitespace.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::18": {
+      "id": "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::18",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-parse_error.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [trailing_whitespace_linter] Remove trailing whitespace.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::17": {
+      "id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::17",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-request_url.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 88 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::25": {
+      "id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::25",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-request_url.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 102 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::30": {
+      "id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::30",
+      "detector": "lintr_lint",
+      "file": "tests/testthat/test-request_url.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 105 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "flat_dirs::tests/testthat": {
+      "id": "flat_dirs::tests/testthat",
+      "detector": "flat_dirs",
+      "file": "tests/testthat",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Directory overload: 23 files, 0 child dirs (combined 23) \u2014 consider grouping by domain",
+      "detail": {
+        "file_count": 23,
+        "child_dir_count": 0,
+        "combined_score": 23,
+        "kind": "overload",
+        "parent_sibling_count": 0,
+        "wrapper_item_count": 0,
+        "sparse_child_count": 0,
+        "sparse_child_ratio": 0.0,
+        "sparse_child_file_threshold": 0
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "flat_dirs::R": {
+      "id": "flat_dirs::R",
+      "detector": "flat_dirs",
+      "file": "R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Directory overload: 20 files, 0 child dirs (combined 20) \u2014 consider grouping by domain",
+      "detail": {
+        "file_count": 20,
+        "child_dir_count": 0,
+        "combined_score": 20,
+        "kind": "overload",
+        "parent_sibling_count": 0,
+        "wrapper_item_count": 0,
+        "sparse_child_count": 0,
+        "sparse_child_ratio": 0.0,
+        "sparse_child_file_threshold": 0
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-17T00:46:59+00:00",
+      "last_seen": "2026-05-17T01:00:51+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    }
+  },
+  "scan_coverage": {
+    "r": {
+      "status": "reduced",
+      "confidence": 0.0,
+      "detectors": {
+        "air_format": {
+          "detector": "air_format",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "air tooling unavailable (tool_not_found)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "air",
+          "reason": "tool_not_found"
+        },
+        "jarl_lint": {
+          "detector": "jarl_lint",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "jarl tooling unavailable (tool_not_found)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "jarl",
+          "reason": "tool_not_found"
+        },
+        "security": {
+          "detector": "security",
+          "status": "full",
+          "confidence": 1.0,
+          "summary": "Security coverage complete for enabled detectors.",
+          "impact": "",
+          "remediation": "",
+          "tool": "",
+          "reason": ""
+        }
+      },
+      "warnings": [
+        {
+          "detector": "air_format",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "air tooling unavailable (tool_not_found)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "air",
+          "reason": "tool_not_found"
+        },
+        {
+          "detector": "jarl_lint",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "jarl tooling unavailable (tool_not_found)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "jarl",
+          "reason": "tool_not_found"
+        }
+      ],
+      "updated_at": "2026-05-17T01:00:51+00:00"
+    }
+  },
+  "score_confidence": {
+    "status": "reduced",
+    "confidence": 0.0,
+    "detectors": [
+      {
+        "detector": "air_format",
+        "status": "reduced",
+        "confidence": 0.0,
+        "summary": "air tooling unavailable (tool_not_found)",
+        "impact": "Detector results may be under-reported for this scan.",
+        "remediation": "Install/fix the tool command and rerun scan.",
+        "tool": "air",
+        "reason": "tool_not_found"
+      },
+      {
+        "detector": "jarl_lint",
+        "status": "reduced",
+        "confidence": 0.0,
+        "summary": "jarl tooling unavailable (tool_not_found)",
+        "impact": "Detector results may be under-reported for this scan.",
+        "remediation": "Install/fix the tool command and rerun scan.",
+        "tool": "jarl",
+        "reason": "tool_not_found"
+      }
+    ],
+    "dimensions": []
+  },
+  "scan_metadata": {
+    "source": "scan"
+  },
+  "subjective_integrity": {
+    "status": "pass",
+    "target_score": 85.0,
+    "matched_count": 0,
+    "matched_dimensions": [],
+    "reset_dimensions": []
+  },
+  "subjective_assessments": {},
+  "scan_history": [
+    {
+      "timestamp": "2026-05-17T00:46:59+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 64,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 66,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:52:24+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 66,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:53:38+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 66,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:58:55+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 66,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T01:00:43+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 0,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "disabled",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": null
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T01:00:51+00:00",
+      "lang": "r",
+      "strict_score": 22.4,
+      "verified_strict_score": 89.6,
+      "objective_score": 89.6,
+      "overall_score": 22.4,
+      "open": 64,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 66,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.0,
+          "strict": 84.0
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    }
+  ],
+  "review_cache": {
+    "detectors": {
+      "boilerplate": {
+        "version": 1,
+        "fingerprint": "1f7db63de89c5b4723b34a89dfd2296710348263",
+        "entries": []
+      },
+      "security": {
+        "version": 1,
+        "fingerprint": "0f5319998e81526e3cb7b690582d9e8013bcb63e",
+        "entries": [],
+        "files_scanned": 0,
+        "coverage": null
+      },
+      "dupes": {}
+    },
+    "files": {},
+    "holistic": {
+      "reviewed_at": "2026-05-17T01:00:43+00:00",
+      "file_count_at_review": 45,
+      "issue_count": 0
+    }
+  },
+  "lang_capabilities": {
+    "r": {
+      "fixers": [
+        "air-format",
+        "jarl-lint"
+      ],
+      "typecheck_cmd": ""
+    }
+  },
+  "zone_distribution": {
+    "production": 20,
+    "test": 25
+  },
+  "tool_hash": "2ead5ae7d4e6",
+  "scan_path": ".",
+  "scan_completeness": {
+    "r": "full"
+  },
+  "potentials": {
+    "r": {
+      "lintr_lint": 64,
+      "structural": 20,
+      "flat_dirs": 3,
+      "security": 20,
+      "smells": 45,
+      "boilerplate_duplication": 0,
+      "dupes": 0,
+      "stale_wontfix": 0
+    }
+  },
+  "codebase_metrics": {
+    "r": {
+      "total_files": 45,
+      "total_loc": 2812,
+      "total_directories": 3
+    }
+  },
+  "dimension_scores": {
+    "Code quality": {
+      "score": 84.0,
+      "strict": 84.0,
+      "verified_strict_score": 84.0,
+      "checks": 112,
+      "failing": 39,
+      "tier": 3,
+      "detectors": {
+        "smells": {
+          "potential": 45,
+          "pass_rate": 1.0,
+          "failing": 0,
+          "weighted_failures": 0.0
+        },
+        "flat_dirs": {
+          "potential": 3,
+          "pass_rate": 0.5333333333333333,
+          "failing": 2,
+          "weighted_failures": 1.4
+        },
+        "lintr_lint": {
+          "potential": 64,
+          "pass_rate": 0.7421875,
+          "failing": 37,
+          "weighted_failures": 16.5
+        }
+      }
+    },
+    "Security": {
+      "score": 100.0,
+      "strict": 100.0,
+      "verified_strict_score": 100.0,
+      "checks": 20,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "security": {
+          "potential": 20,
+          "pass_rate": 1.0,
+          "failing": 0,
+          "weighted_failures": 0.0
+        }
+      }
+    },
+    "File health": {
+      "score": 100.0,
+      "strict": 100.0,
+      "verified_strict_score": 100.0,
+      "checks": 20,
+      "failing": 0,
+      "tier": 3,
+      "detectors": {
+        "structural": {
+          "potential": 20,
+          "pass_rate": 1.0,
+          "failing": 0,
+          "weighted_failures": 0.0
+        }
+      }
+    },
+    "Abstraction fit": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "abstraction_fitness",
+          "configured_weight": 8.0,
+          "components": []
+        }
+      }
+    },
+    "AI generated debt": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "ai_generated_debt",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "API coherence": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "api_surface_coherence",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Auth consistency": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "authorization_consistency",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Contracts": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "contract_coherence",
+          "configured_weight": 12.0,
+          "components": []
+        }
+      }
+    },
+    "Convention drift": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "convention_outlier",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Cross-module arch": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "cross_module_architecture",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Dep health": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "dependency_health",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Design coherence": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "design_coherence",
+          "configured_weight": 10.0,
+          "components": []
+        }
+      }
+    },
+    "Error consistency": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "error_consistency",
+          "configured_weight": 3.0,
+          "components": []
+        }
+      }
+    },
+    "High elegance": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "high_level_elegance",
+          "configured_weight": 22.0,
+          "components": []
+        }
+      }
+    },
+    "Stale migration": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "incomplete_migration",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Init coupling": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "initialization_coupling",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Logic clarity": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "logic_clarity",
+          "configured_weight": 6.0,
+          "components": []
+        }
+      }
+    },
+    "Low elegance": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "low_level_elegance",
+          "configured_weight": 12.0,
+          "components": []
+        }
+      }
+    },
+    "Mid elegance": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "mid_level_elegance",
+          "configured_weight": 22.0,
+          "components": []
+        }
+      }
+    },
+    "Naming quality": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "naming_quality",
+          "configured_weight": 2.0,
+          "components": []
+        }
+      }
+    },
+    "Structure nav": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "package_organization",
+          "configured_weight": 5.0,
+          "components": []
+        }
+      }
+    },
+    "Test strategy": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "test_strategy",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      }
+    },
+    "Type safety": {
+      "score": 0.0,
+      "strict": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "failing": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "failing": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "type_safety",
+          "configured_weight": 12.0,
+          "components": []
+        }
+      }
+    }
+  },
+  "reminder_history": {
+    "zone_classification": 3,
+    "report_scores": 4,
+    "feedback_nudge": 3,
+    "stagnant_nudge": 23
+  }
+}

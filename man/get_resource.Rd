@@ -13,27 +13,37 @@ get_resource(
 )
 }
 \arguments{
-\item{res_id}{The resource ID as found on
-\href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{res_id}{The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) A named list or vector specifying values of
-columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
+\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) A character vector containing the names of
-desired columns/fields (e.g., c("Date", "Sex")).}
+\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE}, additional information about the
-resource will be added as columns to the data, including the resource ID, the
-resource name, the creation date, and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Downloads a single resource from the NHS Open Data platform by
-resource ID, with optional filtering and column selection.
+Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
+}
+\examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+
+data <- get_resource(res_id)
+
+filters <- list("HB" = "S08000030", "Month" = "202109")
+wanted_cols <- c("HB", "Month", "TotalPatientsSeen")
+
+filtered_data <- get_resource(
+  res_id = res_id,
+  row_filters = filters,
+  col_select = wanted_cols
+)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_dataset]{get_dataset()}} for downloading all resources from a given dataset.

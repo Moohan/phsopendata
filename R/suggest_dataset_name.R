@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
-  content <- phs_GET("package_list", "")
+  content <- phs_GET("package_list", query = NULL)
 
   dataset_names <- unlist(content$result)
 

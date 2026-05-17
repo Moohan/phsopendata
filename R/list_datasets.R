@@ -15,7 +15,6 @@
 #' interface for exploring the PHS Open Data platform. It returns both
 #' datasets and their associated resources in a single tibble, and
 #' supports filtering by dataset titles or resource names.
-
 #'
 #' @return A tibble.
 #' @export
@@ -26,9 +25,7 @@
 #' @seealso [list_resources()]
 list_datasets <- function() {
   # fetch the data
-  content <- phs_GET("package_list", "")
+  content <- phs_GET("package_list", query = NULL)
 
-  data_sets <- tibble::tibble(name = unlist(content$result))
-
-  data_sets
+  tibble::tibble(name = unlist(content$result))
 }

@@ -1,0 +1,756 @@
+{
+  "version": 8,
+  "created": "2026-05-17T00:47:00+00:00",
+  "updated": "2026-05-17T00:58:55+00:00",
+  "queue_order": [],
+  "deferred": [],
+  "skipped": {},
+  "active_cluster": null,
+  "overrides": {
+    "lintr_lint::R/check_res_id.R::lintr_lint::43": {
+      "issue_id": "lintr_lint::R/check_res_id.R::lintr_lint::43",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/dump_download.R::lintr_lint::10": {
+      "issue_id": "lintr_lint::R/dump_download.R::lintr_lint::10",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/error_check.R::lintr_lint::29": {
+      "issue_id": "lintr_lint::R/error_check.R::lintr_lint::29",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20": {
+      "issue_id": "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::29": {
+      "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::29",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::34": {
+      "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::34",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::41": {
+      "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::41",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::56": {
+      "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::56",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::127": {
+      "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::127",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23": {
+      "issue_id": "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::63": {
+      "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::74": {
+      "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::76": {
+      "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource_sql.R::lintr_lint::97": {
+      "issue_id": "lintr_lint::R/get_resource_sql.R::lintr_lint::97",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::42": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::42",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::44": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::44",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::45": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::45",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::62": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::62",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::63": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::63",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::102": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::102",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::109": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::109",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::139": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::139",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::144": {
+      "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::144",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/list_datasets.R::lintr_lint::28": {
+      "issue_id": "lintr_lint::R/list_datasets.R::lintr_lint::28",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/list_resources.R::lintr_lint::196": {
+      "issue_id": "lintr_lint::R/list_resources.R::lintr_lint::196",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/parse_error.R::lintr_lint::1": {
+      "issue_id": "lintr_lint::R/parse_error.R::lintr_lint::1",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/parse_error.R::lintr_lint::3": {
+      "issue_id": "lintr_lint::R/parse_error.R::lintr_lint::3",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/parse_row_filters.R::lintr_lint::61": {
+      "issue_id": "lintr_lint::R/parse_row_filters.R::lintr_lint::61",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::9": {
+      "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::9",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::14": {
+      "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::14",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::46": {
+      "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::46",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::62": {
+      "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::62",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/request_url.R::lintr_lint::52": {
+      "issue_id": "lintr_lint::R/request_url.R::lintr_lint::52",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7": {
+      "issue_id": "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29": {
+      "issue_id": "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::README.Rmd::lintr_lint::52": {
+      "issue_id": "lintr_lint::README.Rmd::lintr_lint::52",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::README.Rmd::lintr_lint::118": {
+      "issue_id": "lintr_lint::README.Rmd::lintr_lint::118",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-add_context.R::lintr_lint::79": {
+      "issue_id": "lintr_lint::tests/testthat/test-add_context.R::lintr_lint::79",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::32": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::32",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::33": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::33",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::44": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::44",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::55": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::55",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::56": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::56",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::60": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::60",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::63": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::63",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::65": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::65",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::74": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::74",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::148": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::148",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::149": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::149",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::155": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::155",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::174": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::174",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::175": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::175",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::178": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::178",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::181": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::181",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::184": {
+      "issue_id": "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::184",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::33": {
+      "issue_id": "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::33",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::34": {
+      "issue_id": "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::34",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::8": {
+      "issue_id": "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::8",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::18": {
+      "issue_id": "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::18",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::17": {
+      "issue_id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::17",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::25": {
+      "issue_id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::25",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::30": {
+      "issue_id": "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::30",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/lintr_lint",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::abstraction_fitness": {
+      "issue_id": "subjective::abstraction_fitness",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::ai_generated_debt": {
+      "issue_id": "subjective::ai_generated_debt",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::api_surface_coherence": {
+      "issue_id": "subjective::api_surface_coherence",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::authorization_consistency": {
+      "issue_id": "subjective::authorization_consistency",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::contract_coherence": {
+      "issue_id": "subjective::contract_coherence",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::convention_outlier": {
+      "issue_id": "subjective::convention_outlier",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::cross_module_architecture": {
+      "issue_id": "subjective::cross_module_architecture",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::dependency_health": {
+      "issue_id": "subjective::dependency_health",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::design_coherence": {
+      "issue_id": "subjective::design_coherence",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::error_consistency": {
+      "issue_id": "subjective::error_consistency",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::high_level_elegance": {
+      "issue_id": "subjective::high_level_elegance",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::incomplete_migration": {
+      "issue_id": "subjective::incomplete_migration",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::initialization_coupling": {
+      "issue_id": "subjective::initialization_coupling",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::logic_clarity": {
+      "issue_id": "subjective::logic_clarity",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::low_level_elegance": {
+      "issue_id": "subjective::low_level_elegance",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::mid_level_elegance": {
+      "issue_id": "subjective::mid_level_elegance",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::naming_quality": {
+      "issue_id": "subjective::naming_quality",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::package_organization": {
+      "issue_id": "subjective::package_organization",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::test_strategy": {
+      "issue_id": "subjective::test_strategy",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    },
+    "subjective::type_safety": {
+      "issue_id": "subjective::type_safety",
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-05-17T00:53:38+00:00"
+    }
+  },
+  "clusters": {
+    "auto/lintr_lint": {
+      "name": "auto/lintr_lint",
+      "description": "Fix 62 lintr issues",
+      "issue_ids": [
+        "lintr_lint::R/check_res_id.R::lintr_lint::43",
+        "lintr_lint::R/dump_download.R::lintr_lint::10",
+        "lintr_lint::R/error_check.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20",
+        "lintr_lint::R/get_dataset.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset.R::lintr_lint::34",
+        "lintr_lint::R/get_dataset.R::lintr_lint::41",
+        "lintr_lint::R/get_dataset.R::lintr_lint::56",
+        "lintr_lint::R/get_dataset.R::lintr_lint::127",
+        "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
+        "lintr_lint::R/get_resource_sql.R::lintr_lint::97",
+        "lintr_lint::R/get_resource.R::lintr_lint::42",
+        "lintr_lint::R/get_resource.R::lintr_lint::44",
+        "lintr_lint::R/get_resource.R::lintr_lint::45",
+        "lintr_lint::R/get_resource.R::lintr_lint::62",
+        "lintr_lint::R/get_resource.R::lintr_lint::63",
+        "lintr_lint::R/get_resource.R::lintr_lint::102",
+        "lintr_lint::R/get_resource.R::lintr_lint::109",
+        "lintr_lint::R/get_resource.R::lintr_lint::139",
+        "lintr_lint::R/get_resource.R::lintr_lint::144",
+        "lintr_lint::R/list_datasets.R::lintr_lint::28",
+        "lintr_lint::R/list_resources.R::lintr_lint::196",
+        "lintr_lint::R/parse_error.R::lintr_lint::1",
+        "lintr_lint::R/parse_error.R::lintr_lint::3",
+        "lintr_lint::R/parse_row_filters.R::lintr_lint::61",
+        "lintr_lint::R/phs_GET.R::lintr_lint::9",
+        "lintr_lint::R/phs_GET.R::lintr_lint::14",
+        "lintr_lint::R/phs_GET.R::lintr_lint::46",
+        "lintr_lint::R/phs_GET.R::lintr_lint::62",
+        "lintr_lint::R/request_url.R::lintr_lint::52",
+        "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7",
+        "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29",
+        "lintr_lint::README.Rmd::lintr_lint::52",
+        "lintr_lint::README.Rmd::lintr_lint::118",
+        "lintr_lint::tests/testthat/test-add_context.R::lintr_lint::79",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::32",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::33",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::44",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::55",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::56",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::60",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::63",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::65",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::74",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::148",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::149",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::155",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::174",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::175",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::178",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::181",
+        "lintr_lint::tests/testthat/test-list_resources.R::lintr_lint::184",
+        "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::33",
+        "lintr_lint::tests/testthat/test-parse_col_select.R::lintr_lint::34",
+        "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::8",
+        "lintr_lint::tests/testthat/test-parse_error.R::lintr_lint::18",
+        "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::17",
+        "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::25",
+        "lintr_lint::tests/testthat/test-request_url.R::lintr_lint::30"
+      ],
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "updated_at": "2026-05-17T00:47:00+00:00",
+      "auto": true,
+      "cluster_key": "detector::lintr_lint",
+      "action": "review and fix lintr issues",
+      "execution_status": "review",
+      "user_modified": false,
+      "action_type": "manual_fix",
+      "execution_policy": "planned_only"
+    },
+    "auto/initial-review": {
+      "name": "auto/initial-review",
+      "description": "Initial review of 20 unscored subjective dimensions",
+      "issue_ids": [
+        "subjective::abstraction_fitness",
+        "subjective::ai_generated_debt",
+        "subjective::api_surface_coherence",
+        "subjective::authorization_consistency",
+        "subjective::contract_coherence",
+        "subjective::convention_outlier",
+        "subjective::cross_module_architecture",
+        "subjective::dependency_health",
+        "subjective::design_coherence",
+        "subjective::error_consistency",
+        "subjective::high_level_elegance",
+        "subjective::incomplete_migration",
+        "subjective::initialization_coupling",
+        "subjective::logic_clarity",
+        "subjective::low_level_elegance",
+        "subjective::mid_level_elegance",
+        "subjective::naming_quality",
+        "subjective::package_organization",
+        "subjective::test_strategy",
+        "subjective::type_safety"
+      ],
+      "created_at": "2026-05-17T00:47:00+00:00",
+      "updated_at": "2026-05-17T00:47:00+00:00",
+      "auto": true,
+      "cluster_key": "subjective::unscored",
+      "action": "desloppify review --prepare --dimensions abstraction_fitness,ai_generated_debt,api_surface_coherence,authorization_consistency,contract_coherence,convention_outlier,cross_module_architecture,dependency_health,design_coherence,error_consistency,high_level_elegance,incomplete_migration,initialization_coupling,logic_clarity,low_level_elegance,mid_level_elegance,naming_quality,package_organization,test_strategy,type_safety",
+      "execution_status": "review",
+      "user_modified": false,
+      "action_type": "manual_fix",
+      "execution_policy": "planned_only"
+    }
+  },
+  "superseded": {},
+  "promoted_ids": [],
+  "plan_start_scores": {},
+  "refresh_state": {
+    "_subjective_migration_pruned": true,
+    "lifecycle_phase": "plan",
+    "postflight_scan_completed_at_scan_count": 4
+  },
+  "execution_log": [
+    {
+      "timestamp": "2026-05-17T00:47:00+00:00",
+      "action": "sync_subjective",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:47:00+00:00",
+      "action": "auto_cluster",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:47:00+00:00",
+      "action": "sync_lifecycle_phase",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "phase": "review_initial"
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:47:00+00:00",
+      "action": "seed_start_scores",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-05-17T00:52:25+00:00",
+      "action": "sync_subjective",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:52:25+00:00",
+      "action": "clear_start_scores",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-05-17T00:52:25+00:00",
+      "action": "complete_postflight_scan",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "scan_count": 2
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:53:38+00:00",
+      "action": "sync_subjective",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:53:38+00:00",
+      "action": "seed_start_scores",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-05-17T00:58:55+00:00",
+      "action": "sync_subjective",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-17T00:58:55+00:00",
+      "action": "clear_start_scores",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-05-17T00:58:55+00:00",
+      "action": "complete_postflight_scan",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "scan_count": 4
+      }
+    }
+  ],
+  "epic_triage_meta": {},
+  "commit_log": [],
+  "uncommitted_issues": [],
+  "commit_tracking_branch": null,
+  "scan_count_at_plan_start": 3
+}

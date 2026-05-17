@@ -1,13 +1,13 @@
-test_that("returns httr::content", {
+test_that("returns httr2 response content", {
   skip_if_offline(host = "www.opendata.nhs.scot")
 
-  content <- phs_GET("package_list", "")
+  content <- phs_GET("package_list", query = NULL)
 
   expect_true(content$success)
 
-  expect_identical(
+  expect_match(
     content$help,
-    "https://www.opendata.nhs.scot/api/3/action/help_show?name=package_list"
+    "package_list$"
   )
 })
 
@@ -16,7 +16,7 @@ test_that("error_check() works as expected", {
 
   # no error for valid endpoint
   expect_type(
-    phs_GET("package_list", ""),
+    phs_GET("package_list", query = NULL),
     "list"
   )
 

@@ -89,6 +89,11 @@ get_dataset <- function(dataset_name,
   }
 
   # Combine the list of resources into a single tibble
+  # Use names to support names_to in list_rbind
+  if (include_context) {
+    all_data <- purrr::set_names(all_data, as.character(seq_along(all_data)))
+  }
+
   combined <- purrr::list_rbind(all_data,
     names_to = if (include_context) "res_idx" else NULL
   )
@@ -99,7 +104,7 @@ get_dataset <- function(dataset_name,
 
     # Extract metadata using purrr
     meta_df <- tibble::tibble(
-      res_idx = seq_along(selection_ids),
+      res_idx = as.character(seq_along(selection_ids)),
       ResID = purrr::map_chr(meta, ~ .x$id),
       ResName = purrr::map_chr(meta, ~ .x$name),
       created = purrr::map_chr(meta, ~ .x$created),
@@ -110,21 +115,22 @@ get_dataset <- function(dataset_name,
 
     # Vectorized date parsing and identity correction
     meta_df$ResCreatedDate <- as.POSIXct(meta_df$created,
-      format = "%FT%X", tz = "UTC")
+                                         format = "%FT%X", tz = "UTC")
     meta_df$ResModifiedDate <- as.POSIXct(meta_df$modified,
-      format = "%FT%X", tz = "UTC")
+                                          format = "%FT%X", tz = "UTC")
 
     m_lt_c <- !is.na(meta_df$ResModifiedDate) &
-              meta_df$ResModifiedDate < meta_df$ResCreatedDate
+      meta_df$ResModifiedDate < meta_df$ResCreatedDate
     meta_df$ResModifiedDate[m_lt_c] <- meta_df$ResCreatedDate[m_lt_c]
 
     # Map metadata back to the combined data frame via res_idx
+    cols <- c("res_idx", "ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
     combined <- combined |>
       dplyr::left_join(
-        meta_df |> dplyr::select(res_idx, dplyr::starts_with("Res")),
+        meta_df |> dplyr::select(dplyr::all_of(cols)),
         by = "res_idx"
       ) |>
-      dplyr::select(-res_idx) |>
+      dplyr::select(-dplyr::any_of("res_idx")) |>
       dplyr::relocate(dplyr::starts_with("Res"), .before = dplyr::everything())
   }
 
