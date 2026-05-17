@@ -19,8 +19,3 @@ the amount of resources it has and the date it was last updated.Last updated
 is taken to mean the most recent date a resource within the dataset was
 created or modified.
 }
-\examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
-get_dataset_additional_info("gp-practice-populations")
-\dontshow{\}) # examplesIf}
-}
