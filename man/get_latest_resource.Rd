@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_latest_resource.R
 \name{get_latest_resource}
 \alias{get_latest_resource}
-\title{Get the latest resource from a data set}
+\title{Get the latest resource from a dataset}
 \usage{
 get_latest_resource(
   dataset_name,
@@ -18,49 +18,29 @@ get_latest_resource(
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
+\item{row_filters}{(optional) A named list or vector specifying values of
+columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
+\item{col_select}{(optional) A character vector containing the names of
+desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the
+resource will be added as columns to the data. Defaults to \code{TRUE} for this
+function.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} with the data
+A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Returns the latest resource available in a dataset.
+The Scottish Health and Social Care Open Data platform
+hosts some datasets that are updated regularly with new resources.
+For some of these datasets, the latest resource is the one that
+is most likely to be of interest. This function attempts to
+identify the latest resource for a given dataset and returns
+it as a tibble.
 }
-\details{
-There are some datasets on the open data platform that
-keep historic resources instead of updating existing ones.
-For these it is useful to be able to retrieve the latest
-resource. As of 1.8.2024 these data sets include:
-\itemize{
-\item gp-practice-populations
-\item gp-practice-contact-details-and-list-sizes
-\item nhsscotland-payments-to-general-practice
-\item dental-practices-and-patient-registrations
-\item general-practitioner-contact-details
-\item prescribed-dispensed
-\item dispenser-location-contact-details
-\item community-pharmacy-contractor-activity
-}
-}
-\examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
-\dontrun{
-dataset_name <- "gp-practice-contact-details-and-list-sizes"
+\seealso{
+\code{\link[=get_resource]{get_resource()}} for downloading a single resource from a dataset.
 
-data <- get_latest_resource(dataset_name)
-
-filters <- list("Postcode" = "DD11 1ES")
-wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
-
-filtered_data <- get_latest_resource(
-  dataset_name = dataset_name,
-  row_filters = filters,
-  col_select = wanted_cols
-)
-}
-\dontshow{\}) # examplesIf}
+\code{\link[=get_dataset]{get_dataset()}} for downloading all resources from a dataset.
 }
