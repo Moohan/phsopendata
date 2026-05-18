@@ -45,14 +45,15 @@ error_check <- function(content, call = rlang::caller_env()) {
   # if there is no error status/message in the content,
   # break out of the function
   is_error <- suppressWarnings(
-    !is.null(content$error)
+    !is.null(content[["error"]])
   )
   if (!is_error) {
     return()
   }
 
   # generate error message and stop
-  error_text <- parse_error(content$error)
+  # parse_error is internal to phsopendata
+  error_text <- parse_error(content[["error"]])
   cli::cli_abort(
     c(
       "API error.",

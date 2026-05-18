@@ -1,85 +1,70 @@
-#' Get the latest resource from a data set
+#' Get the latest resource from a dataset
 #'
-#' Returns the latest resource available in a dataset.
-#'
-#' There are some datasets on the open data platform that
-#' keep historic resources instead of updating existing ones.
-#' For these it is useful to be able to retrieve the latest
-#' resource. As of 1.8.2024 these data sets include:
-#' * gp-practice-populations
-#' * gp-practice-contact-details-and-list-sizes
-#' * nhsscotland-payments-to-general-practice
-#' * dental-practices-and-patient-registrations
-#' * general-practitioner-contact-details
-#' * prescribed-dispensed
-#' * dispenser-location-contact-details
-#' * community-pharmacy-contractor-activity
+#' @description
+#' The Scottish Health and Social Care Open Data platform
+#' hosts some datasets that are updated regularly with new resources.
+#' For some of these datasets, the latest resource is the one that
+#' is most likely to be of interest. This function attempts to
+#' identify the latest resource for a given dataset and returns
+#' it as a tibble.
 #'
 #' @inheritParams get_dataset
-#' @inheritParams get_resource
+#' @param include_context (optional) If `TRUE`, additional information about the
+#' resource will be added as columns to the data. Defaults to `TRUE` for this
+#' function.
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @seealso [get_resource()] for downloading a single resource from a dataset.
+#' @seealso [get_dataset()] for downloading all resources from a dataset.
+#'
+#' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
 #' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error =
 #' FALSE)) > 0L)
 #' \dontrun{
-#' dataset_name <- "gp-practice-contact-details-and-list-sizes"
-#'
-#' data <- get_latest_resource(dataset_name)
-#'
-#' filters <- list("Postcode" = "DD11 1ES")
-#' wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
-#'
-#' filtered_data <- get_latest_resource(
-#'   dataset_name = dataset_name,
-#'   row_filters = filters,
-#'   col_select = wanted_cols
-#' )
+#' get_latest_resource("gp-practice-populations", rows = 10)
 #' }
-get_latest_resource <- function(
-  dataset_name,
-  rows = NULL,
-  row_filters = NULL,
-  col_select = NULL,
-  include_context = TRUE
-) {
+get_latest_resource <- function(dataset_name,
+                                rows = NULL,
+                                row_filters = NULL,
+                                col_select = NULL,
+                                include_context = TRUE) {
+  # define the applicable datasets
   applicable_datasets <- c(
-    "community-pharmacy-contractor-activity",
-    "dental-practices-and-patient-registrations",
-    "dispenser-location-contact-details",
-    "general-practitioner-contact-details",
-    "gp-practice-contact-details-and-list-sizes",
     "gp-practice-populations",
-    "nhsscotland-payments-to-general-practice",
-    "prescribed-dispensed"
+    "quality-outcome-framework-indicators",
+    "child-and-adolescent-mental-health-waiting-times",
+    "child-and-adolescent-mental-health-waiting-times-adhoc",
+    "psychological-therapies-waiting-times"
   )
 
-  # check if data set is within applicable datasets
-  # throw error if not
+  # check if the dataset is within the applicable datasets
   if (!dataset_name %in% applicable_datasets) {
     cli::cli_abort(
       c(
-        "The dataset name supplied {.val {dataset_name}} is not within the applicable datasets.
-      These are: {.val {applicable_datasets}}",
+        paste(
+          "The dataset name supplied {.val {dataset_name}} is not within the",
+          "applicable datasets."
+        ),
+        i = "These are: {.val {applicable_datasets}}",
         x = "Please see {.fun get_latest_resource} documentation.",
-        i = "You can find dataset names in the URL
-      of a dataset's page on {.url www.opendata.nhs.scot}."
-      ),
-      call = rlang::caller_env()
+        "*" = paste(
+          "You can find dataset names in the URL of a dataset's page on",
+          "{.url www.opendata.nhs.scot}."
+        )
+      )
     )
   }
 
   # get the latest resource id
-  id <- get_latest_resource_id(dataset_name)
+  res_id <- get_latest_resource_id(dataset_name)
 
-  resource_data <- get_resource(
-    res_id = id,
+  # get the resource
+  get_resource(
+    res_id = res_id,
     rows = rows,
     row_filters = row_filters,
     col_select = col_select,
     include_context = include_context
   )
-
-  resource_data
 }

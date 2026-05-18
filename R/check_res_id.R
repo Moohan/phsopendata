@@ -15,8 +15,10 @@ check_res_id <- function(res_id, call = rlang::caller_env()) {
       c(
         "Argument {.var res_id} must be of length 1.",
         i = "You supplied a res_id with a length of {length(res_id)}",
-        x = "`get_resource` does not currently support
-      requests for multiple resources simultaneously."
+        x = paste(
+          "`get_resource` does not currently support requests for",
+          "multiple resources simultaneously."
+        )
       ),
       call = call
     )
@@ -27,7 +29,7 @@ check_res_id <- function(res_id, call = rlang::caller_env()) {
     cli::cli_abort(
       c(
         "Argument {.var res_id} must be of type character",
-        i = "You supplied a {.var res_id} with type  {.cls {class(res_id)[1]}}"
+        i = "You supplied a {.var res_id} with type {.cls {class(res_id)[1]}}"
       ),
       call = call
     )
@@ -40,7 +42,10 @@ check_res_id <- function(res_id, call = rlang::caller_env()) {
     cli::cli_abort(
       c(
         "Argument {.var res_id} is in an invalid format.",
-        i = "You can find a resource's ID in the URL of it's page on {.url www.opendata.nhs.scot}."
+        "*" = paste(
+          "You can find a resource's ID in the URL of it's page on",
+          "{.url www.opendata.nhs.scot}."
+        )
       ),
       call = call
     )

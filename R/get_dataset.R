@@ -30,16 +30,18 @@ get_dataset <- function(dataset_name,
 
   # define query and try API call
   query <- list(id = dataset_name)
-  content <- try(
+  content <- tryCatch(
     phs_GET("package_show", query),
-    silent = TRUE
+    error = function(e) {
+      # Handle 'Not Found' error by suggesting a name
+      err_msg <- paste(as.character(e), collapse = " ")
+      if (grepl("Not Found", err_msg, ignore.case = TRUE)) {
+        suggest_dataset_name(dataset_name)
+      }
+      # Re-throw if it wasn't a Not Found error or if suggestion failed to abort
+      stop(e)
+    }
   )
-
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
-  }
 
   # define list of resource IDs to get
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
@@ -53,10 +55,14 @@ get_dataset <- function(dataset_name,
   # get all resources
   all_data <- purrr::map(
     selection_ids,
-    get_resource,
-    rows = rows,
-    row_filters = row_filters,
-    col_select = col_select
+    function(id) {
+      get_resource(
+        res_id = id,
+        rows = rows,
+        row_filters = row_filters,
+        col_select = col_select
+      )
+    }
   )
 
   # Identify column type inconsistencies using purrr
@@ -94,7 +100,8 @@ get_dataset <- function(dataset_name,
     all_data <- purrr::set_names(all_data, as.character(seq_along(all_data)))
   }
 
-  combined <- purrr::list_rbind(all_data,
+  combined <- purrr::list_rbind(
+    all_data,
     names_to = if (include_context) "res_idx" else NULL
   )
 
@@ -124,10 +131,11 @@ get_dataset <- function(dataset_name,
     meta_df$ResModifiedDate[m_lt_c] <- meta_df$ResCreatedDate[m_lt_c]
 
     # Map metadata back to the combined data frame via res_idx
-    cols <- c("res_idx", "ResID", "ResName", "ResCreatedDate", "ResModifiedDate")
+    meta_cols <- c("res_idx", "ResID", "ResName",
+                   "ResCreatedDate", "ResModifiedDate")
     combined <- combined |>
       dplyr::left_join(
-        meta_df |> dplyr::select(dplyr::all_of(cols)),
+        meta_df |> dplyr::select(dplyr::all_of(meta_cols)),
         by = "res_idx"
       ) |>
       dplyr::select(-dplyr::any_of("res_idx")) |>

@@ -49,7 +49,7 @@ request_url <- function(action, query, call = rlang::caller_env()) {
         url <- httr2::url_build(url_obj)
       }
     } else if (is.null(query) ||
-      (is.character(query) && length(query) == 1L && !nzchar(query))) {
+               (is.character(query) && length(query) == 1L && !nzchar(query))) {
       # Empty or NULL query
       url_obj$query <- NULL
       url <- httr2::url_build(url_obj)

@@ -1,29 +1,8 @@
 {
   "version": 8,
   "created": "2026-05-17T00:47:00+00:00",
-  "updated": "2026-05-17T01:00:51+00:00",
-  "queue_order": [
-    "subjective::abstraction_fitness",
-    "subjective::ai_generated_debt",
-    "subjective::api_surface_coherence",
-    "subjective::authorization_consistency",
-    "subjective::contract_coherence",
-    "subjective::convention_outlier",
-    "subjective::cross_module_architecture",
-    "subjective::dependency_health",
-    "subjective::design_coherence",
-    "subjective::error_consistency",
-    "subjective::high_level_elegance",
-    "subjective::incomplete_migration",
-    "subjective::initialization_coupling",
-    "subjective::logic_clarity",
-    "subjective::low_level_elegance",
-    "subjective::mid_level_elegance",
-    "subjective::naming_quality",
-    "subjective::package_organization",
-    "subjective::test_strategy",
-    "subjective::type_safety"
-  ],
+  "updated": "2026-05-18T14:17:14+00:00",
+  "queue_order": [],
   "deferred": [],
   "skipped": {},
   "active_cluster": null,
@@ -31,8 +10,8 @@
     "lintr_lint::R/check_res_id.R::lintr_lint::43": {
       "issue_id": "lintr_lint::R/check_res_id.R::lintr_lint::43",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:26:37+00:00"
     },
     "lintr_lint::R/dump_download.R::lintr_lint::10": {
       "issue_id": "lintr_lint::R/dump_download.R::lintr_lint::10",
@@ -43,8 +22,8 @@
     "lintr_lint::R/error_check.R::lintr_lint::29": {
       "issue_id": "lintr_lint::R/error_check.R::lintr_lint::29",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:05:07+00:00"
     },
     "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20": {
       "issue_id": "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20",
@@ -55,32 +34,32 @@
     "lintr_lint::R/get_dataset.R::lintr_lint::29": {
       "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::29",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:17:14+00:00"
     },
     "lintr_lint::R/get_dataset.R::lintr_lint::34": {
       "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::34",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:17:14+00:00"
     },
     "lintr_lint::R/get_dataset.R::lintr_lint::41": {
       "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::41",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:04:53+00:00"
     },
     "lintr_lint::R/get_dataset.R::lintr_lint::56": {
       "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::56",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:04:53+00:00"
     },
     "lintr_lint::R/get_dataset.R::lintr_lint::127": {
       "issue_id": "lintr_lint::R/get_dataset.R::lintr_lint::127",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:26:37+00:00"
     },
     "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23": {
       "issue_id": "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23",
@@ -91,20 +70,20 @@
     "lintr_lint::R/get_latest_resource.R::lintr_lint::63": {
       "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:17:14+00:00"
     },
     "lintr_lint::R/get_latest_resource.R::lintr_lint::74": {
       "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T14:04:53+00:00"
     },
     "lintr_lint::R/get_latest_resource.R::lintr_lint::76": {
       "issue_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:26:37+00:00"
     },
     "lintr_lint::R/get_resource_sql.R::lintr_lint::97": {
       "issue_id": "lintr_lint::R/get_resource_sql.R::lintr_lint::97",
@@ -157,14 +136,14 @@
     "lintr_lint::R/get_resource.R::lintr_lint::139": {
       "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::139",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:05:07+00:00"
     },
     "lintr_lint::R/get_resource.R::lintr_lint::144": {
       "issue_id": "lintr_lint::R/get_resource.R::lintr_lint::144",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:05:07+00:00"
     },
     "lintr_lint::R/list_datasets.R::lintr_lint::28": {
       "issue_id": "lintr_lint::R/list_datasets.R::lintr_lint::28",
@@ -211,14 +190,14 @@
     "lintr_lint::R/phs_GET.R::lintr_lint::46": {
       "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::46",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:05:07+00:00"
     },
     "lintr_lint::R/phs_GET.R::lintr_lint::62": {
       "issue_id": "lintr_lint::R/phs_GET.R::lintr_lint::62",
       "created_at": "2026-05-17T00:47:00+00:00",
-      "cluster": "auto/lintr_lint",
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "cluster": null,
+      "updated_at": "2026-05-18T13:05:07+00:00"
     },
     "lintr_lint::R/request_url.R::lintr_lint::52": {
       "issue_id": "lintr_lint::R/request_url.R::lintr_lint::52",
@@ -526,19 +505,9 @@
       "name": "auto/lintr_lint",
       "description": "Fix 62 lintr issues",
       "issue_ids": [
-        "lintr_lint::R/check_res_id.R::lintr_lint::43",
         "lintr_lint::R/dump_download.R::lintr_lint::10",
-        "lintr_lint::R/error_check.R::lintr_lint::29",
         "lintr_lint::R/get_dataset_additional_info.R::lintr_lint::20",
-        "lintr_lint::R/get_dataset.R::lintr_lint::29",
-        "lintr_lint::R/get_dataset.R::lintr_lint::34",
-        "lintr_lint::R/get_dataset.R::lintr_lint::41",
-        "lintr_lint::R/get_dataset.R::lintr_lint::56",
-        "lintr_lint::R/get_dataset.R::lintr_lint::127",
         "lintr_lint::R/get_latest_resource_id.R::lintr_lint::23",
-        "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
-        "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
-        "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
         "lintr_lint::R/get_resource_sql.R::lintr_lint::97",
         "lintr_lint::R/get_resource.R::lintr_lint::42",
         "lintr_lint::R/get_resource.R::lintr_lint::44",
@@ -547,8 +516,6 @@
         "lintr_lint::R/get_resource.R::lintr_lint::63",
         "lintr_lint::R/get_resource.R::lintr_lint::102",
         "lintr_lint::R/get_resource.R::lintr_lint::109",
-        "lintr_lint::R/get_resource.R::lintr_lint::139",
-        "lintr_lint::R/get_resource.R::lintr_lint::144",
         "lintr_lint::R/list_datasets.R::lintr_lint::28",
         "lintr_lint::R/list_resources.R::lintr_lint::196",
         "lintr_lint::R/parse_error.R::lintr_lint::1",
@@ -556,8 +523,6 @@
         "lintr_lint::R/parse_row_filters.R::lintr_lint::61",
         "lintr_lint::R/phs_GET.R::lintr_lint::9",
         "lintr_lint::R/phs_GET.R::lintr_lint::14",
-        "lintr_lint::R/phs_GET.R::lintr_lint::46",
-        "lintr_lint::R/phs_GET.R::lintr_lint::62",
         "lintr_lint::R/request_url.R::lintr_lint::52",
         "lintr_lint::R/suggest_dataset_name.R::lintr_lint::7",
         "lintr_lint::R/suggest_dataset_name.R::lintr_lint::29",
@@ -635,7 +600,200 @@
       "execution_policy": "planned_only"
     }
   },
-  "superseded": {},
+  "superseded": {
+    "lintr_lint::R/error_check.R::lintr_lint::29": {
+      "original_id": "lintr_lint::R/error_check.R::lintr_lint::29",
+      "original_detector": "lintr_lint",
+      "original_file": "R/error_check.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'parse_error'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:05:07+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/error_check.R::lintr_lint::11",
+        "lintr_lint::R/error_check.R::lintr_lint::55"
+      ]
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::139": {
+      "original_id": "lintr_lint::R/get_resource.R::lintr_lint::139",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_resource.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:05:07+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_resource.R::lintr_lint::42",
+        "lintr_lint::R/get_resource.R::lintr_lint::44",
+        "lintr_lint::R/get_resource.R::lintr_lint::45",
+        "lintr_lint::R/get_resource.R::lintr_lint::62",
+        "lintr_lint::R/get_resource.R::lintr_lint::63"
+      ]
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::144": {
+      "original_id": "lintr_lint::R/get_resource.R::lintr_lint::144",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_resource.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'add_context'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:05:07+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_resource.R::lintr_lint::42",
+        "lintr_lint::R/get_resource.R::lintr_lint::44",
+        "lintr_lint::R/get_resource.R::lintr_lint::45",
+        "lintr_lint::R/get_resource.R::lintr_lint::62",
+        "lintr_lint::R/get_resource.R::lintr_lint::63"
+      ]
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::46": {
+      "original_id": "lintr_lint::R/phs_GET.R::lintr_lint::46",
+      "original_detector": "lintr_lint",
+      "original_file": "R/phs_GET.R",
+      "original_summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:05:07+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/phs_GET.R::lintr_lint::9",
+        "lintr_lint::R/phs_GET.R::lintr_lint::14",
+        "lintr_lint::R/phs_GET.R::lintr_lint::47",
+        "lintr_lint::R/phs_GET.R::lintr_lint::63"
+      ]
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::62": {
+      "original_id": "lintr_lint::R/phs_GET.R::lintr_lint::62",
+      "original_detector": "lintr_lint",
+      "original_file": "R/phs_GET.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'error_check'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:05:07+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/phs_GET.R::lintr_lint::9",
+        "lintr_lint::R/phs_GET.R::lintr_lint::14",
+        "lintr_lint::R/phs_GET.R::lintr_lint::47",
+        "lintr_lint::R/phs_GET.R::lintr_lint::63"
+      ]
+    },
+    "lintr_lint::R/check_res_id.R::lintr_lint::43": {
+      "original_id": "lintr_lint::R/check_res_id.R::lintr_lint::43",
+      "original_detector": "lintr_lint",
+      "original_file": "R/check_res_id.R",
+      "original_summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 99 characters.",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:26:37+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/check_res_id.R::lintr_lint::44"
+      ]
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::127": {
+      "original_id": "lintr_lint::R/get_dataset.R::lintr_lint::127",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_dataset.R",
+      "original_summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:26:37+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_dataset.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset.R::lintr_lint::34",
+        "lintr_lint::R/get_dataset.R::lintr_lint::41",
+        "lintr_lint::R/get_dataset.R::lintr_lint::56",
+        "lintr_lint::R/get_dataset.R::lintr_lint::128"
+      ]
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::76": {
+      "original_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::76",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_latest_resource.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T13:26:37+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::46",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::47",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::58"
+      ]
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::41": {
+      "original_id": "lintr_lint::R/get_dataset.R::lintr_lint::41",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_dataset.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'suggest_dataset_name'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:04:53+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_dataset.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset.R::lintr_lint::34",
+        "lintr_lint::R/get_dataset.R::lintr_lint::40",
+        "lintr_lint::R/get_dataset.R::lintr_lint::59"
+      ]
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::56": {
+      "original_id": "lintr_lint::R/get_dataset.R::lintr_lint::56",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_dataset.R",
+      "original_summary": "warning: [object_usage_linter] no visible binding for global variable 'get_resource'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:04:53+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_dataset.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset.R::lintr_lint::34",
+        "lintr_lint::R/get_dataset.R::lintr_lint::40",
+        "lintr_lint::R/get_dataset.R::lintr_lint::59"
+      ]
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::74": {
+      "original_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::74",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_latest_resource.R",
+      "original_summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:04:53+00:00",
+      "remapped_to": null,
+      "candidates": [
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::60"
+      ]
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::29": {
+      "original_id": "lintr_lint::R/get_dataset.R::lintr_lint::29",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_dataset.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'check_dataset_name'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:17:14+00:00",
+      "remapped_to": null,
+      "candidates": []
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::34": {
+      "original_id": "lintr_lint::R/get_dataset.R::lintr_lint::34",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_dataset.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:17:14+00:00",
+      "remapped_to": null,
+      "candidates": []
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::63": {
+      "original_id": "lintr_lint::R/get_latest_resource.R::lintr_lint::63",
+      "original_detector": "lintr_lint",
+      "original_file": "R/get_latest_resource.R",
+      "original_summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
+      "status": "superseded",
+      "superseded_at": "2026-05-18T14:17:14+00:00",
+      "remapped_to": null,
+      "candidates": []
+    }
+  },
   "promoted_ids": [],
   "plan_start_scores": {
     "strict": 22.4,
@@ -792,6 +950,91 @@
       "actor": "system",
       "note": null,
       "detail": {}
+    },
+    {
+      "timestamp": "2026-05-18T13:05:07+00:00",
+      "action": "reconcile",
+      "issue_ids": [
+        "lintr_lint::R/error_check.R::lintr_lint::29",
+        "lintr_lint::R/get_resource.R::lintr_lint::139",
+        "lintr_lint::R/get_resource.R::lintr_lint::144",
+        "lintr_lint::R/phs_GET.R::lintr_lint::46",
+        "lintr_lint::R/phs_GET.R::lintr_lint::62"
+      ],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "superseded_count": 5,
+        "pruned_count": 0,
+        "resurfaced_count": 0,
+        "clusters_completed_count": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-18T13:05:07+00:00",
+      "action": "sync_subjective",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-05-18T13:26:37+00:00",
+      "action": "reconcile",
+      "issue_ids": [
+        "lintr_lint::R/check_res_id.R::lintr_lint::43",
+        "lintr_lint::R/get_dataset.R::lintr_lint::127",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::76"
+      ],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "superseded_count": 3,
+        "pruned_count": 0,
+        "resurfaced_count": 0,
+        "clusters_completed_count": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:04:53+00:00",
+      "action": "reconcile",
+      "issue_ids": [
+        "lintr_lint::R/get_dataset.R::lintr_lint::41",
+        "lintr_lint::R/get_dataset.R::lintr_lint::56",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::74"
+      ],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "superseded_count": 3,
+        "pruned_count": 0,
+        "resurfaced_count": 0,
+        "clusters_completed_count": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:17:14+00:00",
+      "action": "reconcile",
+      "issue_ids": [
+        "lintr_lint::R/get_dataset.R::lintr_lint::29",
+        "lintr_lint::R/get_dataset.R::lintr_lint::34",
+        "lintr_lint::R/get_latest_resource.R::lintr_lint::63"
+      ],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "superseded_count": 3,
+        "pruned_count": 0,
+        "resurfaced_count": 0,
+        "clusters_completed_count": 0
+      }
     }
   ],
   "epic_triage_meta": {},

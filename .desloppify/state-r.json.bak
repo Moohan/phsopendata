@@ -1,28 +1,28 @@
 {
   "version": 3,
   "created": "2026-05-17T00:46:52+00:00",
-  "last_scan": "2026-05-17T01:00:51+00:00",
-  "scan_count": 6,
-  "overall_score": 22.4,
-  "objective_score": 89.6,
-  "strict_score": 22.4,
-  "verified_strict_score": 89.6,
+  "last_scan": "2026-05-18T14:28:53+00:00",
+  "scan_count": 15,
+  "overall_score": 22.5,
+  "objective_score": 90.2,
+  "strict_score": 21.9,
+  "verified_strict_score": 90.2,
   "stats": {
-    "total": 64,
-    "auto_resolved": 0,
+    "total": 102,
+    "auto_resolved": 40,
     "deferred": 0,
     "false_positive": 0,
     "fixed": 0,
-    "open": 64,
+    "open": 62,
     "triaged_out": 0,
     "wontfix": 0,
     "by_tier": {
       "3": {
-        "auto_resolved": 0,
+        "auto_resolved": 40,
         "deferred": 0,
         "false_positive": 0,
         "fixed": 0,
-        "open": 64,
+        "open": 62,
         "triaged_out": 0,
         "wontfix": 0
       }
@@ -37,11 +37,11 @@
       "confidence": "medium",
       "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 99 characters.",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -63,7 +63,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -83,11 +83,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_error'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
       "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-05-18T13:05:07+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -109,7 +109,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -130,11 +130,11 @@
       "summary": "warning: [object_usage_linter] no visible global function definition for 'check_dataset_name'",
       "detail": {},
       "status": "open",
-      "note": null,
+      "note": "Reopened (\u00d71) \u2014 reappeared in scan (was auto_resolved)",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
-      "reopen_count": 0,
+      "reopen_count": 1,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
       "origin": "scan",
@@ -153,11 +153,11 @@
       "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
       "detail": {},
       "status": "open",
-      "note": null,
+      "note": "Reopened (\u00d71) \u2014 reappeared in scan (was auto_resolved)",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
-      "reopen_count": 0,
+      "reopen_count": 1,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
       "origin": "scan",
@@ -175,11 +175,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'suggest_dataset_name'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -198,11 +198,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible binding for global variable 'get_resource'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -221,11 +221,11 @@
       "confidence": "medium",
       "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -247,7 +247,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -265,14 +265,14 @@
       "file": "R/get_latest_resource.R",
       "tier": 3,
       "confidence": "medium",
-      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 95 characters.",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
       "detail": {},
       "status": "open",
-      "note": null,
+      "note": "Reopened (\u00d71) \u2014 reappeared in scan (was auto_resolved)",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
-      "reopen_count": 0,
+      "reopen_count": 1,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
       "origin": "scan",
@@ -288,13 +288,13 @@
       "file": "R/get_latest_resource.R",
       "tier": 3,
       "confidence": "medium",
-      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_latest_resource_id'",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -313,11 +313,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -339,7 +339,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -362,7 +362,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -385,7 +385,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -408,7 +408,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -431,7 +431,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -454,7 +454,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -477,7 +477,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -500,7 +500,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -520,11 +520,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
       "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-05-18T13:05:07+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -543,11 +543,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'add_context'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
       "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-05-18T13:05:07+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -569,7 +569,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -592,7 +592,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -615,7 +615,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -638,7 +638,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -661,7 +661,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -684,7 +684,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -707,7 +707,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -727,11 +727,11 @@
       "confidence": "medium",
       "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
       "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-05-18T13:05:07+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -750,11 +750,11 @@
       "confidence": "medium",
       "summary": "warning: [object_usage_linter] no visible global function definition for 'error_check'",
       "detail": {},
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
       "first_seen": "2026-05-17T00:46:59+00:00",
       "last_seen": "2026-05-17T01:00:51+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-05-18T13:05:07+00:00",
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
       "issue_kind": "mechanical_defect",
@@ -776,7 +776,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -799,7 +799,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -822,7 +822,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -845,7 +845,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -868,7 +868,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -891,7 +891,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -914,7 +914,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -937,7 +937,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -960,7 +960,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -983,7 +983,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1006,7 +1006,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1029,7 +1029,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1052,7 +1052,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1075,7 +1075,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1098,7 +1098,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1121,7 +1121,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1144,7 +1144,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1167,7 +1167,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1190,7 +1190,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1213,7 +1213,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1236,7 +1236,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1259,7 +1259,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1282,7 +1282,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1305,7 +1305,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1328,7 +1328,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1351,7 +1351,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1374,7 +1374,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1397,7 +1397,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1420,7 +1420,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1443,7 +1443,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1476,7 +1476,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1509,7 +1509,881 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-05-17T00:46:59+00:00",
-      "last_seen": "2026-05-17T01:00:51+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/error_check.R::lintr_lint::11": {
+      "id": "lintr_lint::R/error_check.R::lintr_lint::11",
+      "detector": "lintr_lint",
+      "file": "R/error_check.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [trailing_whitespace_linter] Remove trailing whitespace.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:05:07+00:00",
+      "resolved_at": "2026-05-18T13:07:51+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/error_check.R::lintr_lint::55": {
+      "id": "lintr_lint::R/error_check.R::lintr_lint::55",
+      "detector": "lintr_lint",
+      "file": "R/error_check.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_error'",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::115": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::115",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 117 characters.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::116": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::116",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 12 spaces but is 14 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::123": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::123",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 98 characters.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::136": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::136",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::141": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::141",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'add_context'",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T13:07:51+00:00",
+      "resolved_at": "2026-05-18T13:26:37+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::47": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::47",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 81 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/phs_GET.R::lintr_lint::63": {
+      "id": "lintr_lint::R/phs_GET.R::lintr_lint::63",
+      "detector": "lintr_lint",
+      "file": "R/phs_GET.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'error_check'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T13:05:07+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/check_res_id.R::lintr_lint::44": {
+      "id": "lintr_lint::R/check_res_id.R::lintr_lint::44",
+      "detector": "lintr_lint",
+      "file": "R/check_res_id.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 18 spaces but is 13 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::128": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::128",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 14 spaces but is 13 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::46": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::46",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [brace_linter] Opening curly braces should never go on their own line and should always be followed by a new line.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::47": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::47",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::58": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::58",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::60": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::60",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_latest_resource_id'",
+      "detail": {},
+      "status": "open",
+      "note": "Reopened (\u00d71) \u2014 reappeared in scan (was auto_resolved)",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 1,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::61": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::61",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 4 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::62": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::62",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 6 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::64": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::64",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Hanging indent should be 14 spaces but is 8 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::65": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::65",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "error: [error] unexpected symbol",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::66": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::66",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 8 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::68": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::68",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 6 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::71": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::71",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 4 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::72": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::72",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::77": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::77",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::78": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::78",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 4 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::83": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::83",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_latest_resource.R::lintr_lint::85": {
+      "id": "lintr_lint::R/get_latest_resource.R::lintr_lint::85",
+      "detector": "lintr_lint",
+      "file": "R/get_latest_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [indentation_linter] Indentation should be 0 spaces but is 2 spaces.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::117": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::117",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 119 characters.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::124": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::124",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 98 characters.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::137": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::137",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T13:26:37+00:00",
+      "resolved_at": "2026-05-18T14:04:53+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::142": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::142",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'phs_GET'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T13:26:37+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/check_res_id.R::lintr_lint::18": {
+      "id": "lintr_lint::R/check_res_id.R::lintr_lint::18",
+      "detector": "lintr_lint",
+      "file": "R/check_res_id.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 114 characters.",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:09:41+00:00",
+      "resolved_at": "2026-05-18T14:11:21+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/error_check.R::lintr_lint::56": {
+      "id": "lintr_lint::R/error_check.R::lintr_lint::56",
+      "detector": "lintr_lint",
+      "file": "R/error_check.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'parse_error'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::40": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::40",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'suggest_dataset_name'",
+      "detail": {},
+      "status": "auto_resolved",
+      "note": "Auto-resolved: absent from latest detector output",
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:13:33+00:00",
+      "resolved_at": "2026-05-18T14:17:14+00:00",
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::59": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::59",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'get_resource'",
+      "detail": {},
+      "status": "open",
+      "note": "Reopened (\u00d71) \u2014 reappeared in scan (was auto_resolved)",
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 1,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::129": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::129",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "style: [line_length_linter] Lines should not be more than 80 characters. This line is 105 characters.",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_resource.R::lintr_lint::147": {
+      "id": "lintr_lint::R/get_resource.R::lintr_lint::147",
+      "detector": "lintr_lint",
+      "file": "R/get_resource.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'add_context'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T14:04:53+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "work_item_kind": "mechanical_defect",
+      "issue_kind": "mechanical_defect",
+      "origin": "scan",
+      "lang": "r",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "lintr_lint::R/get_dataset.R::lintr_lint::39": {
+      "id": "lintr_lint::R/get_dataset.R::lintr_lint::39",
+      "detector": "lintr_lint",
+      "file": "R/get_dataset.R",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "warning: [object_usage_linter] no visible global function definition for 'suggest_dataset_name'",
+      "detail": {},
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-05-18T14:28:53+00:00",
+      "last_seen": "2026-05-18T14:28:53+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "work_item_kind": "mechanical_defect",
@@ -1580,7 +2454,7 @@
           "reason": "tool_not_found"
         }
       ],
-      "updated_at": "2026-05-17T01:00:51+00:00"
+      "updated_at": "2026-05-18T14:28:53+00:00"
     }
   },
   "score_confidence": {
@@ -2347,18 +3221,1107 @@
           "strict": 0.0
         }
       }
+    },
+    {
+      "timestamp": "2026-05-18T13:05:07+00:00",
+      "lang": "r",
+      "strict_score": 22.3,
+      "verified_strict_score": 89.7,
+      "objective_score": 89.7,
+      "overall_score": 22.4,
+      "open": 68,
+      "diff_new": 9,
+      "diff_resolved": 5,
+      "ignored": 0,
+      "raw_issues": 70,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.3,
+          "strict": 83.4
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T13:07:51+00:00",
+      "lang": "r",
+      "strict_score": 22.3,
+      "verified_strict_score": 89.7,
+      "objective_score": 89.7,
+      "overall_score": 22.4,
+      "open": 67,
+      "diff_new": 0,
+      "diff_resolved": 1,
+      "ignored": 0,
+      "raw_issues": 69,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.4,
+          "strict": 83.3
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T13:26:37+00:00",
+      "lang": "r",
+      "strict_score": 22.3,
+      "verified_strict_score": 90.4,
+      "objective_score": 90.4,
+      "overall_score": 22.6,
+      "open": 82,
+      "diff_new": 22,
+      "diff_resolved": 7,
+      "ignored": 0,
+      "raw_issues": 86,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 86.1,
+          "strict": 84.5
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:04:53+00:00",
+      "lang": "r",
+      "strict_score": 21.9,
+      "verified_strict_score": 89.8,
+      "objective_score": 89.8,
+      "overall_score": 22.5,
+      "open": 63,
+      "diff_new": 6,
+      "diff_resolved": 25,
+      "ignored": 0,
+      "raw_issues": 65,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.3,
+          "strict": 81.1
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:09:41+00:00",
+      "lang": "r",
+      "strict_score": 21.9,
+      "verified_strict_score": 89.8,
+      "objective_score": 89.8,
+      "overall_score": 22.5,
+      "open": 63,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 65,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.3,
+          "strict": 81.1
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:11:21+00:00",
+      "lang": "r",
+      "strict_score": 21.9,
+      "verified_strict_score": 90.2,
+      "objective_score": 90.2,
+      "overall_score": 22.5,
+      "open": 62,
+      "diff_new": 0,
+      "diff_resolved": 1,
+      "ignored": 0,
+      "raw_issues": 64,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.8,
+          "strict": 80.9
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:13:33+00:00",
+      "lang": "r",
+      "strict_score": 21.9,
+      "verified_strict_score": 90.2,
+      "objective_score": 90.2,
+      "overall_score": 22.5,
+      "open": 62,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 64,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.8,
+          "strict": 80.9
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:17:14+00:00",
+      "lang": "r",
+      "strict_score": 21.8,
+      "verified_strict_score": 91.3,
+      "objective_score": 91.3,
+      "overall_score": 22.8,
+      "open": 56,
+      "diff_new": 0,
+      "diff_resolved": 6,
+      "ignored": 0,
+      "raw_issues": 58,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 86.3,
+          "strict": 79.8
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:28:53+00:00",
+      "lang": "r",
+      "strict_score": 21.9,
+      "verified_strict_score": 90.2,
+      "objective_score": 90.2,
+      "overall_score": 22.5,
+      "open": 62,
+      "diff_new": 1,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 64,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": {
+        "status": "reduced",
+        "confidence": 0.0,
+        "detector_count": 2,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "Code quality": {
+          "score": 84.8,
+          "strict": 80.9
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "File health": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "API coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Auth consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Contracts": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Stale migration": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Init coupling": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Logic clarity": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Naming quality": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Type safety": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
     }
   ],
   "review_cache": {
     "detectors": {
       "boilerplate": {
         "version": 1,
-        "fingerprint": "1f7db63de89c5b4723b34a89dfd2296710348263",
+        "fingerprint": "01886a87af13b4f83510c9728a6a3a568343de76",
         "entries": []
       },
       "security": {
         "version": 1,
-        "fingerprint": "0f5319998e81526e3cb7b690582d9e8013bcb63e",
+        "fingerprint": "2237a09cda4cfafede63111ee63e44500dd628bf",
         "entries": [],
         "files_scanned": 0,
         "coverage": null
@@ -2392,7 +4355,7 @@
   },
   "potentials": {
     "r": {
-      "lintr_lint": 64,
+      "lintr_lint": 62,
       "structural": 20,
       "flat_dirs": 3,
       "security": 20,
@@ -2405,17 +4368,17 @@
   "codebase_metrics": {
     "r": {
       "total_files": 45,
-      "total_loc": 2812,
+      "total_loc": 2841,
       "total_directories": 3
     }
   },
   "dimension_scores": {
     "Code quality": {
-      "score": 84.0,
-      "strict": 84.0,
-      "verified_strict_score": 84.0,
-      "checks": 112,
-      "failing": 39,
+      "score": 84.8,
+      "strict": 80.9,
+      "verified_strict_score": 84.8,
+      "checks": 110,
+      "failing": 37,
       "tier": 3,
       "detectors": {
         "smells": {
@@ -2431,10 +4394,10 @@
           "weighted_failures": 1.4
         },
         "lintr_lint": {
-          "potential": 64,
-          "pass_rate": 0.7421875,
-          "failing": 37,
-          "weighted_failures": 16.5
+          "potential": 62,
+          "pass_rate": 0.753225806451613,
+          "failing": 35,
+          "weighted_failures": 15.299999999999999
         }
       }
     },
@@ -2893,8 +4856,9 @@
   },
   "reminder_history": {
     "zone_classification": 3,
-    "report_scores": 4,
+    "report_scores": 13,
     "feedback_nudge": 3,
-    "stagnant_nudge": 23
+    "stagnant_nudge": 23,
+    "wontfix_growing": 3
   }
 }
