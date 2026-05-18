@@ -21,7 +21,7 @@ phs_GET <- function(action,
         "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
       ) |>
       httr2::req_retry(max_tries = 3) |>
-      httr2::req_error(is_error = ~ FALSE) |>
+      httr2::req_error(is_error = ~FALSE) |>
       httr2::req_perform(),
     error = function(e) {
       cli::cli_abort(
