@@ -30,12 +30,10 @@ test_that("Can deal with a list in some cases", {
 })
 
 test_that(
-  "parse_col_select() removes duplicates and preserves order of first occurrence",
-  {
-    x <- c("A", "A", "B", "A", "C", "B")
-    expect_identical(parse_col_select(x), "A,B,C")
-  }
-)
+  "parse_col_select() removes duplicates and preserves order of first occurrence", {
+  x <- c("A", "A", "B", "A", "C", "B")
+  expect_identical(parse_col_select(x), "A,B,C")
+})
 
 test_that("errors on bad input", {
   expect_error(

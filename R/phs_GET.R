@@ -21,7 +21,7 @@ phs_GET <- function(action,
         "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
       ) |>
       httr2::req_retry(max_tries = 3) |>
-      httr2::req_error(is_error = ~FALSE) |>
+      httr2::req_error(is_error = ~ FALSE) |>
       httr2::req_perform(),
     error = function(e) {
       cli::cli_abort(
@@ -41,6 +41,7 @@ phs_GET <- function(action,
   if (content_type %in% c("text/html", "application/json")) {
     if (content_type == "text/html") {
       # Handle HTML error pages or redirects
+      # Some endpoints return HTML when an ID is not found (e.g. dump action)
       content <- xml2::read_html(httr2::resp_body_string(response))
     } else {
       # Use simplifyVector = FALSE for compatibility with existing record parsing
@@ -52,10 +53,10 @@ phs_GET <- function(action,
       guess_max = Inf
     )
   } else {
-    cli::cli_abort(paste0(
-      "The response contained an unhandled content type: ",
-      "{content_type}"
-    ))
+    cli::cli_abort(
+      "The response contained an unhandled content type: {.val {content_type}}",
+      call = call
+    )
   }
 
   # detect/handle errors

@@ -112,19 +112,16 @@ get_resource_via_datastore <- function(res_id, rows, query) {
   # Warn if implicit limit hit
   if (is.null(rows) && query$limit < total_rows) {
     cli::cli_warn(c(
-      "Returning the first {query$limit} results (rows) of your query. ",
-      "{total_rows} rows match your query in total.",
-      i = "To get ALL matching rows you will need to download ",
-      "the whole resource and apply filters/selections locally."
+      "Returning the first {query$limit} results (rows) of your query. {total_rows} rows match your query in total.",
+      i = "To get ALL matching rows you will need to download the whole resource and apply filters/selections locally."
     ))
   }
 
   # Warn if requested rows not reached
   if (!is.null(rows) && query$limit > total_rows) {
-    cli::cli_warn(paste(
-      "You set {.var rows} to {.val {query$limit}} but only ",
-      "{.val {total_rows}} rows matched your query."
-    ))
+    cli::cli_warn(
+      "You set {.var rows} to {.val {rows}} but only {.val {total_rows}} rows matched your query."
+    )
   }
 
   purrr::map(res_content$result$records, ~.x) |>
