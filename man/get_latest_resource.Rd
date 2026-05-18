@@ -18,11 +18,15 @@ get_latest_resource(
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
+\item{row_filters}{(optional) A named list or vector specifying values of
+columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
+\item{col_select}{(optional) A character vector containing the names of
+desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the
+resource will be added as columns to the data, including the resource ID, the
+resource name, the creation date, and the last modified/updated date.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -45,22 +49,4 @@ resource. As of 1.8.2024 these data sets include:
 \item dispenser-location-contact-details
 \item community-pharmacy-contractor-activity
 }
-}
-\examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
-\dontrun{
-dataset_name <- "gp-practice-contact-details-and-list-sizes"
-
-data <- get_latest_resource(dataset_name)
-
-filters <- list("Postcode" = "DD11 1ES")
-wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
-
-filtered_data <- get_latest_resource(
-  dataset_name = dataset_name,
-  row_filters = filters,
-  col_select = wanted_cols
-)
-}
-\dontshow{\}) # examplesIf}
 }
